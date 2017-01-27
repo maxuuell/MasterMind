@@ -17,7 +17,7 @@ app.use(session({
 //require login
 var requireLogin = function(req, res, next) {
   req.session.user ? res.render('/profile') : res.redirect('/login');
-}
+};
 
 
 //Mongoose
@@ -36,7 +36,7 @@ var port = process.env.PORT || 3000;
 
 
 //routes
-app.get('/', function(req,res) {
+app.get('/', function(req, res) {
   res.send('hello world');
 });
 

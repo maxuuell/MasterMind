@@ -13,17 +13,17 @@ module.exports = {
     var username = req.body.username;
     var password = req.body.password;
     User.findOne({username: username})
-      .exec(function(err, userProfile){
+      .exec(function(err, userProfile) {
         //if the user profile does not exist, we will create the new user
-        console.log('userProfile is ', userProfile)
-        if(!userProfile) {
+        console.log('userProfile is ', userProfile);
+        if (!userProfile) {
           //hashes the password
-          bcrypt.hash(password, null, null, function(err, hash){
-            if(err){
-              console.log("Error", err);
+          bcrypt.hash(password, null, null, function(err, hash) {
+            if (err) {
+              console.log('Error', err);
               res.status(500).send(err);
             } else {
-              console.log('hash is ', hash)
+              console.log('hash is ', hash);
               var newUser = new User({
                 username: username,
                 password: hash,
@@ -32,9 +32,9 @@ module.exports = {
                 memScores: [],
                 scramScores: []
               });
-              newUser.save(function(err, user){
-                if(err){
-                  console.log("SAVE ERROR", err);
+              newUser.save(function(err, user) {
+                if (err) {
+                  console.log('SAVE ERROR', err);
                   res.status(500).send(err);
                 }
                 console.log('user saved', user);
@@ -46,7 +46,7 @@ module.exports = {
           console.log('Account already exists');
           res.redirect('/signup');
         }
-      })
+      });
     next();
   },
   //function for logging in user
@@ -56,14 +56,14 @@ module.exports = {
     var username = req.body.username;
     var password = req.body.password;
     User.findOne({username: username})
-      .exec(function(err, userProfile){
-        if(!userProfile){
-          console.log('userProfile does not exist')
+      .exec(function(err, userProfile) {
+        if (!userProfile) {
+          console.log('userProfile does not exist');
           res.redirect('/login');
         } else {
           //bcrypt compare
           bcrypt.compare(password, userProfile.password, function(err, match) {
-            if(match){
+            if (match) {
               console.log('passwords match');
               req.session.user = userProfile;
               res.redirect('/');
@@ -75,5 +75,5 @@ module.exports = {
         }
       });
   }
-}
+};
 

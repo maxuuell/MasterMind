@@ -99,7 +99,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('babel', function(n) {
-    grunt.task.run(['shell:babel'])
+    grunt.task.run(['shell:babel']);
     // add your production server task here
 
   });
