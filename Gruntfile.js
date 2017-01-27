@@ -64,11 +64,14 @@ module.exports = function(grunt) {
     //   }
     // },
 
-    // shell: {
-    //   prodServer: {
-    //     command: 'git push live master'
-    //   }
-    // },
+    shell: {
+      prodServer: {
+        command: 'git push live master'
+      },
+      babel: {
+        command: 'babel . --out-dir compiled --presets=es2015,react --ignore=node_modules,compiled --source-maps inline --watch'
+      }
+    },
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -95,14 +98,12 @@ module.exports = function(grunt) {
   grunt.registerTask('build', ['nodemon'
   ]);
 
-  // grunt.registerTask('upload', function(n) {
-  //   if (grunt.option('prod')) {
-  //     grunt.task.run(['shell:prodServer'])
-  //     // add your production server task here
-  //   } else {
-  //     grunt.task.run([ 'server-dev' ]);
-  //   }
-  // });
+  grunt.registerTask('babel', function(n) {
+    grunt.task.run(['shell:babel'])
+    // add your production server task here
+
+  });
+
 
   // grunt.registerTask('deploy', function(n) {
   //   if (grunt.option('prod')) {
