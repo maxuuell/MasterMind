@@ -3,8 +3,8 @@ var bodyparser = require('body-parser');
 var mongoose = require('mongoose');
 var userController = require('./users/userController.js');
 var session = require('express-session');
+var config = require('./config.js')
 var app = express();
-
 
 //middlewares
 app.use(bodyparser.json());
@@ -21,6 +21,8 @@ var requireLogin = function(req, res, next) {
 
 
 //Mongoose
+var uri;
+process.env.PORT ? uri = config.web : uri = config.local;
 mongoose.connect('mongodb://localhost/mastermind');
 
 var db = mongoose.connection;
@@ -43,6 +45,8 @@ app.get('/', function(req, res) {
 app.post('/signup', userController.signup);
 app.post('/login', userController.login);
 app.get('/profile', requireLogin);
+app.post('/scores', userController.postScore);
+app.get('/leaderboard', userController.getAll);
 
 app.listen(port, function () {
   console.log('Example app listening on port 3000!');

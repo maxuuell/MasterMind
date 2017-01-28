@@ -11,11 +11,12 @@ var UserSchema = new mongoose.Schema({
     type: String,
     require: true
   },
-  highscoreMem: Number,
-  highscoreScram: Number,
-  memScores: [Number],
-  scramScores: [Number]
+  memoryHigh: Number,
+  scrambleHigh: Number,
+  memoryArray: [Number],
+  scrambleArray: [Number]
 });
+
 
 
 module.exports = mongoose.model("User", UserSchema);

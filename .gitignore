@@ -4,4 +4,5 @@ npm-debug.log
 .floo
 .flooignore
 /compiled
+/server/config.js
 /*.env
