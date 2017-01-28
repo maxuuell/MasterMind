@@ -76,7 +76,7 @@ module.exports = {
       });
   },
   postScore: function(req, res, next) {
-    if(req.body.username) {
+    if (req.body.username) {
       var username = req.body.username;
       var gametype = req.body.gametype;
       var score = req.body.score;
@@ -94,8 +94,8 @@ module.exports = {
               userProfile[gametype + 'High'] = score;
               console.log('new high score recorded');
             }
-            userProfile.save(function(err, user){
-              if(err){
+            userProfile.save(function(err, user) {
+              if (err) {
                 console.log('Error when posting score');
                 res.status(500).send(err);
               } else {
@@ -107,9 +107,9 @@ module.exports = {
     }
   },
   getAll: function(req, res, next) {
-    User.find({}).exec(function(err, users){
-      if(err) {
-        console.log('Error getting scores', err);
+    User.find({}).exec(function(err, users) {
+      if (err) {
+        console.log('Error getting users', err);
         res.status(500).send(err);
       } else {
         res.status(200).send(users);
