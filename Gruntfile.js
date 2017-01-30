@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 
     nodemon: {
       dev: {
-        script: 'server.js'
+        script: 'server/server.js'
       }
     },
 
@@ -99,7 +99,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('babel', function(n) {
-    grunt.task.run(['shell:babel'])
+    grunt.task.run(['shell:babel']);
     // add your production server task here
 
   });
