@@ -1,0 +1,1 @@
+ReactDOM.render(<NavBar />, document.getElementById('app'));

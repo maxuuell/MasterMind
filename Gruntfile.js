@@ -95,7 +95,7 @@ module.exports = function(grunt) {
   //   'mochaTest'
   // ]);
 
-  grunt.registerTask('build', ['nodemon'
+  grunt.registerTask('start', ['nodemon'
   ]);
 
   grunt.registerTask('babel', function(n) {

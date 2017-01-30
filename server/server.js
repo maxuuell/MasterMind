@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyparser = require('body-parser');
 var mongoose = require('mongoose');
+var path = require('path');
 var userController = require('./users/userController.js');
 var session = require('express-session');
 var config = require('./config.js');
@@ -35,13 +36,15 @@ db.once('open', function() {
 //define port
 var port = process.env.PORT || 3000;
 
-
+var rootPath = path.join(__dirname,'/..');
+var publicPath = path.join(rootPath, '/compiled/public');
+app.use(express.static(path.join(__dirname, '../')));
 
 //routes
 //get routes
-app.get('/', function(req, res) {
-  res.send('hello world');
-});
+// app.get('/', function(req, res) {
+//   res.sendFile('hello world from server');
+// });
 app.get('/singup', function(req, res) {
   res.send('This is where we would serve the signup');
 });
