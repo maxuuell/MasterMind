@@ -1,4 +1,8 @@
 import React from 'react';
+// import { Nav, Navbar, NavItem, MenuItem, NavDropdown } from 'react-bootstrap'
+// import { Link } from 'react-router';
+// import { LinkContainer } from 'react-router-bootstrap';
+
 
 export const NavBar = () => {
   return (

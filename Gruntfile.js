@@ -69,7 +69,7 @@ module.exports = function(grunt) {
         command: 'git push upstream master'
       },
       babel: {
-        command: 'babel . --out-dir compiled --presets=es2015,react --ignore=node_modules,compiled --source-maps inline --watch'
+        command: 'babel . --out-dir compiled --presets=es2015,react --ignore=node_modules,compiled,Gruntfile --source-maps inline --watch'
       }
     }
   });

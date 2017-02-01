@@ -1,5 +1,8 @@
 import React from 'react';
-import {NavBar} from './NavBar';
+import { NavBar } from './NavBar';
+import { Login } from './Login';
+import { SignUp } from './SignUp';
+
 
 export default class App extends React.Component {
   constructor (props) {
@@ -10,10 +13,11 @@ export default class App extends React.Component {
     };
   }
   render() {
-    console.log('Goodbye world')
     return (
       <div>
         <NavBar />
+        <SignUp />
+        <Login />
       </div>
     );
   }
