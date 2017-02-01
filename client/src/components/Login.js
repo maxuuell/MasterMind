@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Login = () => {
+export const LogIn = () => {
   return (
     <div className="container">
       <div className = "row">
@@ -27,5 +27,5 @@ export const Login = () => {
       </div>
     </div>
   );
-}
+};
 

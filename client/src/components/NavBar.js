@@ -1,7 +1,6 @@
 import React from 'react';
-// import { Nav, Navbar, NavItem, MenuItem, NavDropdown } from 'react-bootstrap'
-// import { Link } from 'react-router';
-// import { LinkContainer } from 'react-router-bootstrap';
+import {Link} from 'react-router';
+
 
 
 export const NavBar = () => {
@@ -10,7 +9,7 @@ export const NavBar = () => {
       <ul>
         <div className="floatleft">
           <li>
-            <a href="#" >Home</a>
+            <Link to="/">Home</Link>
           </li>
           <li>
             <a href="#" >Leaderboard</a>
@@ -21,7 +20,7 @@ export const NavBar = () => {
           <li className="dropthis">
             <a href="#" >Games▼</a>
               <ul className="dropdown">
-                <li><a className="test" href="#">Memory</a>
+                <li><Link className="test" to="/memory">Memory</Link>
                 </li>
                 <li><a className="test" href="#">Scramble</a>
                 </li>
@@ -29,10 +28,10 @@ export const NavBar = () => {
           </li>
           <div className="floatright">
             <li>
-              <a href="#" >Signup</a>
+              <Link to="/signup">Signup</Link>
             </li>
             <li>
-              <a href="#" >Login</a>
+              <Link to="/login">Login</Link>
             </li>
         </div>
         </div>
