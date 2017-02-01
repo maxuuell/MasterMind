@@ -12,17 +12,23 @@ var NavBar = () => {
           <li>
             <a href="#" >Profile</a>
           </li>
-          <li>
+          <li className="dropthis">
             <a href="#" >Games▼</a>
+              <ul className="dropdown">
+                <li><a className="test" href="#">Memory</a>
+                </li>
+                <li><a className="test" href="#">Scramble</a>
+                </li>
+              </ul>
           </li>
+          <div className="floatright">
+            <li>
+              <a href="#" >Signup</a>
+            </li>
+            <li>
+              <a href="#" >Login</a>
+            </li>
         </div>
-        <div className="floatright">
-          <li>
-            <a href="#" >Login</a>
-          </li>
-          <li>
-            <a href="#" >Signup</a>
-          </li>
         </div>
       </ul>
     </nav>

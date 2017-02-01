@@ -3,11 +3,15 @@ ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #222;
 }
 
-li {
+.floatleft li {
     float: left;
+}
+
+.floatright li {
+    float: right;
 }
 
 li a {
@@ -18,9 +22,20 @@ li a {
     text-decoration: none;
 }
 
+.dropdown {
+    display: none;
+}
 
+.floatleft li:hover ul{
+    position: absolute;
+    display: block;
+}
 
-/* Change the link color to #111 (black) on hover */
+/*.test {
+    color: green;
+    display: block;
+}*/
+
 li a:hover {
     background-color: white;
 }
