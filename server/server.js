@@ -57,7 +57,7 @@ app.get('/memory', function(req, res) {
 app.get('/scramble', function(req, res) {
   res.send('This is where we would serve the scramble game');
 });
-app.get('/profile', requireLogin);
+app.get('/#/profile', requireLogin);
 app.get('/leaderboard', userController.getAll);
 
 //post routes

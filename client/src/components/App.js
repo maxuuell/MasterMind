@@ -3,7 +3,6 @@ import { NavBar } from './NavBar';
 import { Login } from './Login';
 import { SignUp } from './SignUp';
 import Homepage from './Homepage';
-import Memory from './Memory';
 
 export default class App extends React.Component {
   constructor (props) {
@@ -14,9 +13,7 @@ export default class App extends React.Component {
     };
   }
   render() {
-    console.log('memory is ', typeof Memory);
-    console.log('navbar is ', typeof NavBar);
-    console.log('this props children', this.props.children);
+    console.log('hello')
     return (
       <div>
         <NavBar />

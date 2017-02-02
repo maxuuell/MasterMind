@@ -5,6 +5,7 @@ var Promise = require('bluebird');
 
 
 
+
 module.exports = {
   //function for signin in user
   signup: function(req, res, next) {
@@ -20,7 +21,6 @@ module.exports = {
           bcrypt.hash(password, null, null, function(err, hash) {
             if (err) {
               console.log('Error', err);
-              res.status(500).send(err);
             } else {
               //create the user profile in the database and save
               console.log('hash is ', hash);
@@ -35,19 +35,19 @@ module.exports = {
               newUser.save(function(err, user) {
                 if (err) {
                   console.log('SAVE ERROR', err);
-                  res.status(500).send(err);
                 }
-                console.log('user saved', user);
+                console.log('user saved here', user);
+                res.send({redirect: '/#/'});
               });
             }
           });
         //if the user already exists...
         } else {
           console.log('Account already exists');
-          res.redirect('/signup');
+          res.send({redirect: '/#/signup'});
         }
       });
-    next();
+    // next();
   },
   //function for logging in user
   login: function(req, res, next) {
@@ -66,10 +66,10 @@ module.exports = {
             if (match) {
               console.log('passwords match');
               req.session.user = userProfile;
-              res.redirect('/');
+              res.send({redirect: '/#/'});
             } else {
               console.log('password is incorrect');
-              res.redirect('/login');
+              res.send({redirect: '/#/login'});
             }
           });
         }
