@@ -1,42 +1,40 @@
 import React from 'react';
-// import { Nav, Navbar, NavItem, MenuItem, NavDropdown } from 'react-bootstrap'
-// import { Link } from 'react-router';
-// import { LinkContainer } from 'react-router-bootstrap';
+import {Link} from 'react-router';
+
 
 
 export const NavBar = () => {
   return (
-    <nav className="navbar">
-      <ul>
-        <div className="floatleft">
-          <li>
-            <a href="#" >Home</a>
-          </li>
-          <li>
-            <a href="#" >Leaderboard</a>
-          </li>
-          <li>
-            <a href="#" >Profile</a>
-          </li>
-          <li className="dropthis">
-            <a href="#" >Games▼</a>
-              <ul className="dropdown">
-                <li><a className="test" href="#">Memory</a>
-                </li>
-                <li><a className="test" href="#">Scramble</a>
-                </li>
+    <nav className="navbar navbar-inverse">
+      <div className="container-fluid">
+        <div className="navbar-header">
+          <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span className="sr-only">Toggle navigation</span>
+            <span className="icon-bar"></span>
+            <span className="icon-bar"></span>
+            <span className="icon-bar"></span>
+          </button>
+          <Link className="navbar-brand" to="/">Home</Link>
+        </div>
+        <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul className="nav navbar-nav">
+            <li><Link to="/leaderboard">Leaderboard</Link></li>
+            <li><Link to="/profile">Profile</Link></li>
+            <li className="dropdown">
+              <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Games <span className="caret"></span></a>
+              <ul className="dropdown-menu">
+                <li><Link to="/memorygame">Memory Game</Link></li>
+                <li role="separator" className="divider"></li>
+                <li><Link to="/scramblegame">Scramble Game</Link></li>
               </ul>
-          </li>
-          <div className="floatright">
-            <li>
-              <a href="#" >Signup</a>
             </li>
-            <li>
-              <a href="#" >Login</a>
-            </li>
+          </ul>
+          <ul className="nav navbar-nav navbar-right">
+            <li><Link to="/login">Login</Link></li>
+            <li><Link to="/signup">Signup</Link></li>
+          </ul>
         </div>
-        </div>
-      </ul>
+      </div>
     </nav>
   );
 };

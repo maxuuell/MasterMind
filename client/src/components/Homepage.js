@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default class Memory extends React.Component {
+export default class Homepage extends React.Component {
   render() {
     return (
       <div>
-        <h2>Memory Game here</h2>
+        <h2>Homepage2</h2>
       </div>
     );
   }
