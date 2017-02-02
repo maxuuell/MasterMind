@@ -5,18 +5,24 @@ import { IndexRoute, Router, Route, Link, hashHistory } from 'react-router';
 import App from './components/App';
 import {SignUp} from './components/SignUp';
 import Homepage from './components/Homepage';
-import Memory from './components/Memory';
+import GameMemory from './components/GameMemory';
 import {LogIn} from './components/Login';
+import {Leaderboard} from './components/Leaderboard';
+import {Profile} from './components/Profile';
+import {GameScramble} from './components/GameScramble';
 
 const app = document.getElementById('app');
 
-console.log('Memory is index js ', typeof Memory);
-console.log('Signup is index js ', typeof SignUp);
+console.log('GameMemory is index js ', typeof GameMemory);
+console.log('GameScramble is index js ', typeof GameScramble);
 render(
   <Router history={hashHistory}>
     <Route path="/" component = {App}>
       <IndexRoute component={Homepage}></IndexRoute>
-      <Route path="memory" component={Memory}/>
+      <Route path="memorygame" component={GameMemory}/>
+      <Route path="leaderboard" component={Leaderboard}/>
+      <Route path="profile" component={Profile}/>
+      <Route path="scramblegame" component={GameScramble}/>
       <Route path="login" component={LogIn}/>
       <Route path="signup" component={SignUp}/>
     </Route>

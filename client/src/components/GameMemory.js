@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Memory extends React.Component {
+export default class GameMemory extends React.Component {
   render() {
     return (
       <div>
