@@ -6,5 +6,4 @@ npm-debug.log
 /compiled
 /server/config.js
 /*.env
-bundle.js
 /client/dist/bundle.js
