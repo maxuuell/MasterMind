@@ -60,7 +60,7 @@ module.exports = {
       .exec(function(err, userProfile) {
         if (!userProfile) {
           console.log('userProfile does not exist');
-          res.redirect('/login');
+          res.send('User does not exist');
         } else {
           //bcrypt compare
           bcrypt.compare(password, userProfile.password, function(err, match) {
@@ -70,7 +70,7 @@ module.exports = {
               res.send({redirect: '/#/'});
             } else {
               console.log('password is incorrect');
-              res.send({redirect: '/#/login'});
+              res.send('Password is incorrect');
             }
           });
         }

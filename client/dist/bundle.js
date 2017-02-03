@@ -25164,7 +25164,8 @@
 
 	    _this.state = {
 	      username: '',
-	      password: ''
+	      password: '',
+	      errorText: localStorage.errorTextLogin
 	    };
 	    return _this;
 	  }
@@ -25184,7 +25185,6 @@
 	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit() {
-
 	      var object = {
 	        username: this.state.username,
 	        password: this.state.password
@@ -25195,7 +25195,9 @@
 	        data: JSON.stringify(object),
 	        contentType: "application/json",
 	        success: function success(data) {
-	          if (typeof data.redirect === 'string') {
+	          if (typeof data === 'string') {
+	            localStorage.setItem('errorTextLogin', data);
+	          } else if (typeof data.redirect === 'string') {
 	            window.location = data.redirect;
 	          }
 	        }
@@ -25204,6 +25206,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      console.log(this.state.errorText);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'container' },
@@ -25234,6 +25237,7 @@
 	                  _react2.default.createElement(
 	                    'div',
 	                    { className: 'form-group' },
+	                    _react2.default.createElement('div', { className: 'error', dangerouslySetInnerHTML: { __html: this.state.errorText } }),
 	                    _react2.default.createElement(
 	                      'label',
 	                      null,

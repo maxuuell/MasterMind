@@ -8,6 +8,7 @@ export default class Login extends React.Component {
     this.state = {
       username: '',
       password: '',
+      errorText: localStorage.errorTextLogin
     };
   }
 
@@ -22,7 +23,6 @@ export default class Login extends React.Component {
   }
 
   handleSubmit() {
-
     var object = {
       username: this.state.username,
       password: this.state.password
@@ -33,7 +33,9 @@ export default class Login extends React.Component {
       data: JSON.stringify(object),
       contentType: "application/json",
       success: function(data) {
-        if (typeof data.redirect === 'string') {
+        if (typeof data === 'string') {
+          localStorage.setItem( 'errorTextLogin', data);
+        } else if (typeof data.redirect === 'string') {
           window.location = data.redirect;
         }
       }
@@ -42,6 +44,7 @@ export default class Login extends React.Component {
   }
 
   render(){
+    console.log(this.state.errorText);
     return (
       <div className="container">
         <div className = "row">
@@ -53,6 +56,7 @@ export default class Login extends React.Component {
               <div className="panel-body">
                 <form role = "form">
                   <div className="form-group">
+                    <div className="error" dangerouslySetInnerHTML={{__html: this.state.errorText}}/>
                     <label>User Name</label>
                     <input type="text" name="username" className="form-control" placeholder="User Name" value={this.state.username}
                       onChange={this.updateUsername.bind(this)}/>
