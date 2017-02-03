@@ -27,8 +27,8 @@ module.exports = {
               var newUser = new User({
                 username: username,
                 password: hash,
-                highscoreMem: null,
-                highscoreScram: null,
+                highscoreMem: 0,
+                highscoreScram: 0,
                 memScores: [],
                 scramScores: []
               });
@@ -37,14 +37,14 @@ module.exports = {
                   console.log('SAVE ERROR', err);
                 }
                 console.log('user saved here', user);
+                req.session.user = username;
                 res.send({redirect: '/#/'});
               });
             }
           });
         //if the user already exists...
         } else {
-          console.log('Account already exists');
-          res.send({redirect: '/#/signup'});
+          res.send('Account already exists');
         }
       });
     // next();
@@ -58,23 +58,22 @@ module.exports = {
     User.findOne({username: username})
       .exec(function(err, userProfile) {
         if (!userProfile) {
-          console.log('userProfile does not exist');
-          res.redirect('/login');
+          res.send('User does not exist');
         } else {
           //bcrypt compare
           bcrypt.compare(password, userProfile.password, function(err, match) {
             if (match) {
               console.log('passwords match');
-              req.session.user = userProfile;
+              req.session.user = username;
               res.send({redirect: '/#/'});
             } else {
-              console.log('password is incorrect');
-              res.send({redirect: '/#/login'});
+              res.send('Password is incorrect');
             }
           });
         }
       });
   },
+
   postScore: function(req, res, next) {
     if (req.body.username) {
       var username = req.body.username;
@@ -83,7 +82,7 @@ module.exports = {
       User.findOne({username: username})
         .exec(function(err, userProfile) {
           if (err) {
-            console.log('error when posting score');
+            console.log('error when posting score here');
             res.status(500).send(err);
           } else {
             //push the score into the gametype array
@@ -115,6 +114,27 @@ module.exports = {
         res.status(200).send(users);
       }
     });
+  },
+  getUser: function(req, res, next) {
+    if (!req.session.user) {
+      res.send({redirect: '/#/login'});
+    } else {
+      User.findOne({username: req.params.username}).exec(function(err, user) {
+        if (err) {
+          console.log('error in fetching user');
+          res.send(err);
+        } else {
+          var userObject = {
+            username: user.username,
+            highscoreMem: user.memoryHigh,
+            highscoreScram: user.scrambleHigh,
+            memScores: user.memoryArray,
+            scramScores: user.scrambleArray
+          }
+          res.send(userObject);
+        }
+      });
+    }
   }
 };
 

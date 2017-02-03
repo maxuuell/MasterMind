@@ -25164,7 +25164,8 @@
 
 	    _this.state = {
 	      username: '',
-	      password: ''
+	      password: '',
+	      errorText: localStorage.errorTextLogin
 	    };
 	    return _this;
 	  }
@@ -25173,29 +25174,29 @@
 	    key: 'updateUsername',
 	    value: function updateUsername(text) {
 	      this.setState({ username: text.target.value });
-	      console.log('state username', this.state.username);
 	    }
 	  }, {
 	    key: 'updatePassword',
 	    value: function updatePassword(text) {
 	      this.setState({ password: text.target.value });
-	      console.log('state password', this.state.password);
 	    }
 	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit() {
-
-	      var data = {
+	      var object = {
 	        username: this.state.username,
 	        password: this.state.password
 	      };
 	      _jquery2.default.ajax({
 	        type: 'POST',
 	        url: '/login',
-	        data: JSON.stringify(data),
+	        data: JSON.stringify(object),
 	        contentType: "application/json",
 	        success: function success(data) {
-	          if (typeof data.redirect === 'string') {
+	          if (typeof data === 'string') {
+	            localStorage.setItem('errorTextLogin', data);
+	          } else if (typeof data.redirect === 'string') {
+	            localStorage.setItem('errorTextLogin', '');
 	            window.location = data.redirect;
 	          }
 	        }
@@ -25234,6 +25235,7 @@
 	                  _react2.default.createElement(
 	                    'div',
 	                    { className: 'form-group' },
+	                    _react2.default.createElement('div', { className: 'error', dangerouslySetInnerHTML: { __html: this.state.errorText } }),
 	                    _react2.default.createElement(
 	                      'label',
 	                      null,
@@ -35131,7 +35133,8 @@
 	    _this.state = {
 	      username: '',
 	      password: '',
-	      confirmPassword: ''
+	      confirmPassword: '',
+	      errorText: localStorage.errorText
 	    };
 	    return _this;
 	  }
@@ -35157,18 +35160,29 @@
 	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit() {
-	      if (this.state.password === this.state.confirmPassword) {
-	        var data = {
+	      if (this.state.username.length < 6) {
+	        localStorage.setItem('errorText', 'Please enter a username with at least 6 characters');
+	        this.setState({ errorText: localStorage.errorText });
+	      } else if (this.state.password !== this.state.confirmPassword) {
+	        localStorage.setItem('errorText', 'Passwords do not match');
+	        this.setState({ errorText: localStorage.errorText });
+	      } else if (this.state.password.length < 6) {
+	        localStorage.setItem('errorText', 'Please enter a password with at least 6 characters');
+	        this.setState({ errorText: localStorage.errorText });
+	      } else {
+	        var object = {
 	          username: this.state.username,
 	          password: this.state.password
 	        };
 	        _jquery2.default.ajax({
 	          type: 'POST',
 	          url: '/signup',
-	          data: JSON.stringify(data),
+	          data: JSON.stringify(object),
 	          contentType: "application/json",
 	          success: function success(data) {
 	            if (typeof data.redirect === 'string') {
+	              console.log('redirection here');
+	              localStorage.setItem('errorText', '');
 	              window.location = data.redirect;
 	            }
 	          }
@@ -35208,12 +35222,13 @@
 	                  _react2.default.createElement(
 	                    'div',
 	                    { className: 'form-group' },
+	                    _react2.default.createElement('div', { className: 'error', dangerouslySetInnerHTML: { __html: this.state.errorText } }),
 	                    _react2.default.createElement(
 	                      'label',
 	                      null,
 	                      'User Name'
 	                    ),
-	                    _react2.default.createElement('input', { type: 'text', name: 'username', className: 'form-control', placeholder: 'User Name', value: this.state.username,
+	                    _react2.default.createElement('input', { type: 'text', name: 'username', className: 'form-control', placeholder: 'Please enter at least 6 characters', value: this.state.username,
 	                      onChange: this.updateUsername.bind(this)
 	                    })
 	                  ),
@@ -35225,7 +35240,7 @@
 	                      null,
 	                      'Password'
 	                    ),
-	                    _react2.default.createElement('input', { type: 'password', name: 'password', className: 'form-control', placeholder: 'Password', value: this.state.password,
+	                    _react2.default.createElement('input', { type: 'password', name: 'password', className: 'form-control', placeholder: 'Please enter at least 6 characters', value: this.state.password,
 	                      onChange: this.updatePassword.bind(this) })
 	                  ),
 	                  _react2.default.createElement(

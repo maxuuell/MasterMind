@@ -1,38 +1,40 @@
 import React from 'react';
 import $ from 'jquery';
 
+
 export default class Login extends React.Component {
   constructor () {
     super();
     this.state = {
       username: '',
       password: '',
+      errorText: localStorage.errorTextLogin
     };
   }
 
   updateUsername(text) {
     this.setState({username: text.target.value})
-    console.log('state username', this.state.username)
   }
 
   updatePassword(text) {
     this.setState({password: text.target.value})
-    console.log('state password', this.state.password)
   }
 
   handleSubmit() {
-
-    var data = {
+    var object = {
       username: this.state.username,
       password: this.state.password
     }
     $.ajax({
       type: 'POST',
       url: '/login',
-      data: JSON.stringify(data),
+      data: JSON.stringify(object),
       contentType: "application/json",
       success: function(data) {
-        if (typeof data.redirect === 'string') {
+        if (typeof data === 'string') {
+          localStorage.setItem( 'errorTextLogin', data);
+        } else if (typeof data.redirect === 'string') {
+          localStorage.setItem('errorTextLogin', '');
           window.location = data.redirect;
         }
       }
@@ -52,6 +54,7 @@ export default class Login extends React.Component {
               <div className="panel-body">
                 <form role = "form">
                   <div className="form-group">
+                    <div className="error" dangerouslySetInnerHTML={{__html: this.state.errorText}}/>
                     <label>User Name</label>
                     <input type="text" name="username" className="form-control" placeholder="User Name" value={this.state.username}
                       onChange={this.updateUsername.bind(this)}/>
