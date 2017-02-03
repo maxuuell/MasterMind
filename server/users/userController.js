@@ -82,7 +82,7 @@ module.exports = {
       User.findOne({username: username})
         .exec(function(err, userProfile) {
           if (err) {
-            console.log('error when posting score');
+            console.log('error when posting score here');
             res.status(500).send(err);
           } else {
             //push the score into the gametype array

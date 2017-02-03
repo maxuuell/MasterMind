@@ -46,7 +46,7 @@ export default class SignUp extends React.Component {
         type: 'POST',
         url: '/signup',
         data: JSON.stringify(object),
-        contentType: "application/json",
+        contentType: 'application/json',
         success: function(data) {
           if (typeof data.redirect === 'string') {
             console.log('redirection here');
