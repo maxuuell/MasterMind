@@ -20,6 +20,8 @@ var requireLogin = function(req, res, next) {
   req.session.user ? res.render('/profile') : res.redirect('/login');
 };
 
+//to remove the mongoose Promise deprecated warning
+mongoose.Promise = global.Promise;
 
 //Mongoose
 // var uri;
@@ -45,7 +47,7 @@ app.use(express.static(path.join(__dirname, '../')));
 // app.get('/', function(req, res) {
 //   res.sendFile('hello world from server');
 // });
-app.get('/singup', function(req, res) {
+app.get('/signup', function(req, res) {
   res.send('This is where we would serve the signup');
 });
 app.get('/login', function(req, res) {
