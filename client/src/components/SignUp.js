@@ -39,6 +39,7 @@ export default class SignUp extends React.Component {
         contentType: "application/json",
         success: function(data) {
           if (typeof data.redirect === 'string') {
+            console.log('redirection here')
             window.location = data.redirect;
           }
         }

@@ -27,8 +27,8 @@ module.exports = {
               var newUser = new User({
                 username: username,
                 password: hash,
-                highscoreMem: null,
-                highscoreScram: null,
+                highscoreMem: 0,
+                highscoreScram: 0,
                 memScores: [],
                 scramScores: []
               });
@@ -37,6 +37,7 @@ module.exports = {
                   console.log('SAVE ERROR', err);
                 }
                 console.log('user saved here', user);
+                req.session.user = username;
                 res.send({redirect: '/#/'});
               });
             }
@@ -65,8 +66,12 @@ module.exports = {
           bcrypt.compare(password, userProfile.password, function(err, match) {
             if (match) {
               console.log('passwords match');
-              req.session.user = userProfile;
-              res.send({redirect: '/#/'});
+              req.session.user = username;
+              console.log('session is ', req.session.user);
+              res.send({redirect: '/#/', });
+              if(localstorage.username) {
+                localstorage.scoreforthis
+              }
             } else {
               console.log('password is incorrect');
               res.send({redirect: '/#/login'});
@@ -75,6 +80,7 @@ module.exports = {
         }
       });
   },
+
   postScore: function(req, res, next) {
     if (req.body.username) {
       var username = req.body.username;
@@ -113,6 +119,23 @@ module.exports = {
         res.status(500).send(err);
       } else {
         res.status(200).send(users);
+      }
+    });
+  },
+  getUser: function(req, res, next) {
+    User.findOne({username: req.params.username}).exec(function(err, user) {
+      if (err) {
+        res.send(err);
+      } else {
+        console.log(user)
+        var userObject = {
+          username: user.username,
+          highscoreMem: user.memoryHigh,
+          highscoreScram: user.scrambleHigh,
+          memScores: user.memoryArray,
+          scramScores: user.scrambleArray
+        }
+        res.send(userObject);
       }
     });
   }

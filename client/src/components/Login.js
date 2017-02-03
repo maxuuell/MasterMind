@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 
+
 export default class Login extends React.Component {
   constructor () {
     super();
@@ -22,14 +23,14 @@ export default class Login extends React.Component {
 
   handleSubmit() {
 
-    var data = {
+    var object = {
       username: this.state.username,
       password: this.state.password
     }
     $.ajax({
       type: 'POST',
       url: '/login',
-      data: JSON.stringify(data),
+      data: JSON.stringify(object),
       contentType: "application/json",
       success: function(data) {
         if (typeof data.redirect === 'string') {
