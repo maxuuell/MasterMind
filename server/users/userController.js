@@ -67,7 +67,6 @@ module.exports = {
             if (match) {
               console.log('passwords match');
               req.session.user = username;
-              console.log('session is ', req.session.user);
               res.send({redirect: '/#/'});
             } else {
               console.log('password is incorrect');
