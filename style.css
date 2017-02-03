@@ -1,23 +1,4 @@
-
-
-/*.floatleft li {
-    float: left;
+.error {
+  display: block;
+  color: red;
 }
-
-.floatright li {
-    float: right;
-}
-*/
-
-
-
-
-
-/*.test {
-    color: green;
-    display: block;
-}*/
-
-/*li a:hover {
-    background-color: white;
-}*/

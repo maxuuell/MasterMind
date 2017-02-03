@@ -45,7 +45,7 @@ module.exports = {
         //if the user already exists...
         } else {
           console.log('Account already exists');
-          res.send({redirect: '/#/signup'});
+          res.send('Account already exists');
         }
       });
     // next();

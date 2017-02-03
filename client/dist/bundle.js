@@ -60,7 +60,7 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _SignUp = __webpack_require__(219);
+	var _SignUp = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/SignUp\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	var _SignUp2 = _interopRequireDefault(_SignUp);
 
@@ -24947,7 +24947,7 @@
 
 	var _Login = __webpack_require__(217);
 
-	var _SignUp = __webpack_require__(219);
+	var _SignUp = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./SignUp\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	var _Homepage = __webpack_require__(220);
 
@@ -35093,173 +35093,7 @@
 
 
 /***/ },
-/* 219 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _jquery = __webpack_require__(218);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var SignUp = function (_React$Component) {
-	  _inherits(SignUp, _React$Component);
-
-	  function SignUp() {
-	    _classCallCheck(this, SignUp);
-
-	    var _this = _possibleConstructorReturn(this, (SignUp.__proto__ || Object.getPrototypeOf(SignUp)).call(this));
-
-	    _this.state = {
-	      username: '',
-	      password: '',
-	      confirmPassword: ''
-	    };
-	    return _this;
-	  }
-
-	  _createClass(SignUp, [{
-	    key: 'updateUsername',
-	    value: function updateUsername(text) {
-	      this.setState({ username: text.target.value });
-	      console.log('state username', this.state.username);
-	    }
-	  }, {
-	    key: 'updatePassword',
-	    value: function updatePassword(text) {
-	      this.setState({ password: text.target.value });
-	      console.log('state password', this.state.password);
-	    }
-	  }, {
-	    key: 'updateConfirmPassword',
-	    value: function updateConfirmPassword(text) {
-	      this.setState({ confirmPassword: text.target.value });
-	      console.log('state confirmedPassword', this.state.confirmPassword);
-	    }
-	  }, {
-	    key: 'handleSubmit',
-	    value: function handleSubmit() {
-	      if (this.state.password === this.state.confirmPassword) {
-	        var object = {
-	          username: this.state.username,
-	          password: this.state.password
-	        };
-	        _jquery2.default.ajax({
-	          type: 'POST',
-	          url: '/signup',
-	          data: JSON.stringify(object),
-	          contentType: "application/json",
-	          success: function success(data) {
-	            if (typeof data.redirect === 'string') {
-	              console.log('redirection here');
-	              window.location = data.redirect;
-	            }
-	          }
-	        });
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'container' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'panel panel-default' },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'panel-heading' },
-	                _react2.default.createElement(
-	                  'h3',
-	                  { className: 'panel-title' },
-	                  'Sign Up for MasterMind'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'panel-body' },
-	                _react2.default.createElement(
-	                  'form',
-	                  { role: 'form' },
-	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'form-group' },
-	                    _react2.default.createElement(
-	                      'label',
-	                      null,
-	                      'User Name'
-	                    ),
-	                    _react2.default.createElement('input', { type: 'text', name: 'username', className: 'form-control', placeholder: 'User Name', value: this.state.username,
-	                      onChange: this.updateUsername.bind(this)
-	                    })
-	                  ),
-	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'form-group' },
-	                    _react2.default.createElement(
-	                      'label',
-	                      null,
-	                      'Password'
-	                    ),
-	                    _react2.default.createElement('input', { type: 'password', name: 'password', className: 'form-control', placeholder: 'Password', value: this.state.password,
-	                      onChange: this.updatePassword.bind(this) })
-	                  ),
-	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'form-group' },
-	                    _react2.default.createElement(
-	                      'label',
-	                      null,
-	                      'Confirm Password'
-	                    ),
-	                    _react2.default.createElement('input', { type: 'password', name: 'confirm-password', className: 'form-control', placeholder: 'Confirm Password', value: this.state.confirmPassword,
-	                      onChange: this.updateConfirmPassword.bind(this) })
-	                  ),
-	                  _react2.default.createElement(
-	                    'button',
-	                    { type: 'submit', className: 'btn btn-primary', onClick: this.handleSubmit.bind(this) },
-	                    'Submit'
-	                  )
-	                )
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return SignUp;
-	}(_react2.default.Component);
-
-	exports.default = SignUp;
-
-/***/ },
+/* 219 */,
 /* 220 */
 /***/ function(module, exports, __webpack_require__) {
 

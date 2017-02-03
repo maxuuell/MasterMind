@@ -7,7 +7,8 @@ export default class SignUp extends React.Component {
     this.state = {
       username: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      errorCode: null
     };
   }
 
@@ -27,7 +28,11 @@ export default class SignUp extends React.Component {
   }
 
   handleSubmit() {
-    if (this.state.password === this.state.confirmPassword) {
+    if (this.state.username.length < 6) {
+      this.setState({errorCode: 'usernameLength'});
+    } else if (this.state.password !== this.state.confirmPassword) {
+      console.log('error')
+    } else {
       var object = {
         username: this.state.username,
         password: this.state.password
@@ -47,7 +52,12 @@ export default class SignUp extends React.Component {
     }
   }
 
+  userError() {
+    return '<h2 class="error">HELLO WORLD</h2>'
+  }
+
   render(){
+    if()
     return (
       <div className="container">
         <div className = "row">
@@ -59,14 +69,15 @@ export default class SignUp extends React.Component {
               <div className="panel-body">
                 <form role = "form">
                   <div className="form-group">
+                  {renderthis}
                     <label>User Name</label>
-                    <input type="text" name="username" className="form-control" placeholder="User Name" value={this.state.username}
+                    <input type="text" name="username" className="form-control" placeholder="Please enter at least 6 characters" value={this.state.username}
                       onChange={this.updateUsername.bind(this)}
                     />
                   </div>
                   <div className="form-group">
                     <label>Password</label>
-                    <input type="password" name="password" className="form-control" placeholder="Password" value={this.state.password}
+                    <input type="password" name="password" className="form-control" placeholder="Please enter at least 6 characters" value={this.state.password}
                       onChange={this.updatePassword.bind(this)}/>
                   </div>
                   <div className="form-group">
