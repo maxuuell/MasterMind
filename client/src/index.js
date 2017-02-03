@@ -9,7 +9,7 @@ import GameMemory from './components/GameMemory';
 import LogIn from './components/Login';
 import {Leaderboard} from './components/Leaderboard';
 import {Profile} from './components/Profile';
-import {GameScramble} from './components/GameScramble';
+import GameScramble from './components/GameScramble';
 
 const app = document.getElementById('app');
 
