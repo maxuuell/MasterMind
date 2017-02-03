@@ -120,21 +120,25 @@ module.exports = {
     });
   },
   getUser: function(req, res, next) {
-    User.findOne({username: req.params.username}).exec(function(err, user) {
-      if (err) {
-        console.log('error in fetching user');
-        res.send(err);
-      } else {
-        var userObject = {
-          username: user.username,
-          highscoreMem: user.memoryHigh,
-          highscoreScram: user.scrambleHigh,
-          memScores: user.memoryArray,
-          scramScores: user.scrambleArray
+    if (!req.session.user) {
+      res.send({redirect: '/#/login'});
+    } else {
+      User.findOne({username: req.params.username}).exec(function(err, user) {
+        if (err) {
+          console.log('error in fetching user');
+          res.send(err);
+        } else {
+          var userObject = {
+            username: user.username,
+            highscoreMem: user.memoryHigh,
+            highscoreScram: user.scrambleHigh,
+            memScores: user.memoryArray,
+            scramScores: user.scrambleArray
+          }
+          res.send(userObject);
         }
-        res.send(userObject);
-      }
-    });
+      });
+    }
   }
 };
 
