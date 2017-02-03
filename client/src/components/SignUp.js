@@ -8,7 +8,7 @@ export default class SignUp extends React.Component {
       username: '',
       password: '',
       confirmPassword: '',
-      errorCode: null
+      errorText: localStorage.errorText
     };
   }
 
@@ -29,9 +29,14 @@ export default class SignUp extends React.Component {
 
   handleSubmit() {
     if (this.state.username.length < 6) {
-      this.setState({errorCode: 'usernameLength'});
+      localStorage.setItem( 'errorText', 'Please enter a username with at least 6 characters');
+      this.setState({errorText: localStorage.errorText});
     } else if (this.state.password !== this.state.confirmPassword) {
-      console.log('error')
+      localStorage.setItem( 'errorText', 'Passwords do not match');
+      this.setState({errorText: localStorage.errorText});
+    } else if (this.state.password.length < 6) {
+      localStorage.setItem( 'errorText', 'Please enter a password with at least 6 characters');
+      this.setState({errorText: localStorage.errorText});
     } else {
       var object = {
         username: this.state.username,
@@ -44,7 +49,8 @@ export default class SignUp extends React.Component {
         contentType: "application/json",
         success: function(data) {
           if (typeof data.redirect === 'string') {
-            console.log('redirection here')
+            console.log('redirection here');
+            localStorage.setItem('errorText', '');
             window.location = data.redirect;
           }
         }
@@ -52,12 +58,7 @@ export default class SignUp extends React.Component {
     }
   }
 
-  userError() {
-    return '<h2 class="error">HELLO WORLD</h2>'
-  }
-
   render(){
-    if()
     return (
       <div className="container">
         <div className = "row">
@@ -69,7 +70,7 @@ export default class SignUp extends React.Component {
               <div className="panel-body">
                 <form role = "form">
                   <div className="form-group">
-                  {renderthis}
+                  <div className="error" dangerouslySetInnerHTML={{__html: this.state.errorText}}/>
                     <label>User Name</label>
                     <input type="text" name="username" className="form-control" placeholder="Please enter at least 6 characters" value={this.state.username}
                       onChange={this.updateUsername.bind(this)}
