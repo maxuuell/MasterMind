@@ -28,14 +28,14 @@ export default class SignUp extends React.Component {
 
   handleSubmit() {
     if (this.state.password === this.state.confirmPassword) {
-      var data = {
+      var object = {
         username: this.state.username,
         password: this.state.password
       }
       $.ajax({
         type: 'POST',
         url: '/signup',
-        data: JSON.stringify(data),
+        data: JSON.stringify(object),
         contentType: "application/json",
         success: function(data) {
           if (typeof data.redirect === 'string') {

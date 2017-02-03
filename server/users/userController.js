@@ -125,9 +125,9 @@ module.exports = {
   getUser: function(req, res, next) {
     User.findOne({username: req.params.username}).exec(function(err, user) {
       if (err) {
+        console.log('error in fetching user');
         res.send(err);
       } else {
-        console.log(user)
         var userObject = {
           username: user.username,
           highscoreMem: user.memoryHigh,
