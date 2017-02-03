@@ -25174,13 +25174,11 @@
 	    key: 'updateUsername',
 	    value: function updateUsername(text) {
 	      this.setState({ username: text.target.value });
-	      console.log('state username', this.state.username);
 	    }
 	  }, {
 	    key: 'updatePassword',
 	    value: function updatePassword(text) {
 	      this.setState({ password: text.target.value });
-	      console.log('state password', this.state.password);
 	    }
 	  }, {
 	    key: 'handleSubmit',
@@ -25198,6 +25196,7 @@
 	          if (typeof data === 'string') {
 	            localStorage.setItem('errorTextLogin', data);
 	          } else if (typeof data.redirect === 'string') {
+	            localStorage.setItem('errorTextLogin', '');
 	            window.location = data.redirect;
 	          }
 	        }
@@ -25206,7 +25205,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.state.errorText);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'container' },

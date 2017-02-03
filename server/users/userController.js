@@ -44,7 +44,6 @@ module.exports = {
           });
         //if the user already exists...
         } else {
-          console.log('Account already exists');
           res.send('Account already exists');
         }
       });
@@ -59,7 +58,6 @@ module.exports = {
     User.findOne({username: username})
       .exec(function(err, userProfile) {
         if (!userProfile) {
-          console.log('userProfile does not exist');
           res.send('User does not exist');
         } else {
           //bcrypt compare
@@ -69,7 +67,6 @@ module.exports = {
               req.session.user = username;
               res.send({redirect: '/#/'});
             } else {
-              console.log('password is incorrect');
               res.send('Password is incorrect');
             }
           });

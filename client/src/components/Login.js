@@ -14,12 +14,10 @@ export default class Login extends React.Component {
 
   updateUsername(text) {
     this.setState({username: text.target.value})
-    console.log('state username', this.state.username)
   }
 
   updatePassword(text) {
     this.setState({password: text.target.value})
-    console.log('state password', this.state.password)
   }
 
   handleSubmit() {
@@ -36,6 +34,7 @@ export default class Login extends React.Component {
         if (typeof data === 'string') {
           localStorage.setItem( 'errorTextLogin', data);
         } else if (typeof data.redirect === 'string') {
+          localStorage.setItem('errorTextLogin', '');
           window.location = data.redirect;
         }
       }
@@ -44,7 +43,6 @@ export default class Login extends React.Component {
   }
 
   render(){
-    console.log(this.state.errorText);
     return (
       <div className="container">
         <div className = "row">
