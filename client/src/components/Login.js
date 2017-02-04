@@ -1,7 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
 
-
 export default class Login extends React.Component {
   constructor () {
     super();
@@ -13,23 +12,23 @@ export default class Login extends React.Component {
   }
 
   updateUsername(text) {
-    this.setState({username: text.target.value})
+    this.setState({username: text.target.value});
   }
 
   updatePassword(text) {
-    this.setState({password: text.target.value})
+    this.setState({password: text.target.value});
   }
 
   handleSubmit() {
     var object = {
       username: this.state.username,
       password: this.state.password
-    }
+    };
     $.ajax({
       type: 'POST',
       url: '/login',
       data: JSON.stringify(object),
-      contentType: "application/json",
+      contentType: 'application/json',
       success: function(data) {
         if (typeof data === 'string') {
           console.log('error message here', data);
@@ -40,11 +39,12 @@ export default class Login extends React.Component {
           window.location = data.redirect;
         }
       }
-    })
-
+    });
+    //record the username on localstorage
+    localStorage.setItem('username', this.state.username);
   }
 
-  render(){
+  render() {
     return (
       <div className="container">
         <div className = "row">
@@ -74,6 +74,6 @@ export default class Login extends React.Component {
         </div>
       </div>
     );
-  };
+  }
 }
 

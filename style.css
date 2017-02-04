@@ -1,4 +1,37 @@
+.highscore {
+  color: #f90875;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: #333;
+}
+body {
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+}
+
+.game-profile {
+  margin-top: 5em;
+}
+
+label {
+  color: black;
+  text-shadow: none;
+}
+
+.panel-title {
+  text-shadow: none;
+}
+
 .error {
   display: block;
+  text-shadow: none;
   color: red;
+}
+
+input {
+  color: black;
 }

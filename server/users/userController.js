@@ -27,8 +27,8 @@ module.exports = {
               var newUser = new User({
                 username: username,
                 password: hash,
-                highscoreMem: 0,
-                highscoreScram: 0,
+                highscoreMem: null,
+                highscoreScram: null,
                 memScores: [],
                 scramScores: []
               });
@@ -37,13 +37,20 @@ module.exports = {
                   console.log('SAVE ERROR', err);
                 }
                 console.log('user saved here', user);
-                req.session.user = username;
-                res.send({redirect: '/#/'});
+                req.session.regenerate(function(err) {
+                  if (err) {
+                    console.log('session err', err);
+                  }
+                  req.session.user = username;
+                  res.send({redirect: '/#/'});
+                });
               });
             }
           });
         //if the user already exists...
         } else {
+          console.log('user already exists');
+          //BUG: this line does not get displayed on page
           res.send('Account already exists');
         }
       });
@@ -64,8 +71,14 @@ module.exports = {
           bcrypt.compare(password, userProfile.password, function(err, match) {
             if (match) {
               console.log('passwords match');
-              req.session.user = username;
-              res.send({redirect: '/#/'});
+              req.session.regenerate(function(err) {
+                if (err) {
+                  console.log('session err', err);
+                }
+                console.log('req.session.user', req.session.user);
+                req.session.user = username;
+                res.send({redirect: '/#/'});
+              });
             } else {
               res.send('Password is incorrect');
             }
@@ -73,7 +86,6 @@ module.exports = {
         }
       });
   },
-
   postScore: function(req, res, next) {
     if (req.body.username) {
       var username = req.body.username;
@@ -124,14 +136,13 @@ module.exports = {
           console.log('error in fetching user');
           res.send(err);
         } else {
-          console.log('error in fetching user');
           var userObject = {
             username: user.username,
-            highscoreMem: user.memoryHigh,
-            highscoreScram: user.scrambleHigh,
+            highScoreMem: user.memoryHigh,
+            highScoreScram: user.scrambleHigh,
             memScores: user.memoryArray,
             scramScores: user.scrambleArray
-          }
+          };
           res.send(userObject);
         }
       });
