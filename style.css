@@ -16,6 +16,15 @@ body {
 .game-profile {
   margin-top: 5em;
 }
+
+label {
+  color: black;
+  text-shadow: none;
+}
+
+.panel-title {
+  text-shadow: none;
+}
 /* Extra markup and styles for table-esque vertical and horizontal centering */
 
 
