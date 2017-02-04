@@ -42,31 +42,6 @@ export class Profile extends React.Component {
         });
       }
     });
-    console.log(localStorage.username);
-    //assume we get the user info from the GET
-    var userInfo = {
-      username: 'cloud',
-      highScoreMem: 100,
-      highScoreScram: 101,
-      memScores: [100, 200],
-      scramScores: [101, 202, 303, 404, 505, 606, 707]
-    };
-
-    // var gamesPlayed = ()=>{
-    //   var games =[];
-    //   if (userInfo.memScores.length !== 0) {
-    //     games.push('');
-    //   }
-
-    // };
-    // this.setState({
-    //       username: userInfo.username,
-    //       highScoreMem: userInfo.highScoreMem,
-    //       highScoreScram: userInfo.highScoreScram,
-    //       memScores: userInfo.memScores,
-    //       scramScores: userInfo.scramScores
-    //     });
-
   }
 
 
