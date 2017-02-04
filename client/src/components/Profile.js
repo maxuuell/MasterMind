@@ -39,7 +39,7 @@ export class Profile extends React.Component {
       highScoreMem: 100,
       highScoreScram: 101,
       memScores: [100, 200],
-      scramScores: [101]
+      scramScores: [101, 202, 303, 404, 505, 606, 707]
     };
 
     // var gamesPlayed = ()=>{
@@ -63,7 +63,7 @@ export class Profile extends React.Component {
   scoreDisplay () {
     //---- Element for displaying one game ----
     var OneGameScoreDisplay = ({gameType, score, scoreArr})=>(
-      <div>
+      <div className="game-profile">
         <h2 className="text-center">Highest {gameType} Game Score: <span className="highscore">{score}</span></h2>
 
         <div className="table-responsive">
@@ -95,27 +95,8 @@ export class Profile extends React.Component {
       <td>{value}</td>
     );
 
-    var OneGameScoreArrayDisplay = ({score, ind})=>{
-      console.log('Inside GameArray Display score:', score, 'ind:',ind);
-      return(
-        <div className="table-responsive">
-          <table className="table">
-            <tbody>
-              <tr>
-                <th>#</th>
-                <td>{ind}</td>
-              </tr>
-              <tr>
-                <th>Score</th>
-                <td>{score}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      );
-    };
-    //------------------------------------
-    //---- Logics for displaying game elem--
+
+    //---- Logics for displaying game elem -----------------------
     //--- Potentially refactor for the games to reside in one array for easy data manipulation
     let gameDisplay = [];
     if (this.state.memScores.length !== 0) {
@@ -125,16 +106,10 @@ export class Profile extends React.Component {
     if (this.state.scramScores.length !== 0) {
       gameDisplay.push(<OneGameScoreDisplay gameType='Scramble' score={this.state.highScoreScram} scoreArr={this.state.scramScores} key='Scramble' />);
     }
-
+    //----- Return the completed score element -------
     return (
       <div>
         {gameDisplay}
-        {this.state.memScores.map((score, ind)=>{
-          console.log('score:', score.toString(), 'ind:', ind);
-
-          return <OneGameScoreArrayDisplay score={score} ind={ind} key={ind.toString()} />;
-        })}
-
       </div>
     );
   }
@@ -148,7 +123,6 @@ export class Profile extends React.Component {
     );
     //--------------------------------------------
 
-    {console.log('inside displayProfile',this.state.memScores.length);}
     //the logics to decide what elements to display
     if (this.state.memScores.length === 0 && this.state.memScores.length === 0) {
       profileElem = (NoScoreDisplay);
@@ -159,7 +133,6 @@ export class Profile extends React.Component {
   }
 
   render() {
-    console.log('memScores',this.state.memScores);
     var name = this.state.username.toUpperCase() + "'s";
     return (
       <div>
