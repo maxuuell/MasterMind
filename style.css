@@ -31,3 +31,7 @@ label {
   text-shadow: none;
   color: red;
 }
+
+input {
+  color: black;
+}

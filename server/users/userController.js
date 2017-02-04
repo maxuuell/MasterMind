@@ -75,6 +75,7 @@ module.exports = {
                 if (err) {
                   console.log('session err', err);
                 }
+                console.log('req.session.user', req.session.user);
                 req.session.user = username;
                 res.send({redirect: '/#/'});
               });
