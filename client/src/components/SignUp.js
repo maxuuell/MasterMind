@@ -29,6 +29,7 @@ export default class SignUp extends React.Component {
 
   handleSubmit() {
     if (this.state.username.length < 6) {
+      console.log('username not long enough');
       localStorage.setItem( 'errorText', 'Please enter a username with at least 6 characters');
       this.setState({errorText: localStorage.errorText});
     } else if (this.state.password !== this.state.confirmPassword) {
