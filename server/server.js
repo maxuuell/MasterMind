@@ -66,7 +66,7 @@ app.get('/leaderboard', userController.getAll);
 app.post('/signup', userController.signup);
 app.post('/login', userController.login);
 app.post('/scores', userController.postScore);
-
+app.post('/logout', userController.logout);
 
 
 app.listen(port, function () {

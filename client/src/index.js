@@ -7,6 +7,7 @@ import SignUp from './components/SignUp';
 import Homepage from './components/Homepage';
 import GameMemory from './components/GameMemory';
 import LogIn from './components/Login';
+import LogOut from './components/LogOut';
 import {Leaderboard} from './components/Leaderboard';
 import {Profile} from './components/Profile';
 import GameScramble from './components/GameScramble';
@@ -23,6 +24,7 @@ render(
       <Route path="profile" component={Profile}/>
       <Route path="scramblegame" component={GameScramble}/>
       <Route path="login" component={LogIn} />
+      <Route path="logout" component={LogOut} />
       <Route path="signup" component={SignUp}/>
     </Route>
   </Router>

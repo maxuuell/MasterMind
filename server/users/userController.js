@@ -90,6 +90,19 @@ module.exports = {
         }
       });
   },
+  logout: function(req, res, next) {
+    console.log('A logout was initiated.');
+    if(req.session.user) {
+      req.session.destroy(function(err) {
+        if(err) {
+          throw err;
+        }
+        res.send({redirect: '/#/'});
+      });
+    } else {
+      console.log('There is no user logged in.');
+    }
+  },
   postScore: function(req, res, next) {
     if (req.body.username) {
       var username = req.body.username;
