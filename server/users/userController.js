@@ -39,7 +39,7 @@ module.exports = {
                 console.log('user saved here', user);
                 req.session.regenerate(function(err) {
                   if (err) {
-                    console.log('session err',err);
+                    console.log('session err', err);
                   }
                   req.session.user = username;
                   res.send({redirect: '/#/'});
@@ -73,7 +73,7 @@ module.exports = {
               console.log('passwords match');
               req.session.regenerate(function(err) {
                 if (err) {
-                  console.log('session err',err);
+                  console.log('session err', err);
                 }
                 req.session.user = username;
                 res.send({redirect: '/#/'});
@@ -127,7 +127,6 @@ module.exports = {
     });
   },
   getUser: function(req, res, next) {
-    console.log('req.session ',req.session);
     if (!req.session.user) {
       res.send({redirect: '/#/login'});
     } else {

@@ -5,11 +5,11 @@ export class Profile extends React.Component {
   constructor() {
     super();
     this.state = {
-      username: "",
+      username: '',
       highScoreMem: null,
       highScoreScram: null,
-      memScores:[],
-      scramScores:[]
+      memScores: [],
+      scramScores: []
     };
   }
 
@@ -29,7 +29,7 @@ export class Profile extends React.Component {
       success: function(data) {
         console.log(data);
         if (typeof data.redirect === 'string') {
-          console.log("redirection from signup!");
+          console.log('redirection from signup!');
           window.location = data.redirect;
         }
         //retrieve data and setState
