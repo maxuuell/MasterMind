@@ -29,7 +29,8 @@ export class Profile extends React.Component {
       success: function(data) {
         console.log(data);
         if (typeof data.redirect === 'string') {
-          console.log('redirection from signup!');
+          console.log('redirect to login!');
+          localStorage.username = null;
           window.location = data.redirect;
         }
         //retrieve data and setState
@@ -104,12 +105,16 @@ export class Profile extends React.Component {
     //-------constructing profile elements -------
     let profileElem;
     const NoScoreDisplay = (
-      <h2 className="text-center">No Game score to display</h2>
+      <h2 className="text-center">No Game Score</h2>
     );
     //--------------------------------------------
 
     //the logics to decide what elements to display
-    if (this.state.memScores.length === 0 && this.state.memScores.length === 0) {
+    //localStorage only stores strings
+    //do a usernmae check to avoid going into the next if statement causing error
+    if (localStorage.username === 'null') {
+      return;
+    } else if (this.state.memScores.length === 0 && this.state.memScores.length === 0) {
       profileElem = (NoScoreDisplay);
     } else {
       profileElem = ( this.scoreDisplay());
@@ -118,10 +123,11 @@ export class Profile extends React.Component {
   }
 
   render() {
-    var name = localStorage.username.toUpperCase() + "'s";
+    var name = (localStorage.username) ? localStorage.username.toUpperCase() + "'s Profile" : '';
+
     return (
       <div>
-        <h1 className="text-center">{name} Profile</h1>
+        <h1 className="text-center">{name}</h1>
             {this.displayProfile()}
       </div>
     );

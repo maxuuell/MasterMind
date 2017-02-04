@@ -3,7 +3,9 @@ var bodyParser = require('body-parser');
 var bcrypt = require('bcrypt-nodejs');
 var Promise = require('bluebird');
 
-
+var mongoose = require('mongoose');
+//to remove the mongoose Promise deprecated warning
+mongoose.Promise = global.Promise;
 
 
 module.exports = {
@@ -41,6 +43,7 @@ module.exports = {
                   if (err) {
                     console.log('session err', err);
                   }
+                  console.log('req.session.user', username);
                   req.session.user = username;
                   res.send({redirect: '/#/'});
                 });
@@ -75,7 +78,8 @@ module.exports = {
                 if (err) {
                   console.log('session err', err);
                 }
-                console.log('req.session.user', req.session.user);
+                //If this console.log is removed, Profile redirection will fail
+                console.log('req.session.user', username);
                 req.session.user = username;
                 res.send({redirect: '/#/'});
               });
@@ -136,14 +140,23 @@ module.exports = {
           console.log('error in fetching user');
           res.send(err);
         } else {
-          var userObject = {
-            username: user.username,
-            highScoreMem: user.memoryHigh,
-            highScoreScram: user.scrambleHigh,
-            memScores: user.memoryArray,
-            scramScores: user.scrambleArray
-          };
-          res.send(userObject);
+          console.log('null user fetched', user, typeof user);
+          //to get around the Profile display bug when the session is not cleared and another invalid user tries loggin in
+          if (user === null) {
+            console.log('user is null');
+            res.send({redirect: '/#/login'});
+          } else {
+            console.log('dunt come here');
+            var userObject = {
+              username: user.username,
+              highScoreMem: user.memoryHigh,
+              highScoreScram: user.scrambleHigh,
+              memScores: user.memoryArray,
+              scramScores: user.scrambleArray
+            };
+            res.send(userObject);
+
+          }
         }
       });
     }

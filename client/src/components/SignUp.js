@@ -57,6 +57,8 @@ export default class SignUp extends React.Component {
           }
         }
       });
+      //record the username on localstorage
+      localStorage.setItem('username', this.state.username);
     }
   }
 

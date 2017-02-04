@@ -42,6 +42,7 @@ export default class Login extends React.Component {
     });
     //record the username on localstorage
     localStorage.setItem('username', this.state.username);
+    console.log('localStorage username', localStorage.username);
   }
 
   render() {
