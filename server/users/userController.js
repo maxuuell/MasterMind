@@ -124,6 +124,7 @@ module.exports = {
           console.log('error in fetching user');
           res.send(err);
         } else {
+          console.log('error in fetching user');
           var userObject = {
             username: user.username,
             highscoreMem: user.memoryHigh,

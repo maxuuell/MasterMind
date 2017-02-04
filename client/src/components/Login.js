@@ -32,8 +32,10 @@ export default class Login extends React.Component {
       contentType: "application/json",
       success: function(data) {
         if (typeof data === 'string') {
+          console.log('error message here', data);
           localStorage.setItem( 'errorTextLogin', data);
         } else if (typeof data.redirect === 'string') {
+          console.log('redirection here');
           localStorage.setItem('errorTextLogin', '');
           window.location = data.redirect;
         }
