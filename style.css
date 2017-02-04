@@ -42,5 +42,6 @@ label {
 }*/
 .error {
   display: block;
+  text-shadow: none;
   color: red;
 }

@@ -13,9 +13,7 @@ import GameScramble from './components/GameScramble';
 
 const app = document.getElementById('app');
 
-console.log('GameMemory is index js asdfasdf ', typeof GameMemory);
-console.log('GameScramble is index js ', typeof GameScramble);
-console.log('hello');
+
 render(
   <Router history={hashHistory}>
     <Route path="/" component = {App}>
@@ -24,7 +22,7 @@ render(
       <Route path="leaderboard" component={Leaderboard}/>
       <Route path="profile" component={Profile}/>
       <Route path="scramblegame" component={GameScramble}/>
-      <Route path="login" component={LogIn}/>
+      <Route path="login" component={LogIn} />
       <Route path="signup" component={SignUp}/>
     </Route>
   </Router>

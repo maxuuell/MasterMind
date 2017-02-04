@@ -49,7 +49,7 @@ export default class SignUp extends React.Component {
         contentType: 'application/json',
         success: function(data) {
           if (typeof data.redirect === 'string') {
-            console.log("redirection from signup!");
+            console.log('redirection from signup!');
             console.log('redirection here');
             localStorage.setItem('errorText', '');
             window.location = data.redirect;
@@ -59,7 +59,7 @@ export default class SignUp extends React.Component {
     }
   }
 
-  render(){
+  render() {
     return (
       <div className="container">
         <div className = "row">

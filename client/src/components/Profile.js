@@ -20,19 +20,29 @@ export class Profile extends React.Component {
   getUserInfo() {
     //hard code a username for now - can get the username from local.storage (or state, for persistence to work)
     //send a Get request to get the user info
-    // $.ajax({
-    //   method: 'GET',
-    //   url: '/cloud',
-    //   contentType: "application/json",
-    //   dataType: 'json',
-    //   success: function(data) {
-    //     if (typeof data.redirect === 'string') {
-    //       console.log("redirection from signup!");
-    //       window.location = data.redirect;
-    //     }
-    //   }
-    // });
-
+    var context = this;
+    $.ajax({
+      method: 'GET',
+      url: '/' + localStorage.username,
+      contentType: 'application/json',
+      dataType: 'json',
+      success: function(data) {
+        console.log(data);
+        if (typeof data.redirect === 'string') {
+          console.log("redirection from signup!");
+          window.location = data.redirect;
+        }
+        //retrieve data and setState
+        context.setState({
+          username: data.username,
+          highScoreMem: data.highScoreMem,
+          highScoreScram: data.highScoreScram,
+          memScores: data.memScores,
+          scramScores: data.scramScores
+        });
+      }
+    });
+    console.log(localStorage.username);
     //assume we get the user info from the GET
     var userInfo = {
       username: 'cloud',
@@ -49,14 +59,14 @@ export class Profile extends React.Component {
     //   }
 
     // };
+    // this.setState({
+    //       username: userInfo.username,
+    //       highScoreMem: userInfo.highScoreMem,
+    //       highScoreScram: userInfo.highScoreScram,
+    //       memScores: userInfo.memScores,
+    //       scramScores: userInfo.scramScores
+    //     });
 
-    this.setState({
-      username: userInfo.username,
-      highScoreMem: userInfo.highScoreMem,
-      highScoreScram: userInfo.highScoreScram,
-      memScores: userInfo.memScores,
-      scramScores: userInfo.scramScores
-    });
   }
 
 
@@ -133,7 +143,7 @@ export class Profile extends React.Component {
   }
 
   render() {
-    var name = this.state.username.toUpperCase() + "'s";
+    var name = localStorage.username.toUpperCase() + "'s";
     return (
       <div>
         <h1 className="text-center">{name} Profile</h1>
