@@ -7,7 +7,8 @@ export default class SignUp extends React.Component {
     this.state = {
       username: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      errorText: localStorage.errorText
     };
   }
 
@@ -27,19 +28,30 @@ export default class SignUp extends React.Component {
   }
 
   handleSubmit() {
-    if (this.state.password === this.state.confirmPassword) {
-      var data = {
+    if (this.state.username.length < 6) {
+      localStorage.setItem( 'errorText', 'Please enter a username with at least 6 characters');
+      this.setState({errorText: localStorage.errorText});
+    } else if (this.state.password !== this.state.confirmPassword) {
+      localStorage.setItem( 'errorText', 'Passwords do not match');
+      this.setState({errorText: localStorage.errorText});
+    } else if (this.state.password.length < 6) {
+      localStorage.setItem( 'errorText', 'Please enter a password with at least 6 characters');
+      this.setState({errorText: localStorage.errorText});
+    } else {
+      var object = {
         username: this.state.username,
         password: this.state.password
       };
       $.ajax({
         type: 'POST',
         url: '/signup',
-        data: JSON.stringify(data),
-        contentType: "application/json",
+        data: JSON.stringify(object),
+        contentType: 'application/json',
         success: function(data) {
           if (typeof data.redirect === 'string') {
             console.log("redirection from signup!");
+            console.log('redirection here');
+            localStorage.setItem('errorText', '');
             window.location = data.redirect;
           }
         }
@@ -59,14 +71,15 @@ export default class SignUp extends React.Component {
               <div className="panel-body">
                 <form role = "form">
                   <div className="form-group">
+                  <div className="error" dangerouslySetInnerHTML={{__html: this.state.errorText}}/>
                     <label>User Name</label>
-                    <input type="text" name="username" className="form-control" placeholder="User Name" value={this.state.username}
+                    <input type="text" name="username" className="form-control" placeholder="Please enter at least 6 characters" value={this.state.username}
                       onChange={this.updateUsername.bind(this)}
                     />
                   </div>
                   <div className="form-group">
                     <label>Password</label>
-                    <input type="password" name="password" className="form-control" placeholder="Password" value={this.state.password}
+                    <input type="password" name="password" className="form-control" placeholder="Please enter at least 6 characters" value={this.state.password}
                       onChange={this.updatePassword.bind(this)}/>
                   </div>
                   <div className="form-group">

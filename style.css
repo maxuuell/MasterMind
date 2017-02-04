@@ -31,3 +31,7 @@ body {
 /*li a:hover {
     background-color: white;
 }*/
+.error {
+  display: block;
+  color: red;
+}
