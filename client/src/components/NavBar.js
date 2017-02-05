@@ -11,6 +11,7 @@ export const NavBar = () => {
       type: 'POST',
       url: '/logout',
       success: function(data) {
+        window.location = data.redirect;
         console.log('Post for logout completed successfully.')
       }
     });
