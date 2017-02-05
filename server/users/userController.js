@@ -147,6 +147,7 @@ module.exports = {
   },
   getUser: function(req, res, next) {
     if (!req.session.user) {
+      console.log('req.session.user in getUser', req.session.user);
       res.send({redirect: '/#/login'});
     } else {
       User.findOne({username: req.params.username}).exec(function(err, user) {
@@ -160,7 +161,7 @@ module.exports = {
             console.log('user is null');
             res.send({redirect: '/#/login'});
           } else {
-            console.log('dunt come here');
+            console.log('fetched user', user);
             var userObject = {
               username: user.username,
               highScoreMem: user.memoryHigh,

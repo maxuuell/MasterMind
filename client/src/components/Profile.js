@@ -30,7 +30,8 @@ export class Profile extends React.Component {
         console.log(data);
         if (typeof data.redirect === 'string') {
           console.log('redirect to login!');
-          localStorage.username = null;
+          // localStorage.username = null;
+          localStorage.removeItem('username');
           window.location = data.redirect;
         }
         //retrieve data and setState
@@ -112,7 +113,8 @@ export class Profile extends React.Component {
     //the logics to decide what elements to display
     //localStorage only stores strings
     //do a usernmae check to avoid going into the next if statement causing error
-    if (localStorage.username === 'null') {
+    if (!localStorage.username) {
+      console.log('no localStorage username');
       return;
     } else if (this.state.memScores.length === 0 && this.state.memScores.length === 0) {
       profileElem = (NoScoreDisplay);
