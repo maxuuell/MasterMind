@@ -53,7 +53,6 @@ module.exports = {
         //if the user already exists...
         } else {
           console.log('user already exists');
-          //BUG: this line does not get displayed on page
           res.send('Account already exists');
         }
       });
