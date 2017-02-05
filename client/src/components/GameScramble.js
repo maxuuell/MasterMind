@@ -41,21 +41,24 @@ export default class GameScramble extends React.Component {
       this.setState({shuffled: null});
       text.target.value = '';
     }
+
   }
 
   decrementTimer() {
     this.setState({timeLeft: this.state.timeLeft - 1});
     if (this.state.timeLeft <= 0) {
-      return;
+      clearInterval(this.interval);
     }
-    setTimeout(this.decrementTimer.bind(this), 1000);
   }
 
 
   componentDidMount() {
-    this.decrementTimer();
+    this.interval = setInterval(this.decrementTimer.bind(this), 1000);
   }
 
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
 
   render() {
     if (this.state.word) {
