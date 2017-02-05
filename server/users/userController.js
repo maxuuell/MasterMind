@@ -101,22 +101,26 @@ module.exports = {
             console.log('error when posting score here');
             res.status(500).send(err);
           } else {
-            //push the score into the gametype array
-            userProfile[gametype + 'Array'].push(score);
-            console.log('array is ', userProfile[gametype + 'Array']);
-            //here we compare the request score to the saved highscore
-            if (score > userProfile[gametype + 'High'] || !userProfile[gametype + 'High']) {
-              userProfile[gametype + 'High'] = score;
-              console.log('new high score recorded');
-            }
-            userProfile.save(function(err, user) {
-              if (err) {
-                console.log('Error when posting score');
-                res.status(500).send(err);
-              } else {
-                res.status(201).send('posted score');
+            console.log('userProfile', userProfile);
+            // save score when an userProfile is found
+            if (userProfile) {
+              //push the score into the gametype array
+              userProfile[gametype + 'Array'].push(score);
+              console.log('array is ', userProfile[gametype + 'Array']);
+              //here we compare the request score to the saved highscore
+              if (score > userProfile[gametype + 'High'] || !userProfile[gametype + 'High']) {
+                userProfile[gametype + 'High'] = score;
+                console.log('new high score recorded');
               }
-            });
+              userProfile.save(function(err, user) {
+                if (err) {
+                  console.log('Error when posting score');
+                  res.status(500).send(err);
+                } else {
+                  res.status(201).send('posted score');
+                }
+              });
+            }
           }
         });
     }
