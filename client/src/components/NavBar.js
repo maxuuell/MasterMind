@@ -47,7 +47,7 @@ export const NavBar = () => {
           </ul>
           <ul className="nav navbar-nav navbar-right">
             <li><Link to="/login">Login</Link></li>
-            <li onClick={handleLogout}><Link>Log-Out</Link></li>
+            <li onClick={handleLogout}><Link>Logout</Link></li>
             <li><Link to="/signup">Signup</Link></li>
           </ul>
         </div>
