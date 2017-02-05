@@ -115,22 +115,26 @@ module.exports = {
             console.log('error when posting score here');
             res.status(500).send(err);
           } else {
-            //push the score into the gametype array
-            userProfile[gametype + 'Array'].push(score);
-            console.log('array is ', userProfile[gametype + 'Array']);
-            //here we compare the request score to the saved highscore
-            if (score > userProfile[gametype + 'High'] || !userProfile[gametype + 'High']) {
-              userProfile[gametype + 'High'] = score;
-              console.log('new high score recorded');
-            }
-            userProfile.save(function(err, user) {
-              if (err) {
-                console.log('Error when posting score');
-                res.status(500).send(err);
-              } else {
-                res.status(201).send('posted score');
+            console.log('userProfile', userProfile);
+            // save score when an userProfile is found
+            if (userProfile) {
+              //push the score into the gametype array
+              userProfile[gametype + 'Array'].push(score);
+              console.log('array is ', userProfile[gametype + 'Array']);
+              //here we compare the request score to the saved highscore
+              if (score > userProfile[gametype + 'High'] || !userProfile[gametype + 'High']) {
+                userProfile[gametype + 'High'] = score;
+                console.log('new high score recorded');
               }
-            });
+              userProfile.save(function(err, user) {
+                if (err) {
+                  console.log('Error when posting score');
+                  res.status(500).send(err);
+                } else {
+                  res.status(201).send('posted score');
+                }
+              });
+            }
           }
         });
     }
@@ -147,6 +151,7 @@ module.exports = {
   },
   getUser: function(req, res, next) {
     if (!req.session.user) {
+      console.log('req.session.user in getUser', req.session.user);
       res.send({redirect: '/#/login'});
     } else {
       User.findOne({username: req.params.username}).exec(function(err, user) {
@@ -160,7 +165,7 @@ module.exports = {
             console.log('user is null');
             res.send({redirect: '/#/login'});
           } else {
-            console.log('dunt come here');
+            console.log('fetched user', user);
             var userObject = {
               username: user.username,
               highScoreMem: user.memoryHigh,
