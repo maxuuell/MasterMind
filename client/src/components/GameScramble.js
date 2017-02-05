@@ -43,13 +43,12 @@ export default class GameScramble extends React.Component {
       },
       contentType: 'application/json',
       success: function(data) {
-        //console.log('data from api', data);
-        word.word = data.word.toUpperCase();
         //sometimes API returns result without definition, handle that
         if (!data.results) {
           console.log('word without definiton! try again');
           context.getWord(callback);
         } else {
+          word.word = data.word.toUpperCase();
           word.definition = data.results[0].definition;
           callback(word);
         }
@@ -93,7 +92,6 @@ export default class GameScramble extends React.Component {
       this.setState({shuffled: null});
       text.target.value = '';
     }
-    //setState on word by fetching a random word
   }
 
   decrementTimer() {
