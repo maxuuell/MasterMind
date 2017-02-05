@@ -19,7 +19,7 @@ export default class GameScramble extends React.Component {
       definition: null,
       shuffled: null,
       score: 0,
-      timeLeft: 18
+      timeLeft: 60
     };
     //send a GET for random word
     var context = this;
