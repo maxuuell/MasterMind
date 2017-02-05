@@ -22,7 +22,7 @@ render(
       <Route path="leaderboard" component={Leaderboard}/>
       <Route path="profile" component={Profile}/>
       <Route path="scramblegame" component={GameScramble}/>
-      <Route path="login" component={LogIn} />
+      <Route path="login" component={LogIn}/>
       <Route path="signup" component={SignUp}/>
     </Route>
   </Router>
