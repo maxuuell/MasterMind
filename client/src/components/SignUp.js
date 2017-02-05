@@ -49,10 +49,12 @@ export default class SignUp extends React.Component {
         data: JSON.stringify(object),
         contentType: 'application/json',
         success: function(data) {
+          if (typeof data === 'string') {
+            localStorage.setItem('errorText', data);
+          }
           if (typeof data.redirect === 'string') {
             console.log('redirection from signup!');
-            console.log('redirection here');
-            localStorage.setItem('errorText', '');
+            localStorage.removeItem('errorText');
             window.location = data.redirect;
           }
         }
@@ -60,6 +62,10 @@ export default class SignUp extends React.Component {
       //record the username on localstorage
       localStorage.setItem('username', this.state.username);
     }
+  }
+
+  componentWillUnmount() {
+    localStorage.removeItem('errorText');
   }
 
   render() {
