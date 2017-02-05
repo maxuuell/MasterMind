@@ -4,6 +4,21 @@ import {Link} from 'react-router';
 
 
 export const NavBar = () => {
+
+  var handleLogout = () => {
+    console.log('hangleLogout has been invoked.');
+    $.ajax({
+      type: 'POST',
+      url: '/logout',
+      success: function(data) {
+        console.log('Post for logout completed successfully.')
+      }
+    });
+    //removes the username from localstorage
+    localStorage.removeItem('username');
+    console.log('localStorage username', localStorage.username);
+  }
+
   return (
     <nav className="navbar navbar-inverse">
       <div className="container-fluid">
@@ -31,7 +46,7 @@ export const NavBar = () => {
           </ul>
           <ul className="nav navbar-nav navbar-right">
             <li><Link to="/login">Login</Link></li>
-            <li><Link to="/logout">Log-Out</Link></li>
+            <li onClick={handleLogout}><Link>Log-Out</Link></li>
             <li><Link to="/signup">Signup</Link></li>
           </ul>
         </div>

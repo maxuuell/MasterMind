@@ -98,6 +98,7 @@ module.exports = {
           throw err;
         }
         res.send({redirect: '/#/'});
+        console.log('Logout completed successfully.');
       });
     } else {
       console.log('There is no user logged in.');
