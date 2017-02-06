@@ -72,26 +72,38 @@ export default class GameScramble extends React.Component {
     return result;
   }
 
+  changeWord(context) {
+    if (context.wordData.length > 0) {
+      var thisWord = context.wordData[0].word;
+      this.setState({
+        word: thisWord,
+        definition: context.wordData[0].definition
+      });
+      context.wordData.shift();
+    } else {
+      var thisWord = data[this.state.position];
+      this.setState({position: this.state.position + 1});
+      this.setState({word: thisWord});
+    }
+    this.setState({shuffled: this.shuffle(thisWord)});
+
+  }
+
   changeInput(text) {
     var context = this;
+    console.log('the word in change input is ', this.state.word);
     this.setState({userInput: text.target.value});
     if (text.target.value.toUpperCase() === this.state.word) {
-      if (context.wordData.length > 0) {
-        console.log('context.wordData[0].word', context.wordData[0].word);
-        this.setState({
-          word: context.wordData[0].word,
-          definition: context.wordData[0].definition
-        });
-        context.wordData.shift();
-      } else {
-        this.setState({position: this.state.position + 1});
-        this.setState({word: data[this.state.position]});
-      }
+      this.changeWord(context);
       this.setState({userInput: ''});
       this.setState({score: this.state.score + 1});
-      this.setState({shuffled: null});
       text.target.value = '';
     }
+  }
+
+  skipWord() {
+    this.setState({score: this.state.score - 1});
+    this.changeWord(this);
   }
 
   decrementTimer() {
@@ -104,6 +116,7 @@ export default class GameScramble extends React.Component {
 
   componentDidMount() {
     this.interval = setInterval(this.decrementTimer.bind(this), 1000);
+    this.setState({shuffled: this.shuffle(this.state.word)});
   }
 
   componentWillUnmount() {
@@ -136,16 +149,16 @@ export default class GameScramble extends React.Component {
   }
 
   render() {
-    if (this.state.word) {
-      this.state.shuffled = this.state.shuffled || this.shuffle(this.state.word);
-    }
+    // if (this.state.word) {
+    //   this.state.shuffled = this.state.shuffled || this.shuffle(this.state.word);
+    // }
     return (
       <div>
         <Timer time={this.state.timeLeft} />
         <h1> {this.state.shuffled} </h1>
         <h4> {this.state.definition} </h4>
-        <h2> Sramble Game </h2>
         <input type="text" placeholder="Alert this" onChange={this.changeInput.bind(this)}/>
+        <button className="skipButton" onClick={this.skipWord.bind(this)}>Skip</button>
         <Score score={this.state.score}/>
       </div>
     );
