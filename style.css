@@ -35,3 +35,7 @@ label {
 input {
   color: black;
 }
+
+.skipButton {
+  margin-left: 3px;
+}

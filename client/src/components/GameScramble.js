@@ -3,7 +3,7 @@ import { data }  from './Data.js';
 import { Timer } from './Timer.js';
 import { Score } from './Score.js';
 import $ from 'jquery';
-import {X_MASHAPE_KEY} from '../config.js';
+
 
 const NUM_WORDS = 20;
 
@@ -38,7 +38,7 @@ export default class GameScramble extends React.Component {
       type: 'GET',
       url: 'https://wordsapiv1.p.mashape.com/words/?random=true',
       headers: {
-        'X-Mashape-Key': X_MASHAPE_KEY,
+        'X-Mashape-Key': process.env.X_MASHAPE_KEY,
         Accept: 'application/json'
       },
       contentType: 'application/json',
@@ -75,6 +75,7 @@ export default class GameScramble extends React.Component {
   changeWord(context) {
     if (context.wordData.length > 0) {
       var thisWord = context.wordData[0].word;
+      console.log(thisWord);
       this.setState({
         word: thisWord,
         definition: context.wordData[0].definition
@@ -84,6 +85,7 @@ export default class GameScramble extends React.Component {
       var thisWord = data[this.state.position];
       this.setState({position: this.state.position + 1});
       this.setState({word: thisWord});
+      this.setState({definition: ''});
     }
     this.setState({shuffled: this.shuffle(thisWord)});
 
@@ -91,7 +93,7 @@ export default class GameScramble extends React.Component {
 
   changeInput(text) {
     var context = this;
-    console.log('the word in change input is ', this.state.word);
+    //console.log('the word in change input is ', this.state.word);
     this.setState({userInput: text.target.value});
     if (text.target.value.toUpperCase() === this.state.word) {
       this.changeWord(context);
@@ -157,8 +159,8 @@ export default class GameScramble extends React.Component {
         <Timer time={this.state.timeLeft} />
         <h1> {this.state.shuffled} </h1>
         <h4> {this.state.definition} </h4>
-        <input type="text" placeholder="Alert this" onChange={this.changeInput.bind(this)}/>
-        <button className="skipButton" onClick={this.skipWord.bind(this)}>Skip</button>
+        <input type="text" placeholder="Enter Word" onChange={this.changeInput.bind(this)}/>
+        <button className="btn btn-default skipButton" onClick={this.skipWord.bind(this)}>Skip</button>
         <Score score={this.state.score}/>
       </div>
     );
