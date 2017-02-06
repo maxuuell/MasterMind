@@ -12,7 +12,7 @@ app.use(bodyparser.json());
 app.use(session({
   user: null,
   secret: 'master of my domain',
-  cookie: {maxAge: 60000}
+  cookie: {maxAge: 31536000000}
 }));
 
 //require login
