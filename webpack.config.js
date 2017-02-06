@@ -1,4 +1,5 @@
 const path = require('path');
+var webpack = require('webpack')
 
 module.exports = {
   entry: path.join(__dirname, '/client/src/index.js'),
@@ -18,6 +19,15 @@ module.exports = {
       }
     }],
   },
+
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': Object.keys(process.env).reduce(function(o, k) {
+        o[k] = JSON.stringify(process.env[k]);
+        return o;
+      }, {})
+    })
+  ],
 
   watch: true
 };

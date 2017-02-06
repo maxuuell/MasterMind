@@ -3,9 +3,9 @@ import { data }  from './Data.js';
 import { Timer } from './Timer.js';
 import { Score } from './Score.js';
 import $ from 'jquery';
-import {X_MASHAPE_KEY} from '../config.js';
 
-const NUM_WORDS = 20;
+
+const NUM_WORDS = 2;
 
 export default class GameScramble extends React.Component {
   constructor(props) {
@@ -38,7 +38,7 @@ export default class GameScramble extends React.Component {
       type: 'GET',
       url: 'https://wordsapiv1.p.mashape.com/words/?random=true',
       headers: {
-        'X-Mashape-Key': X_MASHAPE_KEY,
+        'X-Mashape-Key': process.env.X_MASHAPE_KEY,
         Accept: 'application/json'
       },
       contentType: 'application/json',
