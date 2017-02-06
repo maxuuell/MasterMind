@@ -1,1 +1,1 @@
-export var X_MASHAPE_KEY = '';
+export var X_MASHAPE_KEY = 'kgDJagukzvmshdu7fo5uwUZQhxg3p1j0SqEjsnFj25zZCDX1Ag';
