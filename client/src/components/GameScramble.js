@@ -102,7 +102,6 @@ export default class GameScramble extends React.Component {
   }
 
   skipWord() {
-    console.log('hello')
     this.setState({score: this.state.score - 1});
     this.changeWord(this);
   }
