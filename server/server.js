@@ -71,4 +71,5 @@ app.post('/logout', userController.logout);
 
 app.listen(port, function () {
   console.log('Example app listening on port', port);
+  console.log('process.env.NODE_ENV', process.env.NODE_ENV);
 });

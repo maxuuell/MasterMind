@@ -35,11 +35,12 @@ export default class GameScramble extends React.Component {
   getWord(callback) {
     var word = {};
     var context = this;
+    var THE_X_MASHAPE_KEY = process.env.X_MASHAPE_KEY || X_MASHAPE_KEY;
     $.ajax({
       type: 'GET',
       url: 'https://wordsapiv1.p.mashape.com/words/?random=true',
       headers: {
-        'X-Mashape-Key': X_MASHAPE_KEY,
+        'X-Mashape-Key': THE_X_MASHAPE_KEY,
         Accept: 'application/json'
       },
       contentType: 'application/json',
