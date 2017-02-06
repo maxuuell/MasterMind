@@ -3,20 +3,59 @@ import { data }  from './Data.js';
 import { Timer } from './Timer.js';
 import { Score } from './Score.js';
 import $ from 'jquery';
+import {X_MASHAPE_KEY} from '../config.js';
+
+const NUM_WORDS = 20;
 
 export default class GameScramble extends React.Component {
   constructor(props) {
     super(props);
     this.gametype = 'scramble';
+    this.wordData = [];
     this.state = {
       userInput: '',
       position: 1,
       word: data[0],
+      definition: null,
       shuffled: null,
       score: 0,
       timeLeft: 60
     };
+    //send a GET for random word
+    var context = this;
+    for (var i = 0; i < NUM_WORDS; i++) {
+      this.getWord( function(word) {
+        context.wordData.push(word);
+      });
+    }
   }
+
+  //returns a word and a definition
+  getWord(callback) {
+    var word = {};
+    var context = this;
+    $.ajax({
+      type: 'GET',
+      url: 'https://wordsapiv1.p.mashape.com/words/?random=true',
+      headers: {
+        'X-Mashape-Key': X_MASHAPE_KEY,
+        Accept: 'application/json'
+      },
+      contentType: 'application/json',
+      success: function(data) {
+        //sometimes API returns result without definition, handle that
+        if (!data.results) {
+          console.log('word without definiton! try again');
+          context.getWord(callback);
+        } else {
+          word.word = data.word.toUpperCase();
+          word.definition = data.results[0].definition;
+          callback(word);
+        }
+      }
+    });
+  }
+
   shuffle(string) {
     var characters = string.split('');
     var length = characters.length;
@@ -34,10 +73,20 @@ export default class GameScramble extends React.Component {
   }
 
   changeInput(text) {
+    var context = this;
     this.setState({userInput: text.target.value});
     if (text.target.value.toUpperCase() === this.state.word) {
-      this.setState({position: this.state.position + 1});
-      this.setState({word: data[this.state.position]});
+      if (context.wordData.length > 0) {
+        console.log('context.wordData[0].word', context.wordData[0].word);
+        this.setState({
+          word: context.wordData[0].word,
+          definition: context.wordData[0].definition
+        });
+        context.wordData.shift();
+      } else {
+        this.setState({position: this.state.position + 1});
+        this.setState({word: data[this.state.position]});
+      }
       this.setState({userInput: ''});
       this.setState({score: this.state.score + 1});
       this.setState({shuffled: null});
@@ -94,7 +143,8 @@ export default class GameScramble extends React.Component {
       <div>
         <Timer time={this.state.timeLeft} />
         <h1> {this.state.shuffled} </h1>
-        <h2>Sramble Game here</h2>
+        <h4> {this.state.definition} </h4>
+        <h2> Sramble Game </h2>
         <input type="text" placeholder="Alert this" onChange={this.changeInput.bind(this)}/>
         <Score score={this.state.score}/>
       </div>
