@@ -26,12 +26,16 @@ mongoose.Promise = global.Promise;
 //Mongoose
 // var uri;
 // process.env.PORT ? uri = config.web : uri = config.local;
-mongoose.connect('mongodb://localhost/mastermind');
+var mLabUri = 'mongodb://' + process.env.DBUSER + ':' + process.env.DBPASS + '@ds137749.mlab.com:37749/mastermind';
+var localMongoUri = 'mongodb://localhost/mastermind';
+var MONGO_URI = (process.env.NODE_ENV === 'production')? mLabUri : localMongoUri;
+mongoose.connect(MONGO_URI);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection to mongoose error:'));
 db.once('open', function() {
   console.log('we connected to mongoose!');
+  console.log('mLabUri', mLabUri);
 });
 
 
