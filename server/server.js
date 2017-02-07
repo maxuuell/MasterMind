@@ -28,7 +28,7 @@ mongoose.Promise = global.Promise;
 // process.env.PORT ? uri = config.web : uri = config.local;
 var mLabUri = 'mongodb://' + process.env.DBUSER + ':' + process.env.DBPASS + '@ds137749.mlab.com:37749/mastermind';
 var localMongoUri = 'mongodb://localhost/mastermind';
-var MONGO_URI = (process.env.NODE_ENV === 'production')? mLabUri : localMongoUri;
+var MONGO_URI = (process.env.NODE_ENV === 'production') ? mLabUri : localMongoUri;
 mongoose.connect(MONGO_URI);
 
 var db = mongoose.connection;
@@ -42,7 +42,7 @@ db.once('open', function() {
 //define port
 var port = process.env.PORT || 3000;
 
-var rootPath = path.join(__dirname,'/..');
+var rootPath = path.join(__dirname, '/..');
 var publicPath = path.join(rootPath, '/compiled/public');
 app.use(express.static(path.join(__dirname, '../')));
 
