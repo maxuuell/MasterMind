@@ -12,6 +12,7 @@ export default class GameScramble extends React.Component {
   constructor(props) {
     super(props);
     this.gametype = 'scramble';
+    this.session = [];
     this.wordData = [];
     this.state = {
       userInput: '',
@@ -84,8 +85,15 @@ export default class GameScramble extends React.Component {
       });
       context.wordData.shift();
     } else {
-      var thisWord = data[this.state.position];
-      this.setState({position: this.state.position + 1});
+      var random
+      while (random === undefined) {
+        var possible = Math.floor(Math.random()*data.length);
+        if (context.session.indexOf(possible) === -1){
+          context.session.push(possible);
+          random = possible;
+        }
+      }
+      var thisWord = data[random];
       this.setState({word: thisWord});
       this.setState({definition: ''});
     }
