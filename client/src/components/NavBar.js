@@ -51,7 +51,7 @@ export const Navigation = ({ auth, profile }) => {
                 <LinkContainer to='/leaderboard'>
                   <MenuItem eventKey={4.2}>LeaderBoard</MenuItem>
                 </LinkContainer>
-                <MenuItem onClick={auth.logout()}>Logout</MenuItem>
+                <MenuItem onClick={auth.logout}>Logout</MenuItem>
               </Dropdown.Menu>
             </Dropdown>
           </div>

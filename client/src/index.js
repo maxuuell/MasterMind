@@ -7,7 +7,6 @@ import App from './components/App';
 import SignUp from './components/SignUp';
 import Homepage from './components/Homepage';
 import GameMemory from './components/GameMemory';
-import LogIn from './components/Login';
 import { Leaderboard } from './components/Leaderboard';
 import { Profile } from './components/Profile';
 
@@ -18,7 +17,7 @@ const auth = new AuthService('xkMUjA7Bggf2NQ4W0uZlU4wv1pqd6aDD', 'buzzme.auth0.c
 const requireAuth = (nextState, replace) => {
   if (!auth.loggedIn()) {
     console.log('Nope!')
-    replace({ pathname: '/login' })
+    replace({ pathname: '/' })
   }
 }
 

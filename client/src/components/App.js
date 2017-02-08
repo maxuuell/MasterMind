@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Navigation } from './NavBar';
-import { Login } from './Login';
-import { SignUp } from './SignUp';
 import Homepage from './Homepage';
 
 export default class App extends React.Component {
