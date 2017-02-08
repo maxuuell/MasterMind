@@ -22,6 +22,23 @@ export default class AuthService {
     this.setToken(authResult.idToken)
     // navigate to the home route
     browserHistory.replace('/restricted')
+
+    this.lock.getProfile(authResult.idToken, (error, profile) => {
+      if (error) {
+        console.log('Error loading the Profile', error)
+      } else {
+        this.setProfile(profile)
+      }
+    })
+  }
+
+  setProfile(profile) {
+    localStorage.setItem('profile', JSON.stringify(profile))
+  }
+
+  getProfile() {
+    const profile = localStorage.getItem('profile');
+    return profile ? JSON.parse(localStorage.profile) : null;
   }
 
   login() {
