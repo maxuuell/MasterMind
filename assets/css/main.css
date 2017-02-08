@@ -83,6 +83,9 @@ a:after {
     padding: 0;
 }
 
+canvas {
+	display: inline-block !important;
+}
 
 .navbar {
 	text-transform: uppercase;
