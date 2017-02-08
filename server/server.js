@@ -14,6 +14,8 @@ var app = express();
 
 //middlewares
 app.use(bodyparser.json());
+
+
 // app.use(session({
 //   user: null,
 //   secret: 'master of my domain',
