@@ -6,7 +6,7 @@ import GameScramble from './components/GameScramble';
 import App from './components/App';
 import SignUp from './components/SignUp';
 import Homepage from './components/Homepage';
-import GameMemory from './components/GameMemory';
+import GameMemory from './components/phasergame/GameMemory';
 import { Leaderboard } from './components/Leaderboard';
 import { Profile } from './components/Profile';
 
