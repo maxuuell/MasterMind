@@ -11,7 +11,11 @@ var gamesSchema = new Schema ({
 var usersSchema = new Schema ({
   name: String,
   email: String,
+<<<<<<< HEAD
   games: [gamesSchema]
+=======
+  games: [gamesSchema]  
+>>>>>>> c6d30e6f792381f674bbf5b3ce681341dd552ed5
 });
 
 var Games = mongoose.model("Games", gamesSchema);

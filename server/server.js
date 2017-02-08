@@ -2,7 +2,10 @@ var express = require('express');
 var bodyparser = require('body-parser');
 var mongoose = require('mongoose');
 var db = require("../database/dbconnection.js");
+<<<<<<< HEAD
 var models = require("../database/models.js");
+=======
+
 var path = require('path');
 // var userController = require('./users/userController.js');
 // var session = require('express-session');
@@ -22,8 +25,8 @@ app.use(bodyparser.json());
 //   req.session.user ? res.render('/profile') : res.redirect('/login');
 // };
 
-//to remove the mongoose Promise deprecated warning
-mongoose.Promise = global.Promise;
+// //to remove the mongoose Promise deprecated warning
+// mongoose.Promise = global.Promise;
 
 // //Mongoose
 // // var uri;
@@ -32,6 +35,15 @@ mongoose.Promise = global.Promise;
 // var localMongoUri = 'mongodb://localhost/mastermind';
 // var MONGO_URI = (process.env.NODE_ENV === 'production') ? mLabUri : localMongoUri;
 // mongoose.connect(MONGO_URI);
+
+
+// var db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection to mongoose error:'));
+// db.once('open', function() {
+//   console.log('we connected to mongoose!');
+//   console.log('mLabUri', mLabUri);
+// });
+
 
 
 //define port
@@ -60,6 +72,7 @@ app.get('/scramble', function(req, res) {
 });
 // app.get('/:username', userController.getUser);
 // app.get('/leaderboard', userController.getAll);
+<<<<<<< HEAD
 
 // //post routes
 // app.post('/signup', userController.signup);
@@ -94,6 +107,14 @@ app.post("/user", function (req, res) {
     }
   })
 })
+=======
+
+// //post routes
+// app.post('/signup', userController.signup);
+// app.post('/login', userController.login);
+// app.post('/scores', userController.postScore);
+// app.post('/logout', userController.logout);
+
 
 
 app.listen(port, function () {
