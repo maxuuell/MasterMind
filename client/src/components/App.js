@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navigation } from './NavBar';
+import Navigation from './NavBar';
 import Homepage from './Homepage';
 
 export default class App extends React.Component {
@@ -18,7 +18,7 @@ export default class App extends React.Component {
 
     return (
       <div>
-        <Navigation auth={this.props.route.auth} profile={this.props.route.profile} />
+        <Navigation auth={this.props.route.auth} />
         {children}
       </div>
     );
