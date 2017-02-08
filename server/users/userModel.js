@@ -11,7 +11,7 @@ var gamesSchema = new Schema ({
 var usersSchema = new Schema ({
   name: String,
   email: String,
-  games: [gamesSchema]  
+  games: [gamesSchema]
 });
 
 var Games = mongoose.model("Games", gamesSchema);
