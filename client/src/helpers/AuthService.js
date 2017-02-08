@@ -18,7 +18,6 @@ export default class AuthService {
 
   _doAuthentication(authResult) {
     // Saves the user token
-    console.log('authResult', authResult)
     this.setToken(authResult.idToken)
     // navigate to the home route
     browserHistory.replace('/restricted')
@@ -48,7 +47,6 @@ export default class AuthService {
 
   loggedIn() {
     // Checks if there is a saved token and it's still valid
-    console.log('this', this, 'this.getToken()', this.getToken())
     return !!this.getToken()
   }
 

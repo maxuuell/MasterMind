@@ -17,10 +17,10 @@ export const Navigation = ({ auth, profile }) => {
       <Navbar.Collapse>
         <Nav>
           <LinkContainer to='/profile'>
-            <NavItem eventKey={1} href="#">Profile</NavItem>
+            <NavItem eventKey={1}>Profile</NavItem>
           </LinkContainer>
           <LinkContainer to='/leaderboard'>
-            <NavItem eventKey={1} href="#">Leaderboard</NavItem>
+            <NavItem eventKey={1}>Leaderboard</NavItem>
           </LinkContainer>
           <NavDropdown eventKey={3} title="Games" id="basic-nav-dropdown">
             <LinkContainer to='/scramblegame'>
@@ -40,7 +40,7 @@ export const Navigation = ({ auth, profile }) => {
         <Nav pullRight>
           <NavItem style={profile ? {display: 'none'} : {display: ''}} onClick={auth.login.bind(this)} eventKey={1}>Login</NavItem>
           <div style={profile ? {display: ''} : {display: 'none'}}>
-            <Dropdown>
+            <Dropdown id="profile-dropdown">
               <Dropdown.Toggle>
                 <Glyphicon glyph="user" />
               </Dropdown.Toggle>

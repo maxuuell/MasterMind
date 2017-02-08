@@ -32,9 +32,7 @@ render(
         <Route path="memorygame" component={ GameMemory }/>
         <Route path="leaderboard" component={ Leaderboard }/>
         <Route path="profile" component={ Profile }/>
-        <Route path="restricted" component={ Profile } onEnter={requireAuth}/>
         <Route path="scramblegame" component={ GameScramble }/>
-        <Route path="login" component={ LogIn }/>
         <Route path="signup" component={ SignUp }/>
       </Route>
     </Router>
