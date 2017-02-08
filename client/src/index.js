@@ -22,9 +22,12 @@ const requireAuth = (nextState, replace) => {
   }
 }
 
+const profile = auth.getProfile();
+console.log('profile in index', profile)
+
 render(
     <Router history={hashHistory}>
-      <Route path="/" component = { App } auth={ auth }>
+      <Route path="/" component = { App } auth={ auth } profile={ profile }>
         <IndexRoute component={ Homepage }></IndexRoute>
         <Route path="memorygame" component={ GameMemory }/>
         <Route path="leaderboard" component={ Leaderboard }/>
