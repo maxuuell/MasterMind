@@ -15,7 +15,7 @@ export default class GameMemory extends React.Component {
   }
 
   createGame() {
-    var game = new Phaser.Game(400, 250, Phaser.AUTO, 'phaser-game', {preload: preload, create: create, update});
+    var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-game', {preload: preload, create: create, update});
 
     function preload() {
 
