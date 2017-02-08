@@ -1,30 +1,39 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { IndexRoute, Router, Route, Link, hashHistory } from 'react-router';
-
+import { IndexRoute, Router, Route, hashHistory } from 'react-router';
+import AuthService from './helpers/AuthService';
+import GameScramble from './components/GameScramble';
 import App from './components/App';
 import SignUp from './components/SignUp';
 import Homepage from './components/Homepage';
 import GameMemory from './components/GameMemory';
 import LogIn from './components/Login';
-import {Leaderboard} from './components/Leaderboard';
-import {Profile} from './components/Profile';
-import GameScramble from './components/GameScramble';
+import { Leaderboard } from './components/Leaderboard';
+import { Profile } from './components/Profile';
 
 const app = document.getElementById('app');
+const auth = new AuthService('xkMUjA7Bggf2NQ4W0uZlU4wv1pqd6aDD', 'buzzme.auth0.com');
 
+// validate authentication for private routes
+const requireAuth = (nextState, replace) => {
+  if (!auth.loggedIn()) {
+    console.log('Nope!')
+    replace({ pathname: '/login' })
+  }
+}
 
 render(
-  <Router history={hashHistory}>
-    <Route path="/" component = {App}>
-      <IndexRoute component={Homepage}></IndexRoute>
-      <Route path="memorygame" component={GameMemory}/>
-      <Route path="leaderboard" component={Leaderboard}/>
-      <Route path="profile" component={Profile}/>
-      <Route path="scramblegame" component={GameScramble}/>
-      <Route path="login" component={LogIn}/>
-      <Route path="signup" component={SignUp}/>
-    </Route>
-  </Router>
+    <Router history={hashHistory}>
+      <Route path="/" component = { App } auth={ auth }>
+        <IndexRoute component={ Homepage }></IndexRoute>
+        <Route path="memorygame" component={ GameMemory }/>
+        <Route path="leaderboard" component={ Leaderboard }/>
+        <Route path="profile" component={ Profile }/>
+        <Route path="restricted" component={ Profile } onEnter={requireAuth}/>
+        <Route path="scramblegame" component={ GameScramble }/>
+        <Route path="login" component={ LogIn }/>
+        <Route path="signup" component={ SignUp }/>
+      </Route>
+    </Router>
   , app
 );

@@ -7,16 +7,20 @@ import Homepage from './Homepage';
 export default class App extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {
-      todo: 'FILL_ME_IN',
-      todos: 'FILL_ME_IN'
-    };
   }
+
   render() {
+    let children = null;
+    if (this.props.children) {
+      children = React.cloneElement(this.props.children, {
+        auth: this.props.route.auth //sends auth instance from route to children
+      })
+    }
+
     return (
       <div>
         <NavBar />
-        {this.props.children}
+        {children}
       </div>
     );
   }

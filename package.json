@@ -5,9 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server/server.js",
-    "test": "mocha --bail --reporter nyan test/ServerSpec.js",
-    "postinstall": "webpack -p --config ./webpack.config.js --progress",
-    "heroku-postinstall": "webpack -p --config ./webpack.config.js --progress"
+    "test": "mocha --bail --reporter nyan test/ServerSpec.js"
   },
   "repository": {
     "type": "git",
