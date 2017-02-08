@@ -2,6 +2,7 @@ var express = require('express');
 var bodyparser = require('body-parser');
 var mongoose = require('mongoose');
 var db = require("../database/dbconnection.js");
+var models = require("../database/models.js");
 var path = require('path');
 // var userController = require('./users/userController.js');
 // var session = require('express-session');
@@ -21,8 +22,8 @@ app.use(bodyparser.json());
 //   req.session.user ? res.render('/profile') : res.redirect('/login');
 // };
 
-// //to remove the mongoose Promise deprecated warning
-// mongoose.Promise = global.Promise;
+//to remove the mongoose Promise deprecated warning
+mongoose.Promise = global.Promise;
 
 // //Mongoose
 // // var uri;
@@ -31,13 +32,6 @@ app.use(bodyparser.json());
 // var localMongoUri = 'mongodb://localhost/mastermind';
 // var MONGO_URI = (process.env.NODE_ENV === 'production') ? mLabUri : localMongoUri;
 // mongoose.connect(MONGO_URI);
-
-// var db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection to mongoose error:'));
-// db.once('open', function() {
-//   console.log('we connected to mongoose!');
-//   console.log('mLabUri', mLabUri);
-// });
 
 
 //define port
@@ -72,9 +66,37 @@ app.get('/scramble', function(req, res) {
 // app.post('/login', userController.login);
 // app.post('/scores', userController.postScore);
 // app.post('/logout', userController.logout);
+app.post("/user", function (req, res) {
+  console.log(req);
+  var username = req.body.username;
+  var email = req.body.email;
+  var game = req.body.game;
+
+  var newUser = new models.Users({
+                name: username,
+                email: email,
+                games: []
+              });
+
+  var newGame = new models.Games({
+    name: game,
+    score: 9000,
+    date: new Date()
+  })
+
+  newUser.games.push(newGame);
+
+  newUser.save(function (err, user) {
+    if (err) {
+      console.log("Error", err);
+    } else {
+      console.log("User added", user);
+    }
+  })
+})
 
 
 app.listen(port, function () {
   console.log('Example app listening on port', port);
-  console.log('process.env.NODE_ENV', process.env.NODE_ENV);
+  // console.log('process.env.NODE_ENV', process.env.NODE_ENV);
 });
