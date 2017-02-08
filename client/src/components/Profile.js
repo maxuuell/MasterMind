@@ -20,30 +20,30 @@ export class Profile extends React.Component {
   getUserInfo() {
     //hard code a username for now - can get the username from local.storage (or state, for persistence to work)
     //send a Get request to get the user info
-    var context = this;
-    $.ajax({
-      method: 'GET',
-      url: '/' + localStorage.username,
-      contentType: 'application/json',
-      dataType: 'json',
-      success: function(data) {
-        console.log(data);
-        if (typeof data.redirect === 'string') {
-          console.log('redirect to login!');
-          // localStorage.username = null;
-          localStorage.removeItem('username');
-          window.location = data.redirect;
-        }
-        //retrieve data and setState
-        context.setState({
-          username: data.username,
-          highScoreMem: data.highScoreMem,
-          highScoreScram: data.highScoreScram,
-          memScores: data.memScores,
-          scramScores: data.scramScores
-        });
-      }
-    });
+    //var context = this;
+    //$.ajax({
+      //method: 'GET',
+      //url: '/' + localStorage.username,
+      //contentType: 'application/json',
+      //dataType: 'json',
+      //success: function(data) {
+        //console.log(data);
+        //if (typeof data.redirect === 'string') {
+          //console.log('redirect to login!');
+          //// localStorage.username = null;
+          //localStorage.removeItem('username');
+          //window.location = data.redirect;
+        //}
+        ////retrieve data and setState
+        //context.setState({
+          //username: data.username,
+          //highScoreMem: data.highScoreMem,
+          //highScoreScram: data.highScoreScram,
+          //memScores: data.memScores,
+          //scramScores: data.scramScores
+        //});
+      //}
+    //});
   }
 
 
