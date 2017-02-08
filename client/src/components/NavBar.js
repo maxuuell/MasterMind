@@ -33,12 +33,6 @@ export default class Navigation extends Component {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <LinkContainer to='/profile'>
-              <NavItem eventKey={1}>Profile</NavItem>
-            </LinkContainer>
-            <LinkContainer to='/leaderboard'>
-              <NavItem eventKey={1}>Leaderboard</NavItem>
-            </LinkContainer>
             <NavDropdown eventKey={3} title="Games" id="basic-nav-dropdown">
               <LinkContainer to='/scramblegame'>
                 <MenuItem eventKey={3.1}>Scramble</MenuItem>
