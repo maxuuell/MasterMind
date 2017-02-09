@@ -22,7 +22,6 @@ const requireAuth = (nextState, replace) => {
 }
 
 const profile = auth.getProfile();
-console.log('profile in index', profile)
 
 render(
     <Router history={hashHistory}>

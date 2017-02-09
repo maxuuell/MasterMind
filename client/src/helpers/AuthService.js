@@ -1,8 +1,10 @@
-import Auth0Lock from 'auth0-lock'
-import { browserHistory } from 'react-router'
+import { EventEmitter } from 'events';
+import Auth0Lock from 'auth0-lock';
+import { browserHistory } from 'react-router';
 
-export default class AuthService {
+export default class AuthService extends EventEmitter {
   constructor(clientId, domain) {
+    super();
     // Configure Auth0
     this.lock = new Auth0Lock(clientId, domain, {
       auth: {
@@ -18,10 +20,9 @@ export default class AuthService {
 
   _doAuthentication(authResult) {
     // Saves the user token
-    console.log('token', authResult.idToken)
     this.setToken(authResult.idToken)
     // navigate to the home route
-    browserHistory.replace('/')
+    browserHistory.replace('/profile')
 
     this.lock.getProfile(authResult.idToken, (error, profile) => {
       if (error) {
@@ -34,6 +35,7 @@ export default class AuthService {
 
   setProfile(profile) {
     localStorage.setItem('profile', JSON.stringify(profile))
+    this.emit('profile_updated', profile)
   }
 
   getProfile() {
@@ -53,7 +55,6 @@ export default class AuthService {
 
   setToken(idToken) {
     // Saves user token to local storage
-    console.log('ere');
     localStorage.setItem('id_token', idToken)
   }
 
