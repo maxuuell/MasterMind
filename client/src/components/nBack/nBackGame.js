@@ -106,7 +106,7 @@ export default class NBackGame extends React.Component {
       <div onKeyPress={this.assertMatch}>
         <NBackModal setN={this.setN.bind(this)}/>
         <div className="squareContainer" style={{width: "300px", margin: "5px auto"}}>
-          {_.range(9).map((i) => <NBackSquare squareId={i} litSquare={this.state.litSquare}/>)}
+          {_.range(9).map((i) => <NBackSquare key={i} squareId={i} litSquare={this.state.litSquare}/>)}
         </div>
       </div>
     );
