@@ -2,9 +2,7 @@ var express = require('express');
 var bodyparser = require('body-parser');
 var mongoose = require('mongoose');
 var db = require("../database/dbconnection.js");
-<<<<<<< HEAD
 var models = require("../database/models.js");
-=======
 
 var path = require('path');
 // var userController = require('./users/userController.js');
@@ -74,7 +72,6 @@ app.get('/scramble', function(req, res) {
 });
 // app.get('/:username', userController.getUser);
 // app.get('/leaderboard', userController.getAll);
-<<<<<<< HEAD
 
 // //post routes
 // app.post('/signup', userController.signup);
@@ -109,7 +106,7 @@ app.post("/user", function (req, res) {
     }
   })
 })
-=======
+
 
 // //post routes
 // app.post('/signup', userController.signup);
