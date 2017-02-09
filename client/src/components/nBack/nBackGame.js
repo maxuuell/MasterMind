@@ -16,7 +16,7 @@ export default class NBackGame extends React.Component {
       history: [null, null],
       score: 0,
       roundsLeft: 24,
-      litSquare: 3,
+      litSquare: 0,
       matchAsserted: false
     };
   }
@@ -26,28 +26,27 @@ export default class NBackGame extends React.Component {
     var square = Math.floor(Math.random * 9);
     newHistory.push(square);
     this.setState({'history': newHistory})
-    lightSquare(square);
-    setTimeout(endRound, 3000);
+    setTimeout(this.endRound.bind(this), 3000);
   }
 
   endRound() {
     var newHistory = this.state.history.slice();
     var scored = (newHistory[0] === newHistory[newHistory.length - 1]) === this.state.matchAsserted;
     if (scored) {
-      showAgreement();
+      //showAgreement();
       this.setState({score: this.state.score + 1})
     } else {
-      showDisagreement();
+      //showDisagreement();
     }
     this.setState({matchAsserted: false});
     this.setState({roundsLeft: this.state.roundsLeft - 1})
     newHistory.shift();
     this.setState({history: newHistory});
     if (this.state.roundsLeft === 0) {
-      saveScore();
+      this.saveScore();
     }
     else {
-      beginRound();
+      this.beginRound();
     }
   }
 
@@ -59,8 +58,19 @@ export default class NBackGame extends React.Component {
     this.setState({matchAsserted: true});
   }
 
-  litStatus() {
-
+  beginGame() {
+    this.setState({
+      score: 0,
+      roundsLeft: 24,
+      litSquare: null,
+      matchAsserted: false
+    });
+    var newHistory = [];
+    while (newHistory.length < this.state.n) {
+      newHistory.push(null);
+    }
+    this.setState({history: newHistory});
+    setTimeout(this.beginRound.bind(this), 750);
   }
 
   showAgreement() {
@@ -104,10 +114,11 @@ export default class NBackGame extends React.Component {
   render() {
     return (
       <div onKeyPress={this.assertMatch}>
-        <NBackModal setN={this.setN.bind(this)}/>
+        <NBackModal setN={this.setN.bind(this)} beginGame={this.beginGame.bind(this)}/>
         <div className="squareContainer" style={{width: "300px", margin: "5px auto"}}>
           {_.range(9).map((i) => <NBackSquare key={i} squareId={i} litSquare={this.state.litSquare}/>)}
         </div>
+        <div className="score">Score: {this.state.score}</div>
       </div>
     );
   }

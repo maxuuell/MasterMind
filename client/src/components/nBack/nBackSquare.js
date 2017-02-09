@@ -9,7 +9,6 @@ const checkLitSquare = (litSquare, id) => {
 
 var divStyle = {
   boxStyle: 'border-box',
-  backgroundColor: 'blue',
   height: '100px',
   width: '32%',
   display: 'inline-block',
