@@ -12,7 +12,7 @@ export default class App extends React.Component {
     if (this.props.children) {
       children = React.cloneElement(this.props.children, {
         auth: this.props.route.auth,
-        profile: this.props.route.profile
+        profile: this.props.route.auth.getProfile()
       })
     }
 

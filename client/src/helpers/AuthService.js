@@ -1,15 +1,12 @@
 import { EventEmitter } from 'events';
 import Auth0Lock from 'auth0-lock';
-import { hashHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 
 export default class AuthService extends EventEmitter {
   constructor(clientId, domain) {
     super();
     // Configure Auth0
-    this.lock = new Auth0Lock(clientId, domain, {
-      redirectUrl: 'http://localhost:3000/#/',
-      responseType: 'token'
-    })
+    this.lock = new Auth0Lock(clientId, domain)
 
     // Add callback for lock `authenticated` event
     this.lock.on('authenticated', this._doAuthentication.bind(this))
@@ -35,6 +32,7 @@ export default class AuthService extends EventEmitter {
   setProfile(profile) {
     console.log('in profile', profile);
     localStorage.setItem('profile', JSON.stringify(profile))
+    browserHistory.replace('/profile')
     this.emit('profile_updated', profile)
   }
 
@@ -67,5 +65,6 @@ export default class AuthService extends EventEmitter {
     // Clear user token and profile data from local storage
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');
+    browserHistory.replace('/');
   }
 }

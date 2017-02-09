@@ -124,6 +124,11 @@ export class Profile extends React.Component {
     return profileElem;
   }
 
+  getProfileName(profile) {
+    //TODO better way to get profile through components
+    return profile ? '' : `${profile.name}'s `
+  }
+
   render() {
     return (
       <div>
