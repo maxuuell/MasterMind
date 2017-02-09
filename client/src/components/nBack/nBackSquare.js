@@ -8,15 +8,17 @@ const checkLitSquare = (litSquare, id) => {
 }
 
 var divStyle = {
-  backgroundColor: 'blue'
+  boxStyle: 'border-box',
+  backgroundColor: 'blue',
+  height: '100px',
+  width: '32%',
+  display: 'inline-block',
+  margin: '2px'
 };
 
 
-export const Square = ({litSquare, squareId}) => ({
-
-  render() {
-    return (<div>
-          <div className={checkLitSquare(litSquare, squareId)} style={divStyle}></div>
-        </div>)
-  }
-});
+export const NBackSquare = ({litSquare, squareId}) => {
+  return(
+    <div className={checkLitSquare(litSquare, squareId)} style={divStyle}></div>
+  )
+}

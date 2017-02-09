@@ -2,12 +2,12 @@ import React from 'react';
 //import { Score } from './Score';
 import $ from 'jquery';
 import { NBackModal } from './nBackModal';
-import { nBackSquare } from './nBackSquare';
+import { NBackSquare } from './nBackSquare';
 import _ from 'lodash';
 
 const NUM_WORDS = 5;
 
-export default class nBackGame extends React.Component {
+export default class NBackGame extends React.Component {
   constructor(props) {
     super(props);
     this.gametype = 'scramble';
@@ -105,8 +105,8 @@ export default class nBackGame extends React.Component {
     return (
       <div onKeyPress={this.assertMatch}>
         <NBackModal setN={this.setN.bind(this)}/>
-        <div className="squareContainer">
-          {_.range(9).map( (i) => <nBackSquare squareId={i} litSquare={this.state.litSquare}/>)  }
+        <div className="squareContainer" style={{width: "300px", margin: "5px auto"}}>
+          {_.range(9).map((i) => <NBackSquare key={i} squareId={i} litSquare={this.state.litSquare}/>)}
         </div>
       </div>
     );
