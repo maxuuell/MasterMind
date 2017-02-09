@@ -2,7 +2,12 @@ import { Popover, Tooltip, Modal, Button, SplitButton, MenuItem } from 'react-bo
 
 export const NBackModal = React.createClass({
   getInitialState() {
-    return { showModal: false };
+    return { showModal: true };
+  },
+
+  startNewGame() {
+    this.close();
+    this.props.beginGame();
   },
 
   close() {
@@ -55,7 +60,8 @@ export const NBackModal = React.createClass({
             <p>Gameplay is simple. Push any key when the square that flashes matches the square that flashed n times ago. If you are playing 2 back and the squares light up in the order top, middle, top, you would hit a key after the second top, because it matches the square that lit up two moves ago.</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.close}>Close</Button>
+            <Button onClick={this.close}>Cancel</Button>
+            <Button onClick={this.startNewGame}>Start New Game</Button>
           </Modal.Footer>
         </Modal>
       </div>
