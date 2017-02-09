@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { IndexRoute, Router, Route, hashHistory } from 'react-router';
+import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 import AuthService from './helpers/AuthService';
 import GameScramble from './components/GameScramble';
 import App from './components/App';
@@ -25,8 +25,8 @@ const requireAuth = (nextState, replace) => {
 const profile = auth.getProfile();
 
 render(
-    <Router history={hashHistory}>
-      <Route path="/" component = { App } auth={ auth } profile={ profile }>
+    <Router history={ browserHistory }>
+      <Route path="/" component = { App } auth={ auth }>
         <IndexRoute component={ Homepage }></IndexRoute>
         <Route path="memorygame" component={ GameMemory }/>
         <Route path="leaderboard" component={ Leaderboard }/>

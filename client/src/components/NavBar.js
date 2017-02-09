@@ -40,8 +40,8 @@ export default class Navigation extends Component {
               <LinkContainer to='/nback'>
                 <MenuItem eventKey={3.2}>N-Back</MenuItem>
               </LinkContainer>
-              <LinkContainer to='/phaser'>
-                <MenuItem eventKey={3.1}>Jimmy's Epic Phaser Game</MenuItem>
+              <LinkContainer to='/memorygame'>
+                <MenuItem eventKey={3.1}>Memory</MenuItem>
               </LinkContainer>
               <LinkContainer to='/renata'>
                 <MenuItem eventKey={3.1}>Renata's Sweet Game</MenuItem>
