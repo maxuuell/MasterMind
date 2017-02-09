@@ -125,12 +125,9 @@ export class Profile extends React.Component {
   }
 
   render() {
-    var name = (localStorage.username) ? localStorage.username.toUpperCase() + "'s Profile" : '';
-
     return (
       <div>
-        <h1 className="text-center">{name}</h1>
-            {this.displayProfile()}
+        <h1 className="text-center">Profile</h1>
       </div>
     );
   }

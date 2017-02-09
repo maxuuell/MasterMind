@@ -47,6 +47,9 @@ export default class Navigation extends Component {
                 <MenuItem eventKey={3.1}>Renata's Sweet Game</MenuItem>
               </LinkContainer>
             </NavDropdown>
+            <LinkContainer to='/leaderboard'>
+              <NavItem>Leaderboard</NavItem>
+            </LinkContainer>
           </Nav>
           <Nav pullRight>
             <NavItem style={this.state.profile ? {display: 'none'} : {display: ''}} onClick={this.props.auth.login.bind(this)} eventKey={1}>Login</NavItem>
@@ -58,9 +61,6 @@ export default class Navigation extends Component {
                 <Dropdown.Menu>
                   <LinkContainer to='/profile'>
                     <MenuItem eventKey={4.1}>Profile</MenuItem>
-                  </LinkContainer>
-                  <LinkContainer to='/leaderboard'>
-                    <MenuItem eventKey={4.2}>LeaderBoard</MenuItem>
                   </LinkContainer>
                   <MenuItem onClick={this.logout.bind(this)}>Logout</MenuItem>
                 </Dropdown.Menu>

@@ -29,7 +29,7 @@ render(
         <IndexRoute component={ Homepage }></IndexRoute>
         <Route path="memorygame" component={ GameMemory }/>
         <Route path="leaderboard" component={ Leaderboard }/>
-        <Route path="profile" component={ Profile }/>
+        <Route path="profile" component={ Profile } onEnter={ requireAuth }/>
         <Route path="scramblegame" component={ GameScramble }/>
         <Route path="signup" component={ SignUp }/>
       </Route>
