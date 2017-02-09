@@ -10,19 +10,18 @@ var localMongoUri = 'mongodb://localhost/megaminds';
 
 // var MONGO_URI = (process.env.NODE_ENV === 'production') ? mLabUri : localMongoUri;
 
-mongoose.connect(localMongoUri);
+// mongoose.connect(localMongoUri);
 
-var MONGO_URI = (process.env.NODE_ENV === 'production') ? mLabUri : localMongoUri;
+// var MONGO_URI = (process.env.NODE_ENV === 'production') ? mLabUri : localMongoUri;
 
-mongoose.connect(MONGO_URI);
+// mongoose.connect(MONGO_URI);
 
-
-var db = mongoose.connection;
+var db = mongoose.createConnection(localMongoUri);
 
 db.on('error', console.error.bind(console, 'connection to mongoose error:'));
 
 db.once('open', function() {
-  console.log('we connected to mongoose!');
+  console.log('Connected to Mongo!');
 });
 
 module.exports = db;
