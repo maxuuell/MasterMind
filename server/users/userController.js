@@ -1,18 +1,50 @@
-var User = require('./userModel');
+var models = require("../../database/models.js");
 var bodyParser = require('body-parser');
-var bcrypt = require('bcrypt-nodejs');
-var Promise = require('bluebird');
-
 var mongoose = require('mongoose');
 //to remove the mongoose Promise deprecated warning
 mongoose.Promise = global.Promise;
 
-
 module.exports = {
+  userCheck: function (req, res) {
+    var email = req.body.email;
+    
+    var userInfo = {
+      name: req.body.name,
+      email: email,
+      games: []
+    };
+
+    models.Users.findOne({email: email}).then(function (user) {
+      if(!user) {
+        var newUser = new models.Users(userInfo);
+        newUser.save();
+      }
+    }).catch(function (err) {
+      console.log("Error: ", err);
+    })
+    
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   //function for signin in user
   signup: function(req, res, next) {
     console.log('username is ', req.body.username);
-    console.log('password is ', req.body.password);
+      console.log('password is ', req.body.password);
     var username = req.body.username;
     var password = req.body.password;
     User.findOne({username: username})
