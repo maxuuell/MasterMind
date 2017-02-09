@@ -7,8 +7,8 @@ export default class AuthService extends EventEmitter {
     super();
     // Configure Auth0
     this.lock = new Auth0Lock(clientId, domain, {
-      responseType: 'token',
-      redirect: false
+      redirectUrl: 'http://localhost:3000/#/',
+      responseType: 'token'
     })
 
     // Add callback for lock `authenticated` event
