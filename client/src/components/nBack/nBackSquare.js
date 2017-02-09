@@ -13,10 +13,9 @@ var divStyle = {
 
 
 export const Square = ({litSquare, squareId}) => ({
-
-  render() {
-    return (<div>
-          <div className={checkLitSquare(litSquare, squareId)} style={divStyle}></div>
-        </div>)
-  }
+    return (
+      <div>
+        <div className={checkLitSquare(litSquare, squareId)} style={divStyle}></div>
+      </div>
+    )
 });
