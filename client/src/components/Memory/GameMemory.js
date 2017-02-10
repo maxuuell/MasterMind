@@ -14,10 +14,10 @@ export default class GameMemory extends React.Component {
   }
 
   createGame() {
-    var game = new Phaser.Game(740, 480, Phaser.AUTO, 'phaser-game', {preload: preload, create: create});
+    var game = new Phaser.Game(740, 480, Phaser.AUTO, 'phaser-game', {preload: preload, create: create, update: update});
 
     var blocks, colWidth = 6, colHeight = 6, displacementX = 110, displacementY = 70, startingPositionX = 80, startingPositionY = 50;
-    var answers, text, previouslyClickedBlock;
+    var answers, text, score = 0, previouslyClickedBlock, flipDelay = 0.3, initialDelay = 2;
     var blockTypes = [
       {amountUsed: 0, spriteIndex: 0},
       {amountUsed: 0, spriteIndex: 2},
@@ -52,24 +52,28 @@ export default class GameMemory extends React.Component {
       blocks.enableBody = true;
       blocks.inputEnableChildren = true;
       drawGrid(blocks, 'board_sprites', 1);
-      toggleBoard();
+      toggleBlocks(blocks.children, initialDelay);
 
-      text = game.add.text(250, 16, 'Try to find the matching pairs', {fill: '#eeeeee'});
+      text = game.add.text(250, 16, 'Score ' + score, {fill: '#eeeeee'});
       blocks.onChildInputDown.add(onBlockClicked, this);
+    }
+
+    function update() {
+      
     }
 
     function onBlockClicked(block, pointer) {
       if (block.isClickable === true) {
         block.isClickable = false;
         block.loadTexture('board_sprites', block.blockID);
-        if (previouslyClickedBlock) 
+        if (previouslyClickedBlock)
         {
           if (previouslyClickedBlock.blockID === block.blockID) {
-            text.text = 'You found a matching pair!';
+            score++;
+            text.text = 'Score: ' + score;
 
           } else {
-            previouslyClickedBlock.loadTexture('board_sprites', 1);
-            block.loadTexture('board_sprites', 1);
+            toggleBlocks([previouslyClickedBlock, block], flipDelay);
           }
           block.isClickable = true;
           previouslyClickedBlock.isClickable = true;
@@ -114,10 +118,12 @@ export default class GameMemory extends React.Component {
       }
     }
 
-    function toggleBoard() {
-      game.time.events.add(Phaser.Timer.SECOND * 2, function() {
-        for (var i = 0; i < blocks.children.length; i++) {
-          blocks.children[i].loadTexture('board_sprites', 1);
+    function toggleBlocks(blocksToToggle, timeToWait) {
+      timeToWait = timeToWait || 2;
+
+      game.time.events.add(Phaser.Timer.SECOND * timeToWait, function() {
+        for (var i = 0; i < blocksToToggle.length; i++) {
+          blocksToToggle[i].loadTexture('board_sprites', 1);
         }
       }, this);
     }
