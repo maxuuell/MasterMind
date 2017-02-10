@@ -17,8 +17,7 @@ app.use(bodyparser.json());
 var port = process.env.PORT || 3000;
 
 var rootPath = path.join(__dirname, '/..');
-var publicPath = path.join(rootPath, '/compiled/public');
-app.use(express.static(path.join(__dirname, '../')));
+app.use(express.static(rootPath));
 
 // get endpoints
 app.get("/api/:name/scores", listeners.userScores);
@@ -26,6 +25,10 @@ app.get("/api/:name/scores", listeners.userScores);
 // post endpoints
 app.post("/api/game", listeners.addGame);
 app.post("/api/user", listeners.userCheck);
+
+app.get('*', function (request, response){
+  response.sendFile(path.resolve(rootPath + '/index.html'))
+})
 
 // listener
 app.listen(port, function () {
