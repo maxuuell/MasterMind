@@ -38,7 +38,7 @@ export default class NBackGame extends React.Component {
   beginRound() {
     var newHistory = this.state.calledSquares.slice();
     var square = Math.floor(Math.random() * 9);
-    console.log("Square: " + square);
+    console.log("---------> Round " + this.state.roundsLeft + " <--------- \n Square: " + square);
     this.lightSquare(square);
     newHistory.push(square);
     this.setState({'calledSquares': newHistory})
@@ -48,6 +48,9 @@ export default class NBackGame extends React.Component {
   endRound() {
     var newHistory = this.state.calledSquares.slice();
     var scored = (newHistory[0] === newHistory[newHistory.length - 1]) === this.state.matchAsserted;
+    console.log("oldSqure: " + newHistory[0]);
+    console.log("asserted: " + this.state.matchAsserted);
+    console.log("Scored: " + scored);
     if (scored) {
       this.showAgreement(1);
       this.setState({score: this.state.score + 1})
@@ -67,9 +70,7 @@ export default class NBackGame extends React.Component {
   }
 
   setN(event, skips) {
-    console.log(event);
     this.setState({n: event});
-    console.log("n:" + this.state.n);
   }
 
   assertMatch() {
@@ -181,7 +182,7 @@ export default class NBackGame extends React.Component {
 
   render() {
     return (
-      <div onKeyPress={this.assertMatch}>
+      <div>
         <NBackModal
         setN={this.setN}
         beginGame={this.beginGame}
@@ -190,7 +191,7 @@ export default class NBackGame extends React.Component {
         openModal={this.openModal}
         showModal={this.state.showModal}
         />
-        <div className={this.answerFlash(this.state.borderColor)} style={{width: "300px", margin: "5px auto"}}>
+        <div onClick={()=>this.assertMatch()} className={this.answerFlash(this.state.borderColor)} style={{width: "300px", margin: "5px auto"}}>
           {_.range(9).map((i) => <NBackSquare key={i} squareId={i} litSquare={this.state.litSquare}/>)}
         </div>
         <div className="score">Score: {this.state.score}</div>
