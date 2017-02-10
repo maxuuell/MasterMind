@@ -40,8 +40,8 @@ export default class GameMemory extends React.Component {
     ];
 
     function preload() {
-      game.load.image('background', 'client/src/components/phasergame/graphics/breakout_bg.png');
-      game.load.spritesheet('board_sprites', 'client/src/components/phasergame/graphics/breakout_sprites.png', 40, 40);
+      game.load.image('background', 'client/src/components/Memory/graphics/breakout_bg.png');
+      game.load.spritesheet('board_sprites', 'client/src/components/Memory/graphics/breakout_sprites.png', 40, 40);
     }
 
     function create() {
