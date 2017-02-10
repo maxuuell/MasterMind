@@ -37,9 +37,17 @@ export default class NBackGame extends React.Component {
 
   beginRound() {
     var newHistory = this.state.calledSquares.slice();
-    var square = Math.floor(Math.random() * 9);
+    var square;
+    if (newHistory[0]) {
+      if (Math.random() < .3) {
+        square = newHistory[0];
+      }
+    }
+    if (!square) {
+      square = Math.floor(Math.random() * 9);
+    }
     console.log("---------> Round " + this.state.roundsLeft + " <--------- \n Square: " + square);
-    this.lightSquare(square);
+    this.lightItUp = setTimeout(this.lightSquare(square), 500);
     newHistory.push(square);
     this.setState({'calledSquares': newHistory})
     this.commence = setTimeout(()=>{this.endRound()}, 3000);
@@ -112,7 +120,7 @@ export default class NBackGame extends React.Component {
 
   lightSquare(square) {
     this.setState({litSquare: square});
-    this.unLightItUp = setTimeout(()=>{this.unlightSquare()}, 2500)
+    this.unLightItUp = setTimeout(()=>{this.unlightSquare()}, 2500);
   }
 
   componentWillUnmount() {
@@ -127,6 +135,9 @@ export default class NBackGame extends React.Component {
     }
     if (this.flash) {
       clearTimeout(this.flash);
+    }
+    if (this.lightItUp) {
+      clearTimeout(this.lightItUp);
     }
   }
 
@@ -170,13 +181,13 @@ export default class NBackGame extends React.Component {
 
   answerFlash(color) {
     if (color === 1) {
-      return "youScore"
+      return "youScore score"
     }
     if (color === 2) {
-      return "squareContainer youFail"
+      return "youFail score"
     }
     else {
-      return "squareContainer"
+      return "score"
     }
   }
 
@@ -191,10 +202,10 @@ export default class NBackGame extends React.Component {
         openModal={this.openModal}
         showModal={this.state.showModal}
         />
-        <div onClick={()=>this.assertMatch()} className={this.answerFlash(this.state.borderColor)} style={{width: "300px", margin: "5px auto"}}>
+        <div onClick={()=>this.assertMatch()} className="squareBox" style={{width: "300px", margin: "5px auto"}}>
           {_.range(9).map((i) => <NBackSquare key={i} squareId={i} litSquare={this.state.litSquare}/>)}
         </div>
-        <div className="score">Score: {this.state.score}</div>
+        <div className={this.answerFlash(this.state.borderColor)}>Score: {this.state.score}</div>
       </div>
     );
   }
