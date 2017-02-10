@@ -41,9 +41,11 @@ export default class ProfileContainer extends Component {
   filterGamesByName(name) {
     var filteredGames = this.state.games.filter(game => {
       return game.gameName === name
-    })
+    });
 
-    var sorted = filteredGames.sort(g => new Date(g.date))
+    var sorted = filteredGames.sort((a,b) => {
+      return new Date(a.date) - new Date(b.date)
+    });
     return sorted.slice(0,5);
   }
 
@@ -53,10 +55,10 @@ export default class ProfileContainer extends Component {
       <div>
         <h1 className="text-center">{this.getProfileName(this.state.profile)}Profile</h1>
         <ProfileHeader totalGames={this.state.games.length}/>
-          {GAMES.map((name, i) => {
-            var filtered = this.filterGamesByName(name);
-            return <Games key={i} gameName={name} filteredGames={filtered}/>;
-          })}
+        {GAMES.map((name, i) => {
+          var filtered = this.filterGamesByName(name);
+          return <Games key={i} gameName={name} filteredGames={filtered}/>;
+        })}
         <NbackTable filteredGames={nBackGames} />
       </div>
     );

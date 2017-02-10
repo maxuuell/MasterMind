@@ -4,7 +4,7 @@ import { GameRow } from './GameRow';
 
 export const Games = ({gameName, filteredGames}) => {
   return (
-    <Table id={`#{gameName}-table`}>
+    <Table id={`#{gameName}-table`} condensed striped>
       <h1>{gameName}</h1>
       <thead>
         <tr>
