@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export class Profile extends Component {
+export default class ProfileContainer extends Component {
   constructor(props) {
     /**
      * state shape: {
