@@ -7,7 +7,7 @@ mongoose.Promise = global.Promise;
 module.exports = {
   // this works
   userCheck: function (req, res) {
-    var name = req.body.name;
+    var name = req.body.email;
 
     models.User.findOne({name: name}, function(err, user) {
       if(err) {
@@ -110,17 +110,17 @@ module.exports = {
   },
 
   userScores: function (req, res) {
-    var name = req.params.name;
+    var email = req.params.email;
+    console.log('hello', email)
 
-    models.User.findOne({name: name}, function (err, user) {
+    models.User.findOne({email}, function (err, user) {
       if (err) {
         res.end("Error: ", err);
       }
       
       if (user) {
-        userGames = JSON.stringify(user.games);
-        console.log(userGames);
-        res.send(userGames);
+        console.log('games', user.games);
+        res.send(user.games);
       }    
     })
   }

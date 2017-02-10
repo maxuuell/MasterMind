@@ -22,14 +22,31 @@ export default class ProfileContainer extends Component {
      *  profile: auth0_profile // not sure if this is needed
      * }
      *
-    */
+     */
     super(props);
     this.state = {
-      name: '',
-      scores: [],
-      loadingScores: false,
-      profile: this.props.profile
+      loadingData: false,
+      profile: this.props.profile,
+      games: []
     };
+  }
+
+  componentWillMount() {
+    this.setState({loadingData: true});
+    fetch(`api/user/${this.state.profile.email}/scores`, {
+      method: "GET",
+      headers: new Headers({'Content-Type': 'application/json'})
+    })
+      .then(data => {
+        data.json()
+          .then(games => {
+            this.setState({loadingData: false, games})
+          })
+      })
+      .catch(e => {
+        console.log('Error', e)
+        this.setState({loadingData: false})
+      })
   }
 
   getProfileName(profile) {
@@ -40,7 +57,7 @@ export default class ProfileContainer extends Component {
     return (
       <div>
         <h1 className="text-center">{this.getProfileName(this.state.profile)}Profile</h1>
-        <ProfileHeader />
+        <ProfileHeader totalGames={this.state.games.length}/>
       </div>
     );
   }
