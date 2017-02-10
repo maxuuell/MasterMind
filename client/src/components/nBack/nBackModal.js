@@ -1,4 +1,5 @@
 import { Popover, Tooltip, Modal, Button, SplitButton, MenuItem } from 'react-bootstrap'
+import React from 'react';
 
 export const NBackModal = ({
     setN,

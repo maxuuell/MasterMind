@@ -1,3 +1,5 @@
+import React from 'react';
+
 const checkLitSquare = (litSquare, id) => {
   if (litSquare === id) {
     return "lit";
