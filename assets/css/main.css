@@ -98,7 +98,7 @@ canvas {
 }
 
 .navbar-inverse .navbar-nav > li > a:hover {
-	color: #222222;
+	color: #1abc9c;
 }
 
 .navbar-brand {
@@ -231,8 +231,17 @@ bt {
 /* glyphicon Configuration */
 
 .glyphicon {
-	font-size: 40px;
+	font-size: 30px;
 	color: #1abc9c;
+}
+
+.glyphicon .glyphicon-user {
+    font-size: 30px;
+    background-color: #222;
+}
+
+.glyphicon .glyphicon-user:hover {
+    background-color: #222;
 }
 
 .lit {
