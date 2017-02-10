@@ -7,7 +7,8 @@ export const NBackModal = ({
     startNewGame,
     closeModal,
     openModal,
-    showModal
+    showModal,
+    modalSelector
   }) => {
 
     return (
@@ -26,7 +27,7 @@ export const NBackModal = ({
           </Modal.Header>
           <Modal.Body>
             <h4>n-Back</h4>
-            <SplitButton bsSize="xsmall" title="n: How many back?" pullRight id="split-button-pull-right" onSelect={setN}>
+            <SplitButton bsSize="xsmall" title={modalSelector} pullRight id="split-button-pull-right" onSelect={setN}>
               <MenuItem eventKey="1">1</MenuItem>
               <MenuItem eventKey="2">2</MenuItem>
               <MenuItem eventKey="3">3</MenuItem>

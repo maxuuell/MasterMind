@@ -19,7 +19,8 @@ export default class NBackGame extends React.Component {
       litSquare: 0,
       matchAsserted: false,
       showModal: true,
-      borderColor: 0
+      borderColor: 0,
+      modalSelector: "n: How many back?"
     };
     this.beginRound = this.beginRound.bind(this);
     this.endRound = this.endRound.bind(this);
@@ -78,7 +79,10 @@ export default class NBackGame extends React.Component {
   }
 
   setN(event, skips) {
+    console.log("Firing")
     this.setState({n: event});
+    this.setState({modalSelector: event})
+    console.log(this.state.modalSelector);
   }
 
   assertMatch() {
@@ -201,6 +205,7 @@ export default class NBackGame extends React.Component {
         closeModal={this.closeModal}
         openModal={this.openModal}
         showModal={this.state.showModal}
+        modalSelector={this.state.modalSelector}
         />
         <div onClick={()=>this.assertMatch()} className="squareBox" style={{width: "300px", margin: "5px auto"}}>
           {_.range(9).map((i) => <NBackSquare key={i} squareId={i} litSquare={this.state.litSquare}/>)}
