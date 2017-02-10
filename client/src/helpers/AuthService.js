@@ -24,8 +24,8 @@ export default class AuthService extends EventEmitter {
         console.log('Error loading the Profile', error)
       } else {
         var headers = new Headers({'Content-Type': 'application/json'});
-        var name = profile.name;
-        var email = profile.email;
+
+        var {name, email} = profile;
         var data = {name, email}
 
         fetch("/api/user", {
@@ -43,7 +43,6 @@ export default class AuthService extends EventEmitter {
   }
 
   setProfile(profile) {
-    console.log('in profile', profile);
     localStorage.setItem('profile', JSON.stringify(profile))
     browserHistory.replace('/profile')
     this.emit('profile_updated', profile)
