@@ -18,11 +18,24 @@ export default class AuthService extends EventEmitter {
     // Saves the user token
     this.setToken(authResult.idToken)
 
+
     this.lock.getProfile(authResult.idToken, (error, profile) => {
       if (error) {
         console.log('Error loading the Profile', error)
       } else {
-        console.log('here before set')
+        var headers = new Headers({'Content-Type': 'application/json'});
+
+        var {name, email} = profile;
+        var data = {name, email}
+
+        fetch("/api/user", {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify(data)
+        })
+          .then(user=> {
+            console.log('user posted', user);
+          })
         this.setProfile(profile)
       }
     })
@@ -30,7 +43,6 @@ export default class AuthService extends EventEmitter {
   }
 
   setProfile(profile) {
-    console.log('in profile', profile);
     localStorage.setItem('profile', JSON.stringify(profile))
     browserHistory.replace('/profile')
     this.emit('profile_updated', profile)
