@@ -7,7 +7,6 @@ mongoose.Promise = global.Promise;
 module.exports = {
   // this works
   userCheck: function (req, res) {
-    console.log('body', req.body);
     var name = req.body.name;
 
     models.User.findOne({name: name}, function(err, user) {
