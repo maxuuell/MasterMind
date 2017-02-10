@@ -1,34 +1,18 @@
 import React, { Component } from 'react';
 import { ProfileHeader } from './ProfileHeader';
+import { Games } from './Games';
+import { Table } from 'react-bootstrap';
+import { GAMES } from '../../constants/games';
 
 export default class ProfileContainer extends Component {
   constructor(props) {
-    /**
-     * state shape: {
-     *  name: 'Cory',
-     *  scores: [
-     *    {name: '?',
-     *    gameName: 'nback',
-     *    score: 9000,
-     *    level: 1,
-     *    date: '1/12/2016'},
-     *    {name: '?',
-     *    gameName: 'nback',
-     *    score: 9000,
-     *    level: 1,
-     *    date: '1/12/2016'}
-     *  ],
-     *  loadingScores: true,
-     *  profile: auth0_profile // not sure if this is needed
-     * }
-     *
-     */
     super(props);
     this.state = {
       loadingData: false,
       profile: this.props.profile,
       games: []
     };
+    this.filterGamesByName = this.filterGamesByName.bind(this);
   }
 
   componentWillMount() {
@@ -53,11 +37,24 @@ export default class ProfileContainer extends Component {
     return profile ? `${profile.given_name}'s ` : '';
   }
 
+  filterGamesByName(name) {
+    var filteredGames = this.state.games.filter(game => {
+      return game.gameName === name
+    })
+
+    var sorted = filteredGames.sort(g => new Date(g.date))
+    return sorted.slice(0,5);
+  }
+
   render() {
     return (
       <div>
         <h1 className="text-center">{this.getProfileName(this.state.profile)}Profile</h1>
         <ProfileHeader totalGames={this.state.games.length}/>
+          {GAMES.map((name, i) => {
+            var filtered = this.filterGamesByName(name);
+            return <Games key={i} gameName={name} filteredGames={filtered}/>;
+          })}
       </div>
     );
   }
