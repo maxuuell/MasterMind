@@ -85,6 +85,7 @@ a:after {
 
 canvas {
 	display: inline-block !important;
+    margin-top: 20px;
 }
 
 .navbar {
