@@ -7,13 +7,8 @@ import App from './components/App';
 import SignUp from './components/SignUp';
 import Homepage from './components/Homepage';
 import GameMemory from './components/Memory/GameMemory';
-<<<<<<< HEAD
 import { Leaderboard } from './components/Leaderboard';
 import ProfileContainer from './components/Profile/ProfileContainer';
-=======
-import Leaderboard from './components/Leaderboard';
-import { Profile } from './components/Profile';
->>>>>>> Add leaderboard components that show links to games and a table.
 import NBackGame from './components/nBack/nBackGame';
 import Simon from './components/Simon/Simon.js';
 
@@ -30,7 +25,6 @@ const requireAuth = (nextState, replace) => {
 const profile = auth.getProfile();
 
 render(
-<<<<<<< HEAD
   <Router history={ browserHistory }>
     <Route path="/" component = { App } auth={ auth }>
       <IndexRoute component={ Homepage }></IndexRoute>
@@ -47,20 +41,5 @@ render(
       <Route path="simon" component={ Simon }/>
     </Route>
   </Router>
-=======
-    <Router history={ browserHistory }>
-      <Route path="/" component = { App } auth={ auth }>
-        <IndexRoute component={ Homepage }></IndexRoute>
-        <Route path="memorygame" component={ GameMemory }/>
-        <Route path="leaderboard" component={ Leaderboard }/>
-        <Route path="profile" component={ Profile } onEnter={ requireAuth }/>
-        <Route path="scramblegame" component={ GameScramble }/>
-        <Route path="signup" component={ SignUp }/>
-        <Route path="nback" component={ NBackGame }/>
-        <Route path="simon" component={ Simon }/>
-
-      </Route>
-    </Router>
->>>>>>> Add leaderboard components that show links to games and a table.
   , app
 );
