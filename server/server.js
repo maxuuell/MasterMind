@@ -20,7 +20,7 @@ var rootPath = path.join(__dirname, '/..');
 app.use(express.static(rootPath));
 
 // get endpoints
-app.get("/api/:name/scores", listeners.userScores);
+app.get("/api/user/:email/scores", listeners.userScores);
 
 // post endpoints
 app.post("/api/game", listeners.addGame);
