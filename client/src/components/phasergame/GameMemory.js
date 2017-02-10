@@ -14,7 +14,7 @@ export default class GameMemory extends React.Component {
   }
 
   createGame() {
-    var game = new Phaser.Game(740, 480, Phaser.AUTO, 'phaser-game', {preload: preload, create: create});
+    var game = new Phaser.Game(740, 480, Phaser.AUTO, 'phaser-game', {preload: preload, create: create, update: update});
 
     var blocks, colWidth = 6, colHeight = 6, displacementX = 110, displacementY = 70, startingPositionX = 80, startingPositionY = 50;
     var answers, text, previouslyClickedBlock;
@@ -56,6 +56,10 @@ export default class GameMemory extends React.Component {
 
       text = game.add.text(250, 16, 'Try to find the matching pairs', {fill: '#eeeeee'});
       blocks.onChildInputDown.add(onBlockClicked, this);
+    }
+
+    function update() {
+      
     }
 
     function onBlockClicked(block, pointer) {
