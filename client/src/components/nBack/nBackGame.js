@@ -18,7 +18,8 @@ export default class NBackGame extends React.Component {
       roundsLeft: 24,
       litSquare: 0,
       matchAsserted: false,
-      showModal: true
+      showModal: true,
+      borderColor: 0
     };
     this.beginRound = this.beginRound.bind(this);
     this.endRound = this.endRound.bind(this);
@@ -29,14 +30,16 @@ export default class NBackGame extends React.Component {
     this.unlightSquare = this.unlightSquare.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
-    this.startNewGame =this.startNewGame.bind(this);
+    this.startNewGame = this.startNewGame.bind(this);
+    this.showAgreement = this.showAgreement.bind(this);
+    this.agreementHelper = this.agreementHelper.bind(this);
   }
 
   beginRound() {
     var newHistory = this.state.calledSquares.slice();
     var square = Math.floor(Math.random() * 9);
+    console.log("Square: " + square);
     this.lightSquare(square);
-    console.log("Firing " + square)
     newHistory.push(square);
     this.setState({'calledSquares': newHistory})
     this.commence = setTimeout(()=>{this.endRound()}, 3000);
@@ -46,10 +49,10 @@ export default class NBackGame extends React.Component {
     var newHistory = this.state.calledSquares.slice();
     var scored = (newHistory[0] === newHistory[newHistory.length - 1]) === this.state.matchAsserted;
     if (scored) {
-      //showAgreement();
+      this.showAgreement(1);
       this.setState({score: this.state.score + 1})
     } else {
-      //showDisagreement();
+      this.showAgreement(2);
     }
     newHistory.shift();
     this.setState({matchAsserted: false,
@@ -64,7 +67,9 @@ export default class NBackGame extends React.Component {
   }
 
   setN(event, skips) {
-    this.setState({n: skips})
+    console.log(event);
+    this.setState({n: event});
+    console.log("n:" + this.state.n);
   }
 
   assertMatch() {
@@ -86,12 +91,18 @@ export default class NBackGame extends React.Component {
     this.preGame = setTimeout(()=>{this.beginRound()}, 750);
   }
 
-  showAgreement() {
-    //animate board to show user got answer correct
+  showAgreement(code) {
+    if(code === 1) {
+      this.setState({borderColor: 1})
+    }
+    if (code === 2) {
+      this.setState({borderColor: 2})
+    }
+    this.flash = setTimeout(()=>{this.agreementHelper()}, 250);
   }
 
-  showDisagreement () {
-    //animate board to show user got answer incorrect
+  agreementHelper() {
+    this.setState({borderColor: 0});
   }
 
   unlightSquare() {
@@ -112,6 +123,9 @@ export default class NBackGame extends React.Component {
     }
     if (this.preGame) {
       clearTimeout(this.preGame);
+    }
+    if (this.flash) {
+      clearTimeout(this.flash);
     }
   }
 
@@ -146,13 +160,23 @@ export default class NBackGame extends React.Component {
   }
 
   closeModal() {
-    console.log("Closing modal");
     this.setState({ showModal: false });
   }
 
   openModal() {
-    console.log("Opening modal");
     this.setState({ showModal: true });
+  }
+
+  answerFlash(color) {
+    if (color === 1) {
+      return "youScore"
+    }
+    if (color === 2) {
+      return "squareContainer youFail"
+    }
+    else {
+      return "squareContainer"
+    }
   }
 
   render() {
@@ -166,7 +190,7 @@ export default class NBackGame extends React.Component {
         openModal={this.openModal}
         showModal={this.state.showModal}
         />
-        <div className="squareContainer" style={{width: "300px", margin: "5px auto"}}>
+        <div className={this.answerFlash(this.state.borderColor)} style={{width: "300px", margin: "5px auto"}}>
           {_.range(9).map((i) => <NBackSquare key={i} squareId={i} litSquare={this.state.litSquare}/>)}
         </div>
         <div className="score">Score: {this.state.score}</div>
