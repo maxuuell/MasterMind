@@ -25,17 +25,21 @@ const requireAuth = (nextState, replace) => {
 const profile = auth.getProfile();
 
 render(
-    <Router history={ browserHistory }>
-      <Route path="/" component = { App } auth={ auth }>
-        <IndexRoute component={ Homepage }></IndexRoute>
-        <Route path="memorygame" component={ GameMemory }/>
-        <Route path="leaderboard" component={ Leaderboard }/>
-        <Route path="profile" component={ ProfileContainer } onEnter={ requireAuth }/>
-        <Route path="scramblegame" component={ GameScramble }/>
-        <Route path="signup" component={ SignUp }/>
-        <Route path="nback" component={ NBackGame }/>
-        <Route path="simon" component={ Simon }/>
-      </Route>
-    </Router>
+  <Router history={ browserHistory }>
+    <Route path="/" component = { App } auth={ auth }>
+      <IndexRoute component={ Homepage }></IndexRoute>
+      <Route path="memorygame" component={ GameMemory }/>
+      <Route path="leaderboard" component={ Leaderboard }/>
+      <Route path="profile" component={ ProfileContainer } onEnter={ requireAuth } />
+      <Route path="profile/nback" />
+      <Route path="profile/scramble" />
+      <Route path="profile/simon" />
+      <Route path="profile/memory" />
+      <Route path="scramblegame" component={ GameScramble }/>
+      <Route path="signup" component={ SignUp }/>
+      <Route path="nback" component={ NBackGame }/>
+      <Route path="simon" component={ Simon }/>
+    </Route>
+  </Router>
   , app
 );

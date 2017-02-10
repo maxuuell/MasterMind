@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ProfileHeader } from './ProfileHeader';
 
 export default class ProfileContainer extends Component {
   constructor(props) {
@@ -32,8 +33,6 @@ export default class ProfileContainer extends Component {
   }
 
   getProfileName(profile) {
-    //TODO better way to get profile through components
-    console.log('profile', profile);
     return profile ? `${profile.given_name}'s ` : '';
   }
 
@@ -41,6 +40,7 @@ export default class ProfileContainer extends Component {
     return (
       <div>
         <h1 className="text-center">{this.getProfileName(this.state.profile)}Profile</h1>
+        <ProfileHeader />
       </div>
     );
   }
