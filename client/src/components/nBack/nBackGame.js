@@ -40,17 +40,20 @@ export default class NBackGame extends React.Component {
     var newHistory = this.state.calledSquares.slice();
     var square;
     if (newHistory[0]) {
+      //if a match is possible, the square should match 30% of the time
       if (Math.random() < .3) {
         square = newHistory[0];
       }
     }
     if (!square) {
+      //otherwise, choose a random square to fire
       square = Math.floor(Math.random() * 9);
     }
     console.log("---------> Round " + this.state.roundsLeft + " <--------- \n Square: " + square);
     this.lightItUp = setTimeout(this.lightSquare(square), 500);
     newHistory.push(square);
     this.setState({'calledSquares': newHistory})
+    //end round after 3 seconds
     this.commence = setTimeout(()=>{this.endRound()}, 3000);
   }
 
@@ -63,13 +66,18 @@ export default class NBackGame extends React.Component {
     if (scored) {
       this.showAgreement(1);
       this.setState({score: this.state.score + 1})
+      //score twice if you had to take action to match
+      if (this.state.matchAsserted) {this.setState({score: this.state.score + 1});}
     } else {
       this.showAgreement(2);
     }
+    //shift off the oldest square
     newHistory.shift();
+    //decrease the rounds and set a new history
     this.setState({matchAsserted: false,
       roundsLeft: this.state.roundsLeft - 1,
-      calledSquares: newHistory});
+      calledSquares: newHistory
+    });
     if (this.state.roundsLeft === 0) {
       this.saveScore();
     }
@@ -78,22 +86,24 @@ export default class NBackGame extends React.Component {
     }
   }
 
+  //change the number of intervals between matches
   setN(event, skips) {
-    console.log("Firing")
     this.setState({n: event});
     this.setState({modalSelector: event})
-    console.log(this.state.modalSelector);
   }
 
+  //user asserts a match
   assertMatch() {
     this.setState({matchAsserted: true});
   }
 
   beginGame() {
     var newHistory = [];
+    //array should be the length of n
     while (newHistory.length < this.state.n) {
       newHistory.push(null);
     }
+    //set the initial state for each new game
     this.setState({
       score: 0,
       roundsLeft: 24,
@@ -101,9 +111,11 @@ export default class NBackGame extends React.Component {
       matchAsserted: false,
       calledSquares: newHistory
     })
+    //give the user about a second before starting the game
     this.preGame = setTimeout(()=>{this.beginRound()}, 750);
   }
 
+  //show agreement or disagreement by temporarily changing css properties
   showAgreement(code) {
     if(code === 1) {
       this.setState({borderColor: 1})
@@ -122,6 +134,7 @@ export default class NBackGame extends React.Component {
     this.setState({litSquare: null});
   }
 
+  //flash squares by temporarily changing css properties
   lightSquare(square) {
     this.setState({litSquare: square});
     this.unLightItUp = setTimeout(()=>{this.unlightSquare()}, 2500);
@@ -145,6 +158,7 @@ export default class NBackGame extends React.Component {
     }
   }
 
+  //change how game score is saved **************************
   saveScore() {
     //post the score to the backend if user is logged in
     console.log(this.state.score);
@@ -170,6 +184,7 @@ export default class NBackGame extends React.Component {
     }
   }
 
+  //close the modal and start a new game
   startNewGame() {
     this.closeModal();
     this.beginGame();
@@ -183,6 +198,7 @@ export default class NBackGame extends React.Component {
     this.setState({ showModal: true });
   }
 
+  //provide css class based on input
   answerFlash(color) {
     if (color === 1) {
       return "youScore score"

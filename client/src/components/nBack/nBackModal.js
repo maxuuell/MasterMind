@@ -38,7 +38,7 @@ export const NBackModal = ({
               <MenuItem eventKey="8">8</MenuItem>
             </SplitButton>
             <h4>The n-Back Game</h4>
-            <p>Gameplay is simple. Push any key when the square that flashes matches the square that flashed n times ago. If you are playing 2 back and the squares light up in the order top, middle, top, you would hit a key after the second top, because it matches the square that lit up two moves ago.</p>
+            <p>Gameplay is simple. Click anywhere on the board when the square that flashes matches the square that flashed n times ago. If you are playing 2 back and the squares light up in the order top, middle, top, you would hit a key after the second top, because it matches the square that lit up two moves ago.</p>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={()=>closeModal()}>Cancel</Button>
