@@ -23,6 +23,10 @@ export default class Homepage extends React.Component {
         <div>
         <Link to="/scramblegame"> Scramble</Link>
         </div>
+        <div>
+        <Link to="/simon">Simon</Link>
+        </div>
+
       </div>
       <div className="col-lg-4">
         <a className="zoom green" href="work01.html"><img className="img-responsive" src="assets/img/portfolio/port02.jpg" alt="" /></a>

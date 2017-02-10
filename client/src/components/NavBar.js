@@ -43,8 +43,8 @@ export default class Navigation extends Component {
               <LinkContainer to='/memorygame'>
                 <MenuItem eventKey={3.1}>Memory</MenuItem>
               </LinkContainer>
-              <LinkContainer to='/renata'>
-                <MenuItem eventKey={3.1}>Renata's Sweet Game</MenuItem>
+              <LinkContainer to='/simon'>
+                <MenuItem eventKey={3.1}>Simon</MenuItem>
               </LinkContainer>
             </NavDropdown>
             <LinkContainer to='/leaderboard'>
