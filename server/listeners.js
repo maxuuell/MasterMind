@@ -1,47 +1,81 @@
 var models = require("../database/models.js");
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-// var Q = require('q');
-//to remove the mongoose Promise deprecated warning
-mongoose.Promise = require('q').Promise;
-// mongoose.Promise = global.Promise;
-// mongoose.Promise = require('bluebird');
+
+mongoose.Promise = global.Promise;
 
 module.exports = {
+  // this works
   userCheck: function (req, res) {
-    console.log("Made it to the listener!")
-    var email = req.body.email;
-    
-    var userInfo = {
-      name: req.body.name,
-      email: email,
-      games: []
-    };
+    var name = req.body.name;
 
-    var promise = models.Users.findOne({email: email}).exec();
+    models.User.findOne({name: name}, function(err, user) {
+      if(err) {
+        console.log("Error: ", err);
+      } 
+      if (!user) {
+        var newUser = new models.User({
+          name: name,
+          email: req.body.email,
+          games: []
+        });
 
-    promise.then(function (user) {
-      console.log(user);
-      if(!user) {
-        console.log("no user!")
-        var newUser = new models.Users(userInfo);
-        newUser.save();
-        res.send({redirect: '/profile'});
-      } else {
-        res.send("User already exists.");
+        newUser.save(function (err, user) {
+          if (err) {
+            console.log("Error", err);
+          } else {
+            res.end("User added", user);
+          }  
+        })
       }
-    })
-
-    console.log("Promise: ", promise);
+      if (user) {
+        res.end("User already exists", user);
+      }
+    });
   },
 
-  fetchUserScores: function (req, res) {
-    var user = req.body.userName;
+  // this works!!
+  addGame: function (req, res) {
+    var name = req.body.name;
 
+    var gameObj = {
+      gameName: req.body.gameName,
+      score:  req.body.score,
+      date: new Date()
+    }
 
+    var newGame = new models.Game(gameObj);
 
+    models.User.findOne({name: name}, function(err, user) {
+      if (err) {
+        res.end("Error: ", err);
+      }
 
+      user.games.push(newGame);
+      
+      user.save(function (err, game) {
+        if (err) {
+          res.end("Error: ", err);
+        } else {
+          res.end("Game added");
+        }  
+      })
+    });
+  },
 
+  userScores: function (req, res) {
+    var name = req.params.name;
+    models.User.findOne({name: name}, function (err, user) {
+      if (err) {
+        res.end("Error: ", err);
+      }
+      
+      if (user) {
+        userGames = JSON.stringify(user.games);
+        console.log(userGames);
+        res.send(userGames);
+      }    
+    })
   }
 
 };
