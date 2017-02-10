@@ -51,7 +51,7 @@ module.exports = {
     /* 
     Note: add games is only meant to work after the userCheck 
     function above was fired.  addGame is not handled to check to 
-    see if a exists.
+    see if a user exists.
     */
     models.Score.findOne({scoreboard: 0}, function (err, scores) {
       if (err) {
