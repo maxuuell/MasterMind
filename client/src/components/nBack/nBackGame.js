@@ -39,7 +39,7 @@ export default class NBackGame extends React.Component {
     console.log("Firing " + square)
     newHistory.push(square);
     this.setState({'calledSquares': newHistory})
-    commence = setTimeout(()=>{this.endRound()}, 3000);
+    this.commence = setTimeout(()=>{this.endRound()}, 3000);
   }
 
   endRound() {
@@ -81,8 +81,9 @@ export default class NBackGame extends React.Component {
       roundsLeft: 24,
       litSquare: null,
       matchAsserted: false,
-      calledSquares: newHistory})
-    preGame = setTimeout(()=>{this.beginRound()}, 750);
+      calledSquares: newHistory
+    })
+    this.preGame = setTimeout(()=>{this.beginRound()}, 750);
   }
 
   showAgreement() {
@@ -99,18 +100,18 @@ export default class NBackGame extends React.Component {
 
   lightSquare(square) {
     this.setState({litSquare: square});
-    unLightItUp = setTimeout(()=>{console.log(this); this.unlightSquare()}, 2500)
+    this.unLightItUp = setTimeout(()=>{this.unlightSquare()}, 2500)
   }
 
   componentWillUnmount() {
-    if (commence) {
-      clearTimeout(commence);
+    if (this.commence) {
+      clearTimeout(this.commence);
     }
-    if (unLightItUp) {
-      clearTimeout(unLightItUp);
+    if (this.unLightItUp) {
+      clearTimeout(this.unLightItUp);
     }
-    if (preGame) {
-      clearTimeout(preGame);
+    if (this.preGame) {
+      clearTimeout(this.preGame);
     }
   }
 
