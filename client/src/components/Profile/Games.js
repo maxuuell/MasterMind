@@ -5,8 +5,8 @@ import { GameRow } from './GameRow';
 export const Games = ({gameName, filteredGames}) => {
   return (
     <Table id={`#{gameName}-table`}>
+      <h1>{gameName}</h1>
       <thead>
-        <h1>{gameName}</h1>
         <tr>
           <th>Date</th>
           <th>Score</th>

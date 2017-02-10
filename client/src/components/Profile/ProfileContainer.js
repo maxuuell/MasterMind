@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ProfileHeader } from './ProfileHeader';
 import { Games } from './Games';
+import { NbackTable } from './NbackTable';
 import { Table } from 'react-bootstrap';
 import { GAMES } from '../../constants/games';
 
@@ -47,6 +48,7 @@ export default class ProfileContainer extends Component {
   }
 
   render() {
+    const nBackGames = this.filterGamesByName('nback');
     return (
       <div>
         <h1 className="text-center">{this.getProfileName(this.state.profile)}Profile</h1>
@@ -55,6 +57,7 @@ export default class ProfileContainer extends Component {
             var filtered = this.filterGamesByName(name);
             return <Games key={i} gameName={name} filteredGames={filtered}/>;
           })}
+        <NbackTable filteredGames={nBackGames} />
       </div>
     );
   }
