@@ -24,12 +24,12 @@ module.exports = {
           if (err) {
             console.log("Error", err);
           } else {
-            res.end("User added", user);
+            res.send(user);
           }  
         })
       }
       if (user) {
-        res.end("User already exists", user);
+        res.send(user);
       }
     });
   },
@@ -39,20 +39,66 @@ module.exports = {
     var name = req.body.name;
 
     var gameObj = {
+      name: name,
       gameName: req.body.gameName,
       score:  req.body.score,
       date: new Date()
-    }
+    };
 
     var newGame = new models.Game(gameObj);
 
+    // add game instance to overall scoreboard
+    /* 
+    Note: add games is only meant to work after the userCheck 
+    function above was fired.  addGame is not handled to check to 
+    see if a exists.
+    */
+    models.Score.findOne({scoreboard: 0}, function (err, scores) {
+      if (err) {
+        res.end("Error: ", err);
+      }
+      if (!scores) {
+        var newScore = new models.Score ({
+          scoreboard: 0,
+          nback: [],
+          memory: [],
+          simon: [],
+          scramble: []
+        })
+
+        newScore[newGame.gameName].push(newGame);
+
+        newScore.save(function (err, game) {
+          if (err) {
+            res.end("Error: ", err);
+          } else {
+            res.end("Score added");
+          }  
+        })
+      }
+
+      if (scores) {
+        scores[newGame.gameName].push(newGame);
+
+        scores.save(function (err, game) {
+          if (err) {
+            res.end("Error: ", err);
+          } else {
+            res.end("Score added");
+          }  
+        })
+      }
+    })
+
+    // add new game instance to users object
     models.User.findOne({name: name}, function(err, user) {
       if (err) {
         res.end("Error: ", err);
       }
 
       user.games.push(newGame);
-      
+      console.log("just pushed to users game list");
+
       user.save(function (err, game) {
         if (err) {
           res.end("Error: ", err);
@@ -65,6 +111,7 @@ module.exports = {
 
   userScores: function (req, res) {
     var name = req.params.name;
+
     models.User.findOne({name: name}, function (err, user) {
       if (err) {
         res.end("Error: ", err);
