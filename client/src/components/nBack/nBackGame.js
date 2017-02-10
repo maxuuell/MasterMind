@@ -19,7 +19,8 @@ export default class NBackGame extends React.Component {
       litSquare: 0,
       matchAsserted: false,
       showModal: true,
-      borderColor: 0
+      borderColor: 0,
+      modalSelector: "n: How many back?"
     };
     this.beginRound = this.beginRound.bind(this);
     this.endRound = this.endRound.bind(this);
@@ -37,9 +38,17 @@ export default class NBackGame extends React.Component {
 
   beginRound() {
     var newHistory = this.state.calledSquares.slice();
-    var square = Math.floor(Math.random() * 9);
-    console.log("Square: " + square);
-    this.lightSquare(square);
+    var square;
+    if (newHistory[0]) {
+      if (Math.random() < .3) {
+        square = newHistory[0];
+      }
+    }
+    if (!square) {
+      square = Math.floor(Math.random() * 9);
+    }
+    console.log("---------> Round " + this.state.roundsLeft + " <--------- \n Square: " + square);
+    this.lightItUp = setTimeout(this.lightSquare(square), 500);
     newHistory.push(square);
     this.setState({'calledSquares': newHistory})
     this.commence = setTimeout(()=>{this.endRound()}, 3000);
@@ -48,6 +57,9 @@ export default class NBackGame extends React.Component {
   endRound() {
     var newHistory = this.state.calledSquares.slice();
     var scored = (newHistory[0] === newHistory[newHistory.length - 1]) === this.state.matchAsserted;
+    console.log("oldSqure: " + newHistory[0]);
+    console.log("asserted: " + this.state.matchAsserted);
+    console.log("Scored: " + scored);
     if (scored) {
       this.showAgreement(1);
       this.setState({score: this.state.score + 1})
@@ -67,9 +79,10 @@ export default class NBackGame extends React.Component {
   }
 
   setN(event, skips) {
-    console.log(event);
+    console.log("Firing")
     this.setState({n: event});
-    console.log("n:" + this.state.n);
+    this.setState({modalSelector: event})
+    console.log(this.state.modalSelector);
   }
 
   assertMatch() {
@@ -111,7 +124,7 @@ export default class NBackGame extends React.Component {
 
   lightSquare(square) {
     this.setState({litSquare: square});
-    this.unLightItUp = setTimeout(()=>{this.unlightSquare()}, 2500)
+    this.unLightItUp = setTimeout(()=>{this.unlightSquare()}, 2500);
   }
 
   componentWillUnmount() {
@@ -126,6 +139,9 @@ export default class NBackGame extends React.Component {
     }
     if (this.flash) {
       clearTimeout(this.flash);
+    }
+    if (this.lightItUp) {
+      clearTimeout(this.lightItUp);
     }
   }
 
@@ -169,19 +185,19 @@ export default class NBackGame extends React.Component {
 
   answerFlash(color) {
     if (color === 1) {
-      return "youScore"
+      return "youScore score"
     }
     if (color === 2) {
-      return "squareContainer youFail"
+      return "youFail score"
     }
     else {
-      return "squareContainer"
+      return "score"
     }
   }
 
   render() {
     return (
-      <div onKeyPress={this.assertMatch}>
+      <div>
         <NBackModal
         setN={this.setN}
         beginGame={this.beginGame}
@@ -189,11 +205,12 @@ export default class NBackGame extends React.Component {
         closeModal={this.closeModal}
         openModal={this.openModal}
         showModal={this.state.showModal}
+        modalSelector={this.state.modalSelector}
         />
-        <div className={this.answerFlash(this.state.borderColor)} style={{width: "300px", margin: "5px auto"}}>
+        <div onClick={()=>this.assertMatch()} className="squareBox" style={{width: "300px", margin: "5px auto"}}>
           {_.range(9).map((i) => <NBackSquare key={i} squareId={i} litSquare={this.state.litSquare}/>)}
         </div>
-        <div className="score">Score: {this.state.score}</div>
+        <div className={this.answerFlash(this.state.borderColor)}>Score: {this.state.score}</div>
       </div>
     );
   }
