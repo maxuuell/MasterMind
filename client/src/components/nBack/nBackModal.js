@@ -1,52 +1,31 @@
 import { Popover, Tooltip, Modal, Button, SplitButton, MenuItem } from 'react-bootstrap'
 
-export const NBackModal = React.createClass({
-  getInitialState() {
-    return { showModal: true };
-  },
-
-  startNewGame() {
-    this.close();
-    this.props.beginGame();
-  },
-
-  close() {
-    this.setState({ showModal: false });
-  },
-
-  open() {
-    this.setState({ showModal: true });
-  },
-
-  render() {
-    const popover = (
-      <Popover id="modal-popover" title="popover">
-        very popover. such engagement
-      </Popover>
-    );
-    const tooltip = (
-      <Tooltip id="modal-tooltip">
-        wow.
-      </Tooltip>
-    );
+export const NBackModal = ({
+    setN,
+    beginGame,
+    startNewGame,
+    closeModal,
+    openModal,
+    showModal
+  }) => {
 
     return (
       <div>
         <Button
           bsStyle="primary"
           bsSize="large"
-          onClick={this.open}
+          onClick={()=>openModal()}
         >
           n-Back Settings
         </Button>
 
-        <Modal show={this.state.showModal} onHide={this.close}>
+        <Modal show={showModal} onHide={()=>closeModal()}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>n-Back</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <h4>n-Back</h4>
-            <SplitButton bsSize="xsmall" title="n: How many back?" pullRight id="split-button-pull-right" onSelect={this.props.setN}>
+            <SplitButton bsSize="xsmall" title="n: How many back?" pullRight id="split-button-pull-right" onSelect={()=>setN}>
               <MenuItem eventKey="1">1</MenuItem>
               <MenuItem eventKey="2">2</MenuItem>
               <MenuItem eventKey="3">3</MenuItem>
@@ -60,11 +39,10 @@ export const NBackModal = React.createClass({
             <p>Gameplay is simple. Push any key when the square that flashes matches the square that flashed n times ago. If you are playing 2 back and the squares light up in the order top, middle, top, you would hit a key after the second top, because it matches the square that lit up two moves ago.</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.close}>Cancel</Button>
-            <Button onClick={this.startNewGame}>Start New Game</Button>
+            <Button onClick={()=>closeModal()}>Cancel</Button>
+            <Button onClick={()=>startNewGame()}>Start New Game</Button>
           </Modal.Footer>
         </Modal>
       </div>
     );
-  }
-});
+};

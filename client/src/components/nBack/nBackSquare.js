@@ -1,5 +1,4 @@
 const checkLitSquare = (litSquare, id) => {
-  console.log("Checking!")
   if (litSquare === id) {
     return "lit";
   } else {
