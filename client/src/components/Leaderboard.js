@@ -61,6 +61,10 @@ export default class Leaderboard extends React.Component {
     this.leaderboardFetch('memory');
   }
 
+  componentDidMount () {
+    this.nback();
+  }
+
   render() {
 
     return (
