@@ -4,6 +4,7 @@ import { Timer } from './Timer.js';
 import { Score } from './Score.js';
 import $ from 'jquery';
 import {X_MASHAPE_KEY} from '../config.js';
+import { ScrambleModal } from './scrambleModal';
 
 
 const NUM_WORDS = 5;
@@ -22,9 +23,9 @@ export default class GameScramble extends React.Component {
       definition: null,
       shuffled: null,
       score: 0,
-      timeLeft: 45
+      timeLeft: 45,
+      showModal: true
     };
-
     this.getWord = this.getWord.bind(this);
     this.shuffle = this.shuffle.bind(this);
     this.changeWord = this.changeWord.bind(this);
@@ -175,21 +176,16 @@ export default class GameScramble extends React.Component {
   }
 
   beginGame() {
-    var newHistory = [];
-    //array should be the length of n
-    while (newHistory.length < this.state.n) {
-      newHistory.push(null);
-    }
     //set the initial state for each new game
     this.setState({
+      userInput: '',
+      position: 1,
+      word: data[0],
+      definition: null,
+      shuffled: null,
       score: 0,
-      roundsLeft: 24,
-      litSquare: null,
-      matchAsserted: false,
-      calledSquares: newHistory
+      timeLeft: 45
     })
-    //give the user about a second before starting the game
-    this.preGame = setTimeout(()=>{this.beginRound()}, 750);
   }
 
   //close the modal and start a new game
@@ -212,6 +208,13 @@ export default class GameScramble extends React.Component {
     // }
     return (
       <div>
+        <ScrambleModal
+        beginGame={this.beginGame}
+        startNewGame={this.startNewGame}
+        closeModal={this.closeModal}
+        openModal={this.openModal}
+        showModal={this.state.showModal}
+        />
         <Timer time={this.state.timeLeft} />
         <h1> {this.state.shuffled} </h1>
         <h4> {this.state.definition} </h4>
