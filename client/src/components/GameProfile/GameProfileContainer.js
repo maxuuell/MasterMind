@@ -15,6 +15,8 @@ export default class GameProfileContainer extends Component {
     }
     this.getHeader = this.getHeader.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
+    this.paginateScores = this.paginateScores.bind(this)
+    this.getItemsAmount = this.getItemsAmount.bind(this)
   }
 
   componentWillMount() {
@@ -24,7 +26,10 @@ export default class GameProfileContainer extends Component {
         data.json()
           .then(scores => {
             var filteredGames = scores.filter(game => game.gameName === this.state.gameName)
-            this.setState({filteredGames, loadingData: false});
+            var sorted = filteredGames.sort((a,b) => {
+              return new Date(b.date) - new Date(a.date)
+            });
+            this.setState({filteredGames: sorted, loadingData: false});
           })
       })
       .catch(error => this.setState({loadingData: false}))
@@ -41,19 +46,31 @@ export default class GameProfileContainer extends Component {
   }
 
   paginateScores() {
+    var currentPage = this.state.activePage - 1;
+    var startingIdx = currentPage * 5;
+    var endingIdx = currentPage * 5 + 5;
+    return this.state.filteredGames.slice(startingIdx, endingIdx);
+  }
+
+  getItemsAmount() {
+    return Math.ceil(this.state.filteredGames.length/5);
   }
 
   render() {
     return (
       <div className='text-center'>
         <h1>{this.getHeader()}</h1>
+        <GameTable
+          gameName={this.state.gameName}
+          filteredGames={this.paginateScores()}
+        />
         <Pagination
           first
           last
           ellipsis
           boundaryLinks
           bsSize='medium'
-          items={100}
+          items={this.getItemsAmount()}
           maxButtons={10}
           activePage={this.state.activePage}
           onSelect={this.handleSelect}
