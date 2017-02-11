@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var gamesSchema = new Schema ({
   email: String,
+  userName: String,
   gameName: String,
   score:  Number,
   level: Number,

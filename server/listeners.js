@@ -37,10 +37,12 @@ module.exports = {
   // this works!!
   addGame: function (req, res) {
     console.log("AddGame Listener");
+    var userName = req.body.name;
     var email = req.body.email;
 
     var gameObj = {
       email: email,
+      userName: userName,
       gameName: req.body.gameName,
       score:  req.body.score,
       date: new Date()
@@ -81,15 +83,11 @@ module.exports = {
       }
 
       if (scores) {
-        console.log("Scores document: ", scores)
         
         var scoresArray = scores[newGame.gameName];
-        
-        console.log("Scores Array: ", scoresArray);
 
         // check length of array
         if (scoresArray.length < 10) {
-          console.log("Inside the if < 10");
           // if less than 10, push
           scoresArray.push(newGame);
           // if not,
@@ -104,7 +102,6 @@ module.exports = {
             scoresArray.push(newGame);
             // sort
             scoresArray.sort((a,b) => b.score - a.score);
-            console.log("ScoresArray after last sort.", scoresArray);
           }   
         }
 
