@@ -60,6 +60,7 @@ export default class GameProfileContainer extends Component {
     return (
       <div className='text-center'>
         <h1>{this.getHeader()}</h1>
+        <p>Total {this.state.gameName} games played: {this.state.filteredGames.length}</p>
         <GameTable
           gameName={this.state.gameName}
           filteredGames={this.paginateScores()}
