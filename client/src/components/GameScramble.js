@@ -158,7 +158,8 @@ export default class GameScramble extends React.Component {
       var obj = {
         email: this.profile.email,
         gameName: this.gametype,
-        score: this.state.score
+        score: this.state.score,
+        n: null
       };
       $.ajax({
         type: 'POST',
