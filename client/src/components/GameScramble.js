@@ -178,15 +178,15 @@ export default class GameScramble extends React.Component {
 
   beginGame() {
     //set the initial state for each new game
+    var context = this;
     this.setState({
       userInput: '',
       position: 1,
-      word: data[0],
       definition: null,
-      shuffled: null,
       score: 0,
       timeLeft: 45
-    })
+    });
+    this.changeWord(context);
   }
 
   //close the modal and start a new game
