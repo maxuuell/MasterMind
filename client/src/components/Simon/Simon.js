@@ -14,7 +14,7 @@ export default class Simon extends React.Component {
   }
 
   createGame() {
-    var game = new Phaser.Game(740, 480, Phaser.AUTO, 'simon', { preload: preload, create: create, update: update });
+    var game = new Phaser.Game(740, 480, Phaser.AUTO, 'simon', { preload: preload, create: create, update: update, render:render });
 
     var simon;
     var N = 1;
@@ -28,13 +28,31 @@ export default class Simon extends React.Component {
     var winner;
     var loser;
     var intro;
+    var width = 3;
+    var height = 2;
 
-    preload() {
-      game.load.image('background', 'client/src/components/Semory/imgs/blue.jpg');
-      game.load.spritesheet('item', 'client/src/components/Semory/imgs/number-buttons', 160, 160);
+    function preload() {
+      game.load.image('background', 'client/src/components/Simon/imgs/blue.jpg');
+      game.load.spritesheet('item', 'client/src/components/Simon/imgs/number-buttons.png', 160, 160);
     }
 
-    update() {
+    function create() {
+      game.add.sprite(0,0, "background");
+      simon = game.add.group();
+
+      for(var i =0; i < height; i++){
+        for(var j =0; j < width; j++){
+          simon.create(100 + (30*j), 100 + (30*i), 'item', 0+j+i )
+        }
+      }
+
+      introTween();
+      setUp();
+      setTimeout(function() { simonSequence();
+      intro = false; }, 6000);
+  }
+
+    function update() {
 
       if (simonSez) {
         if (game.time.now - timeCheck > 700 - N * 40) {
@@ -54,40 +72,7 @@ export default class Simon extends React.Component {
       }
     }
 
-    create() {
-
-      simon = game.add.group();
-      var item;
-
-      for (var i = 0; i < 3; i++) {
-        item = simon.create(150 + 168 * i, 150, 'item', i);
-        // Enable input.
-        item.inputEnabled = true;
-        item.input.start(0, true);
-        item.events.onInputDown.add(select);
-        item.events.onInputUp.add(release);
-        item.events.onInputOut.add(moveOff);
-        simon.getAt(i).alpha = 0;
-      }
-
-    for (var i = 0; i < 3; i++) {
-        item = simon.create(150 + 168 * i, 318, 'item', i + 3);
-        // Enable input.
-        item.inputEnabled = true;
-        item.input.start(0, true);
-        item.events.onInputDown.add(select);
-        item.events.onInputUp.add(release);
-        item.events.onInputOut.add(moveOff);
-        simon.getAt(i + 3).alpha = 0;
-    }
-
-    introTween();
-    setUp();
-    setTimeout(function() { simonSequence();
-      intro = false; }, 6000);
-
-
-    restart() {
+    function restart() {
       N = 1;
       userCount = 0;
       currentCount = 0;
@@ -100,7 +85,7 @@ export default class Simon extends React.Component {
       intro = false; }, 6000);
     }
 
-    introTween() {
+    function introTween() {
 
       intro = true;
 
@@ -114,7 +99,7 @@ export default class Simon extends React.Component {
 
     }
 
-    playerSequence(selected) {
+    function playerSequence(selected) {
 
       correctSquare = sequenceList[userCount];
       userCount++;
@@ -140,7 +125,7 @@ export default class Simon extends React.Component {
 
     }
 
-    simonSequence() {
+    function simonSequence() {
 
       simonSez = true;
       litSquare = sequenceList[currentCount];
@@ -150,7 +135,7 @@ export default class Simon extends React.Component {
 
     }
 
-    setUp() {
+    function setUp() {
 
       for (var i = 0; i < sequenceCount; i++) {
         thisSquare = game.rnd.integerInRange(0, 5);
@@ -159,13 +144,13 @@ export default class Simon extends React.Component {
 
     }
 
-    select(item, pointer) {
+    function select(item, pointer) {
       if (!simonSez && !intro && !loser && !winner) {
         item.alpha = 1;
       }
     }
 
-    release(item, pointer) {
+    function release(item, pointer) {
 
       if (!simonSez && !intro && !loser && !winner) {
         item.alpha = .25;
@@ -173,13 +158,13 @@ export default class Simon extends React.Component {
       }
     }
 
-    moveOff(item, pointer) {
+    function moveOff(item, pointer) {
       if (!simonSez && !intro && !loser && !winner) {
         item.alpha = .25;
       }
     }
 
-    render() {
+    function render() {
 
       if (!intro) {
         if (simonSez) {
@@ -199,6 +184,5 @@ export default class Simon extends React.Component {
 
     }
 
-  }
 }
 }
