@@ -7,7 +7,7 @@ mongoose.Promise = global.Promise;
 module.exports = {
   // this works
   userCheck: function (req, res) {
-    var name = req.body.email;
+    var name = req.body.name;
 
     models.User.findOne({name: name}, function(err, user) {
       if(err) {
@@ -36,28 +36,31 @@ module.exports = {
 
   // this works!!
   addGame: function (req, res) {
-    var name = req.body.name;
+    console.log("AddGame Listener");
+    var email = req.body.email;
 
     var gameObj = {
-      name: name,
+      email: email,
       gameName: req.body.gameName,
       score:  req.body.score,
       date: new Date()
     };
 
     var newGame = new models.Game(gameObj);
+    console.log("New Game Instance: ", newGame);
 
     // add game instance to overall scoreboard
     /* 
     Note: add games is only meant to work after the userCheck 
     function above was fired.  addGame is not handled to check to 
-    see if a exists.
+    see if a user exists.
     */
     models.Score.findOne({scoreboard: 0}, function (err, scores) {
       if (err) {
         res.end("Error: ", err);
       }
       if (!scores) {
+        console.log("No Score");
         var newScore = new models.Score ({
           scoreboard: 0,
           nback: [],
@@ -78,7 +81,32 @@ module.exports = {
       }
 
       if (scores) {
-        scores[newGame.gameName].push(newGame);
+        console.log("Scores document: ", scores)
+        
+        var scoresArray = scores[newGame.gameName];
+        
+        console.log("Scores Array: ", scoresArray);
+
+        // check length of array
+        if (scoresArray.length < 10) {
+          console.log("Inside the if < 10");
+          // if less than 10, push
+          scoresArray.push(newGame);
+          // if not,
+          scoresArray.sort((a,b) => b.score - a.score);
+        } else {
+            // compare to last index
+          if (scoresArray[scoresArray.length - 1].score < newGame.score) {
+            // if larger 
+            // pop last index
+            scoresArray.pop();
+            // add new game
+            scoresArray.push(newGame);
+            // sort
+            scoresArray.sort((a,b) => b.score - a.score);
+            console.log("ScoresArray after last sort.", scoresArray);
+          }   
+        }
 
         scores.save(function (err, game) {
           if (err) {
@@ -91,7 +119,7 @@ module.exports = {
     })
 
     // add new game instance to users object
-    models.User.findOne({name: name}, function(err, user) {
+    models.User.findOne({email: email}, function(err, user) {
       if (err) {
         res.end("Error: ", err);
       }
@@ -111,7 +139,6 @@ module.exports = {
 
   userScores: function (req, res) {
     var email = req.params.email;
-    console.log('hello', email)
 
     models.User.findOne({email}, function (err, user) {
       if (err) {
