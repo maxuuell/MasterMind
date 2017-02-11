@@ -10,7 +10,7 @@ const NUM_WORDS = 5;
 export default class NBackGame extends React.Component {
   constructor(props) {
     super(props);
-    this.gametype = 'nBack';
+    this.gametype = 'nback';
     this.profile = props.auth.getProfile();
     this.state = {
       n: 2,
@@ -160,7 +160,6 @@ export default class NBackGame extends React.Component {
     }
   }
 
-  //change how game score is saved **************************
   saveScore() {
     //post the score to the backend if user is logged in
     console.log(this.state.score);

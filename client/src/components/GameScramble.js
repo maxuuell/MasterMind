@@ -12,6 +12,7 @@ export default class GameScramble extends React.Component {
   constructor(props) {
     super(props);
     this.gametype = 'scramble';
+    this.profile = props.auth.getProfile();
     this.session = [];
     this.wordData = [];
     this.state = {
@@ -23,6 +24,20 @@ export default class GameScramble extends React.Component {
       score: 0,
       timeLeft: 45
     };
+
+    this.getWord = this.getWord.bind(this);
+    this.shuffle = this.shuffle.bind(this);
+    this.changeWord = this.changeWord.bind(this);
+    this.changeInput = this.changeInput.bind(this);
+    this.skipWord = this.skipWord.bind(this);
+    this.decrementTimer = this.decrementTimer.bind(this);
+    this.saveScore = this.saveScore.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.componentWillUnmount = this.componentWillUnmount.bind(this)
+    this.beginGame = this.beginGame.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.startNewGame = this.startNewGame.bind(this);
     //send a GET for random word
     var context = this;
     for (var i = 0; i < NUM_WORDS; i++) {
@@ -138,16 +153,15 @@ export default class GameScramble extends React.Component {
   saveScore() {
     //post the score to the backend if user is logged in
     console.log(this.state.score);
-    if (localStorage.username) {
-      console.log('scramble game username', localStorage.username);
+    if (this.profile) {
       var obj = {
-        username: localStorage.username,
-        gametype: this.gametype,
+        email: this.profile.email,
+        gameName: this.gametype,
         score: this.state.score
       };
       $.ajax({
         type: 'POST',
-        url: '/scores',
+        url: '/api/game',
         data: JSON.stringify(obj),
         contentType: 'application/json',
         success: function(data) {
@@ -156,8 +170,40 @@ export default class GameScramble extends React.Component {
       });
     } else {
       //nothing happens if username is not defined
-      console.log('nothing happens', localStorage.username);
+      console.log('nothing happens');
     }
+  }
+
+  beginGame() {
+    var newHistory = [];
+    //array should be the length of n
+    while (newHistory.length < this.state.n) {
+      newHistory.push(null);
+    }
+    //set the initial state for each new game
+    this.setState({
+      score: 0,
+      roundsLeft: 24,
+      litSquare: null,
+      matchAsserted: false,
+      calledSquares: newHistory
+    })
+    //give the user about a second before starting the game
+    this.preGame = setTimeout(()=>{this.beginRound()}, 750);
+  }
+
+  //close the modal and start a new game
+  startNewGame() {
+    this.closeModal();
+    this.beginGame();
+  }
+
+  closeModal() {
+    this.setState({ showModal: false });
+  }
+
+  openModal() {
+    this.setState({ showModal: true });
   }
 
   render() {
