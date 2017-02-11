@@ -41,38 +41,7 @@ export default class GameScramble extends React.Component {
     this.startNewGame = this.startNewGame.bind(this);
     //send a GET for random word
     var context = this;
-    for (var i = 0; i < NUM_WORDS; i++) {
-      this.getWord( function(word) {
-        context.wordData.push(word);
-      });
-    }
-  }
 
-  //returns a word and a definition
-  getWord(callback) {
-    var word = {};
-    var context = this;
-    var THE_X_MASHAPE_KEY = process.env.X_MASHAPE_KEY || X_MASHAPE_KEY;
-    $.ajax({
-      type: 'GET',
-      url: 'https://wordsapiv1.p.mashape.com/words/?random=true',
-      headers: {
-        'X-Mashape-Key': THE_X_MASHAPE_KEY,
-        Accept: 'application/json'
-      },
-      contentType: 'application/json',
-      success: function(data) {
-        //sometimes API returns result without definition, handle that
-        if (!data.results) {
-          console.log('word without definiton! try again');
-          context.getWord(callback);
-        } else {
-          word.word = data.word.toUpperCase();
-          word.definition = data.results[0].definition;
-          callback(word);
-        }
-      }
-    });
   }
 
   shuffle(string) {
