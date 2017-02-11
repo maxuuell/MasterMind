@@ -5,10 +5,10 @@
 html,
 body {
   height: 100%;
-  background-color: #333;
+  background-color: #fff;
 }
 body {
-  color: #fff;
+  color: #333;
   text-align: center;
   text-shadow: 0 1px 3px rgba(0,0,0,.5);
 }
@@ -38,4 +38,42 @@ input {
 
 .skipButton {
   margin-left: 3px;
+}
+
+/* glyphicon Configuration */
+
+.glyphicon {
+	font-size: 30px;
+	color: #1abc9c;
+}
+
+.glyphicon .glyphicon-user {
+    font-size: 30px;
+    background-color: #222;
+}
+
+.glyphicon .glyphicon-user:hover {
+    background-color: #222;
+}
+
+.lit {
+  background-color: red;
+  border-radius: 15%;
+}
+
+.notLit {
+  background-color: blue;
+  border-radius: 15%;
+}
+
+.youScore {
+  background-color: green;
+  border-width: 4px;
+  border-color: green;
+}
+
+.youFail {
+  background-color: red;
+  border-width: 4px;
+  border-color: red;
 }
