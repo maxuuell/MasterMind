@@ -167,7 +167,7 @@ export default class NBackGame extends React.Component {
     if (this.profile) {
       var obj = {
         email: this.profile.email,
-        gameNampe: this.gametype,
+        gameName: this.gametype,
         score: this.state.score
       };
       $.ajax({
