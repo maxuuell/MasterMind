@@ -8,7 +8,7 @@ export default class Leaderboard extends React.Component {
     super(props);
     this.state = {
       gameToRender: undefined,
-      gameInstances: [{name: "maxwell", score: 9001, date: "2/10/2017"}, {name: "maxwell", score: 8456, date: "2/08/2017"}, {name: "renata", score: 7866, date: "2/09/2017"}, {name: "andrew", score: 7865, date: "2/5/2017"}, {name: "andrew", score: 7801, date: "2/5/2017"}, {name: "andrew", score: 7790, date: "2/5/2017"}, {name: "andrew", score: 7789, date: "2/5/2017"}, {name: "andrew", score: 7230, date: "2/5/2017"}, {name: "jimmie", score: 6890, date: "2/09/2017"}, {name: "cory", score: 7, date: "2/04/2017"}]
+      gameInstances: []
     }
 
     this.nback = this.nback.bind(this);
@@ -18,24 +18,47 @@ export default class Leaderboard extends React.Component {
 
   }
 
+  leaderboardFetch(gameName) {
+    fetch(`/api/${gameName}/scores`, {
+      method: 'GET',
+      headers: new Headers({'Content-Type': 'application/json'})
+    }).then((response) => {
+      response.json().then((scoresArray) => {
+        this.setState({
+          gameInstances: scoresArray  
+        })
+      })
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
   nback() {
-    console.log("nback log");
     this.setState({
       gameToRender: "nback"
     })
-
+    this.leaderboardFetch('nback');
   }
 
   simon() {
-    console.log("simon log");
+    this.setState({
+      gameToRender: "simon"
+    })
+    this.leaderboardFetch('simon');
   }
 
   scramble() {
-    console.log("scramble log");
+    this.setState({
+      gameToRender: "scramble"
+    })
+    this.leaderboardFetch('scramble');
   }
 
   memory() {
-    console.log("memory log");
+    this.setState({
+      gameToRender: "memory"
+    })
+    this.leaderboardFetch('memory');
   }
 
   render() {

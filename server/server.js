@@ -21,6 +21,8 @@ app.use(express.static(rootPath));
 
 // get endpoints
 app.get("/api/user/:email/scores", listeners.userScores);
+// to get top ten scores of specific game
+app.get("/api/:game/scores", listeners.leaderBoard);
 
 // post endpoints
 app.post("/api/game", listeners.addGame);
