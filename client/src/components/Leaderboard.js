@@ -1,6 +1,7 @@
 import React from 'react';
+import { TableItem } from './TableItem.js';
+import { TableContainer } from './Table.js';
 import { Links } from './Links.js';
-import { Board } from './Board.js';
 
 export default class Leaderboard extends React.Component {
   constructor (props) {
@@ -42,13 +43,13 @@ export default class Leaderboard extends React.Component {
     return (
       <div>
         <h1>Leaderboards</h1>
-        <Links 
+        <Links
           nback={this.nback}
           simon={this.simon}
           scramble={this.scramble}
           memory={this.memory} 
         />
-        <Board 
+        <TableContainer
           gameTitle={this.state.gameToRender}
           games={this.state.gameInstances}
         />

@@ -7,7 +7,7 @@ import App from './components/App';
 import SignUp from './components/SignUp';
 import Homepage from './components/Homepage';
 import GameMemory from './components/Memory/GameMemory';
-import { Leaderboard } from './components/Leaderboard';
+import Leaderboard from './components/Leaderboard';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import NBackGame from './components/nBack/nBackGame';
 import Simon from './components/Simon/Simon.js';
