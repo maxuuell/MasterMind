@@ -1,5 +1,6 @@
-export const Music = () => {
-  return (
-    <div>Music</div>
-  );
-};
+import React from 'react';
+
+export default class Music extends React.Component {
+render(){}
+
+}

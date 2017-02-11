@@ -1,9 +1,7 @@
-export const UserEvents = () => {
-  return (
-    <div>
-    <button className="button">Start</button>
-    <button className="button" >Restart</button>
-    <button className="button" >Strict Mode</button>
-    </div>
-  );
+import React from 'react';
+
+export default class UserEvents extends React.Component {
+
+  render(){
+  }
 };
