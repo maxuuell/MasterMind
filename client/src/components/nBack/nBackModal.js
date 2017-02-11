@@ -26,7 +26,6 @@ export const NBackModal = ({
             <Modal.Title>n-Back</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <h4>n-Back</h4>
             <SplitButton bsSize="xsmall" title={modalSelector} pullRight id="split-button-pull-right" onSelect={setN}>
               <MenuItem eventKey="1">1</MenuItem>
               <MenuItem eventKey="2">2</MenuItem>
