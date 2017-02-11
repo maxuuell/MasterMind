@@ -23,13 +23,14 @@ export default class ProfileContainer extends Component {
       .then(data => {
         data.json()
           .then(games => {
-            this.setState({loadingData: false, games})
+            this.setState({games, loadingData: false})
           })
       })
       .catch(e => {
         console.log('Error', e)
         this.setState({loadingData: false})
       })
+
   }
 
   getProfileName(profile) {

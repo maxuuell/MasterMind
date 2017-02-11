@@ -11,6 +11,7 @@ import ProfileContainer from './components/Profile/ProfileContainer';
 import NBackGame from './components/nBack/nBackGame';
 import Simon from './components/Simon/Simon.js';
 import GameProfileContainer from './components/GameProfile/GameProfileContainer';
+import NbackProfile from './components/GameProfile/NbackProfile';
 
 const app = document.getElementById('app');
 const auth = new AuthService('xkMUjA7Bggf2NQ4W0uZlU4wv1pqd6aDD', 'buzzme.auth0.com');
