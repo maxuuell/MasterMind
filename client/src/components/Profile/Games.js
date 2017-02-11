@@ -3,6 +3,7 @@ import { Table } from 'react-bootstrap';
 import { GameRow } from '../shared/GameRow';
 
 export const Games = ({gameName, filteredGames}) => {
+  //TODO fix props in GameRow
   return (
     <div>
       <h1>{gameName}</h1>
@@ -13,7 +14,7 @@ export const Games = ({gameName, filteredGames}) => {
             <th>Score</th>
           </tr>
         </thead>
-        {filteredGames.map((game, i) => <GameRow key={i} date={game.date} score={game.score}/>)}
+        {filteredGames.map((game, i) => <GameRow key={i} date={game.date} score={game.score} game={game}/>)}
       </Table>
     </div>
   )

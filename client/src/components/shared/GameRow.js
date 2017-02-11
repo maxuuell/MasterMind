@@ -1,10 +1,10 @@
 import React from 'react';
 
-export const GameRow = ({date, score, level}) =>
+export const GameRow = ({date, score, game}) =>
   <tbody>
     <tr className='text-left'>
       <td>{new Date(date).toLocaleDateString()}</td>
-      <td>{level ? `${score}%` : score}</td>
-      {level ? <td>{level}</td> : null}
+      <td>{game.level ? `${score}%` : score}</td>
+      {game.level ? <td>{game.level}</td> : null}
     </tr>
   </tbody>
