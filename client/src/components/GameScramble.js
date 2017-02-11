@@ -101,7 +101,7 @@ export default class GameScramble extends React.Component {
       });
       context.wordData.shift();
     } else {
-      var random
+      var random;
       while (random === undefined) {
         var possible = Math.floor(Math.random()*data.length);
         if (context.session.indexOf(possible) === -1){
@@ -152,6 +152,7 @@ export default class GameScramble extends React.Component {
   }
 
   saveScore() {
+    alert("The game is over. Open the settings to start a new game!");
     //post the score to the backend if user is logged in
     console.log(this.state.score);
     if (this.profile) {
