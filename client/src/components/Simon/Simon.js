@@ -16,20 +16,8 @@ export default class Simon extends React.Component {
   createGame() {
     var game = new Phaser.Game(740, 480, Phaser.AUTO, 'simon', { preload: preload, create: create, update: update, render:render });
 
-    var simon;
-    var N = 1;
-    var userCount = 0;
-    var currentCount = 0;
-    var sequenceCount = 16;
+    var simon, width = 3, height = 2, minCount = 1, maxCount = 10;
     var sequenceList = [];
-    var simonSez = false;
-    var timeCheck;
-    var litSquare;
-    var winner;
-    var loser;
-    var intro;
-    var width = 3;
-    var height = 2;
 
     function preload() {
       game.load.image('background', 'client/src/components/Simon/imgs/blue.jpg');
@@ -39,150 +27,47 @@ export default class Simon extends React.Component {
     function create() {
       game.add.sprite(0,0, "background");
       simon = game.add.group();
+      simon.inputEnableChildren = true;
 
       for(var i =0; i < height; i++){
         for(var j =0; j < width; j++){
-          simon.create(100 + (30*j), 100 + (30*i), 'item', 0+j+i )
+          if(i > 0){
+            var item = simon.create(120 + (200*j), 100 + (160*i), 'item', 3+j );
+            item.tileId = 3+j;
+          } else {
+            var item = simon.create(120 + (200*j), 100 + (160*i), 'item', 0+j );
+            item.tileId = 0+j;
+          }
+            item.scale.setTo(0.7);
         }
       }
 
-      introTween();
-      setUp();
-      setTimeout(function() { simonSequence();
-      intro = false; }, 6000);
+      //Set onChildInputDown event listener
+      simon.onChildInputDown.add(onTileClicked, this);
   }
+
+    function createSequence() {
+      sequenceList = [];
+      // generate a random number between 1 and maxCount
+      var num = Math.floor(game.rnd.realInRange(minCount, maxCount));
+
+      // for loop
+      for(var i = 0; i <= num; i++) {
+        var newNum = Math.floor(game.rnd.realInRange(0, 5));
+        sequenceList.push(newNum);
+      }
+    }
 
     function update() {
 
-      if (simonSez) {
-        if (game.time.now - timeCheck > 700 - N * 40) {
-        simon.getAt(litSquare).alpha = .25;
-        game.paused = true;
-
-          setTimeout(function() {
-            if (currentCount < N) {
-              game.paused = false;
-              simonSequence();
-            } else {
-              simonSez = false;
-              game.paused = false;
-            }
-          }, 400 - N * 20);
-        }
-      }
-    }
-
-    function restart() {
-      N = 1;
-      userCount = 0;
-      currentCount = 0;
-      sequenceList = [];
-      winner = false;
-      loser = false;
-      introTween();
-      setUp();
-      setTimeout(function() { simonSequence();
-      intro = false; }, 6000);
-    }
-
-    function introTween() {
-
-      intro = true;
-
-      for (var i = 0; i < 6; i++) {
-        var flashing = game.add.tween(simon.getAt(i)).to({ alpha: 1 }, 500, Phaser.Easing.Linear.None, true, 0, 4, true);
-        var final = game.add.tween(simon.getAt(i)).to({ alpha: .25 }, 500, Phaser.Easing.Linear.None, true);
-
-        flashing.chain(final);
-        flashing.start();
-      }
-
-    }
-
-    function playerSequence(selected) {
-
-      correctSquare = sequenceList[userCount];
-      userCount++;
-      thisSquare = simon.getIndex(selected);
-
-      if (thisSquare == correctSquare) {
-        if (userCount == N) {
-          if (N == sequenceCount) {
-            winner = true;
-            setTimeout(function() { restart(); }, 3000);
-            }
-          else {
-            userCount = 0;
-            currentCount = 0;
-            N++;
-            simonSez = true;
-          }
-        }
-      } else {
-          loser = true;
-          setTimeout(function() { restart(); }, 3000);
-      }
-
-    }
-
-    function simonSequence() {
-
-      simonSez = true;
-      litSquare = sequenceList[currentCount];
-      simon.getAt(litSquare).alpha = 1;
-      timeCheck = game.time.now;
-      currentCount++;
-
-    }
-
-    function setUp() {
-
-      for (var i = 0; i < sequenceCount; i++) {
-        thisSquare = game.rnd.integerInRange(0, 5);
-        sequenceList.push(thisSquare);
-      }
-
-    }
-
-    function select(item, pointer) {
-      if (!simonSez && !intro && !loser && !winner) {
-        item.alpha = 1;
-      }
-    }
-
-    function release(item, pointer) {
-
-      if (!simonSez && !intro && !loser && !winner) {
-        item.alpha = .25;
-        playerSequence(item);
-      }
-    }
-
-    function moveOff(item, pointer) {
-      if (!simonSez && !intro && !loser && !winner) {
-        item.alpha = .25;
-      }
     }
 
     function render() {
-
-      if (!intro) {
-        if (simonSez) {
-        game.debug.text('Simon Sez', 360, 96, 'rgb(255,0,0)');
-        } else {
-        game.debug.text('Your Turn', 360, 96, 'rgb(0,255,0)');
-        }
-      } else {
-        game.debug.text('Get Ready', 360, 96, 'rgb(0,0,255)');
-      }
-
-      if (winner) {
-        game.debug.text('You Win!', 360, 32, 'rgb(0,0,255)');
-      } else if (loser) {
-        game.debug.text('You Lose!', 360, 32, 'rgb(0,0,255)');
-      }
-
     }
 
+    function onTileClicked(tile, pointer){
+      console.log(tile.tileId, "Tile");
+      console.log(pointer, "Pointer");
+    }
 }
 }
