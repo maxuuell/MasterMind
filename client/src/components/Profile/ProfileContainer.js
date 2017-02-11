@@ -4,6 +4,7 @@ import { Games } from './Games';
 import { NbackTable } from './NbackTable';
 import { Table } from 'react-bootstrap';
 import { GAMES } from '../../constants/games';
+import { fetchScores } from '../../helpers/fetchScores';
 
 export default class ProfileContainer extends Component {
   constructor(props) {
@@ -18,10 +19,7 @@ export default class ProfileContainer extends Component {
 
   componentWillMount() {
     this.setState({loadingData: true});
-    fetch(`api/user/${this.state.profile.email}/scores`, {
-      method: "GET",
-      headers: new Headers({'Content-Type': 'application/json'})
-    })
+    fetchScores(this.state.profile.email)
       .then(data => {
         data.json()
           .then(games => {
