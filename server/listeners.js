@@ -150,6 +150,21 @@ module.exports = {
         res.send(user.games);
       }    
     })
+  },
+
+  leaderBoard: function (req, res) {
+    var game = req.params.game;
+
+    models.Score.findOne({scoreboard: 0}, function (err, scores) {
+      if (err) {
+        res.end("Error: ", err);
+      }
+
+      if(scores) {
+        var topTenScoresArray = scores[game];
+        res.send(JSON.stringify(topTenScoresArray));
+      }
+    })
   }
 
 };
