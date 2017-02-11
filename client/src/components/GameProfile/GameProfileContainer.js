@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Pagination } from 'react-bootstrap';
 import { GameTable } from './GameTable';
+import { Graph } from './Graph';
 import { fetchScores } from '../../helpers/fetchScores';
 
 export default class GameProfileContainer extends Component {
@@ -76,6 +77,7 @@ export default class GameProfileContainer extends Component {
           activePage={this.state.activePage}
           onSelect={this.handleSelect}
         />
+        <Graph filteredGames={this.state.filteredGames} />
       </div>
     )
   }
