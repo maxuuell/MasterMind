@@ -44,6 +44,17 @@ input {
   margin-left: 3px;
 }
 
+#profile-dropdown {
+  padding: 2px 6px 2px 6px;
+  margin-top: 7px;
+  background-color: #222;
+  border-color: transparent;
+}
+
+#profile-dropdown:hover {
+  border-color: #1abc9c;
+}
+
 /* glyphicon Configuration */
 
 .glyphicon {
@@ -51,8 +62,8 @@ input {
 	color: #1abc9c;
 }
 
-.glyphicon .glyphicon-user {
-    font-size: 30px;
+.glyphicon-user {
+    font-size: 25px;
     background-color: #222;
 }
 
@@ -80,4 +91,27 @@ input {
   background-color: red;
   border-width: 4px;
   border-color: red;
+}
+
+/* Navbar Configuration*/
+
+.navbar {
+  border-color: #1abc9c;
+}
+
+.navbar .navbar-brand:hover {
+  color: #1abc9c;
+}
+
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
+    color: #1abc9c;
+    background-color: #080808;
+}
+
+.navbar-inverse .navbar-nav>li>a:hover {
+    color: #1abc9c;
+}
+
+.navbar .dropdown-menu {
+
 }
