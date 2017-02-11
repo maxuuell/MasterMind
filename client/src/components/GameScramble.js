@@ -158,6 +158,7 @@ export default class GameScramble extends React.Component {
     if (this.profile) {
       var obj = {
         email: this.profile.email,
+        name: this.profile.name,
         gameName: this.gametype,
         score: this.state.score,
         n: null
