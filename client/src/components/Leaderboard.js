@@ -35,28 +35,28 @@ export default class Leaderboard extends React.Component {
 
   nback() {
     this.setState({
-      gameToRender: "nback"
+      gameToRender: "NBack"
     })
     this.leaderboardFetch('nback');
   }
 
   simon() {
     this.setState({
-      gameToRender: "simon"
+      gameToRender: "Simon"
     })
     this.leaderboardFetch('simon');
   }
 
   scramble() {
     this.setState({
-      gameToRender: "scramble"
+      gameToRender: "Scramble"
     })
     this.leaderboardFetch('scramble');
   }
 
   memory() {
     this.setState({
-      gameToRender: "memory"
+      gameToRender: "Memory"
     })
     this.leaderboardFetch('memory');
   }
