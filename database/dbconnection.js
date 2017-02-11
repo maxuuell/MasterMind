@@ -1,11 +1,13 @@
 var mongoose = require("mongoose");
 
 // to establish mLabUri for Heroku's cloud hosted mongo db
-var mLabUri = 'mongodb://' + process.env.DBUSER + ':' + process.env.DBPASS + '@ds137749.mlab.com:37749/megaminds';
+var mLabUri = 'mongodb://' + process.env.DBUSER + ':' + process.env.DBPASS + '@ds147979.mlab.com:47979/megaminds';
 
 var localMongoUri = 'mongodb://localhost/megaminds';
 
-mongoose.connect(localMongoUri);
+var MONGO_URI = (process.env.NODE_ENV === 'production') ? mLabUri : localMongoUri;
+
+mongoose.connect(MONGO_URI);
 
 var db = mongoose.connection;
 
