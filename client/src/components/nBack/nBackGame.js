@@ -173,10 +173,11 @@ export default class NBackGame extends React.Component {
   saveScore() {
     //post the score to the backend if user is logged in
     console.log(this.state.score);
-    alert("The game is over. Open the settings to start a new game!")
+    alert("The game is over. Open the settings to start a new game!");
     if (this.profile) {
       var obj = {
         email: this.profile.email,
+        name: this.profile.name,
         gameName: this.gametype,
         score: this.state.score,
         n: this.state.n
