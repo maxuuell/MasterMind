@@ -43,10 +43,9 @@ module.exports = {
     // format date
     var dateObj = new Date();
     var day = dateObj.getDate();
-    var month = dateObj.getMonght() + 1;
+    var month = dateObj.getMonth() + 1;
     var year = dateObj.getFullYear();
     var formatedDate = `${month}/${day}/${year}`;
-
 
     var gameObj = {
       email: email,
