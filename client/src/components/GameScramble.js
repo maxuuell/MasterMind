@@ -26,7 +26,6 @@ export default class GameScramble extends React.Component {
       timeLeft: 45,
       showModal: true
     };
-    this.getWord = this.getWord.bind(this);
     this.shuffle = this.shuffle.bind(this);
     this.changeWord = this.changeWord.bind(this);
     this.changeInput = this.changeInput.bind(this);

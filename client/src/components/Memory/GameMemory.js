@@ -1,9 +1,33 @@
 import React from 'react';
+import { MemoryModal } from './memoryModal';
+
 
 export default class GameMemory extends React.Component {
+  constructor(props) {
+    super(props);
+    this.gametype = 'memory';
+    this.profile = props.auth.getProfile();
+    this.state = {
+      score: 0,
+      showModal: true
+    };
+    this.saveScore = this.saveScore.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.beginGame = this.beginGame.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.startNewGame = this.startNewGame.bind(this);
+  }
   render() {
     return (
       <div>
+        <MemoryModal
+        beginGame={this.beginGame}
+        startNewGame={this.startNewGame}
+        closeModal={this.closeModal}
+        openModal={this.openModal}
+        showModal={this.state.showModal}
+        />
         <div id="phaser-game"></div>
       </div>
     );
@@ -11,6 +35,51 @@ export default class GameMemory extends React.Component {
 
   componentDidMount() {
     this.createGame();
+  }
+
+  saveScore() {
+    //********************Call this at the end of the game!*******************
+    alert("The game is over. Open the settings to start a new game!");
+    console.log(this.state.score);
+    if (this.profile) {
+      var obj = {
+        email: this.profile.email,
+        name: this.profile.name,
+        gameName: this.gametype,
+        score: this.state.score,
+        n: null
+      };
+      $.ajax({
+        type: 'POST',
+        url: '/api/game',
+        data: JSON.stringify(obj),
+        contentType: 'application/json',
+        success: function(data) {
+          console.log('data', data);
+        }
+      });
+    } else {
+      //nothing happens if username is not defined
+      console.log('nothing happens');
+    }
+  }
+
+  beginGame() {
+    //************Set state to opening conditions and start a new game****************
+  }
+
+  //close the modal and start a new game
+  startNewGame() {
+    this.closeModal();
+    this.beginGame();
+  }
+
+  closeModal() {
+    this.setState({ showModal: false });
+  }
+
+  openModal() {
+    this.setState({ showModal: true });
   }
 
   createGame() {
@@ -59,7 +128,7 @@ export default class GameMemory extends React.Component {
     }
 
     function update() {
-      
+
     }
 
     function onBlockClicked(block, pointer) {
@@ -84,7 +153,7 @@ export default class GameMemory extends React.Component {
         }
       }
     }
-    
+
     function findAvailableSprite() {
       var randomizedID = Math.floor(game.rnd.realInRange(0, blockTypes.length));
       if (randomizedID > 35) {
@@ -95,7 +164,7 @@ export default class GameMemory extends React.Component {
       if (selectedBlock.amountUsed < 2) {
         selectedBlock.amountUsed++;
         return selectedBlock.spriteIndex;
-      } 
+      }
       else {
         for (var i = 0; i < blockTypes.length; i++) {
           if (blockTypes[i].amountUsed < 2) {
@@ -128,5 +197,5 @@ export default class GameMemory extends React.Component {
       }, this);
     }
   }
-  
+
 }
