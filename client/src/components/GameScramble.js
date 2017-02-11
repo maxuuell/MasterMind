@@ -78,7 +78,7 @@ export default class GameScramble extends React.Component {
   shuffle(string) {
     var characters = string.split('');
     var length = characters.length;
-    for (var i = length - 1; i > 0; i--) {
+    for (var i = length - 1; i > 0; i-=2) {
       var j = Math.floor(Math.random() * (i + 1));
       var temp = characters[i];
       characters[i] = characters[j];
