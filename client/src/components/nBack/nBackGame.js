@@ -21,7 +21,9 @@ export default class NBackGame extends React.Component {
       matchAsserted: false,
       showModal: true,
       borderColor: 0,
-      modalSelector: "n: How many back?"
+      modalSelector: "n: How many back?",
+      numerator: 0
+
     };
     this.beginRound = this.beginRound.bind(this);
     this.endRound = this.endRound.bind(this);
@@ -61,16 +63,23 @@ export default class NBackGame extends React.Component {
 
   endRound() {
     var newHistory = this.state.calledSquares.slice();
-    var scored = (newHistory[0] === newHistory[newHistory.length - 1]) === this.state.matchAsserted;
-    console.log("oldSqure: " + newHistory[0]);
-    console.log("asserted: " + this.state.matchAsserted);
-    console.log("Scored: " + scored);
-    if (scored) {
-      this.showAgreement(1);
-      this.setState({score: this.state.score + 1})
-      //score twice if you had to take action to match
-      if (this.state.matchAsserted) {this.setState({score: this.state.score + 1});}
+    var matched = newHistory[0] === newHistory[newHistory.length - 1];
+    var correct =  matched === this.state.matchAsserted;
+    if (correct) {
+      var wins = this.state.numerator + 1;
+      var denom = 25 - this.state.roundsLeft;
+      var score = Math.floor((wins/denom) * 100);
+      this.setState({
+        numerator: wins,
+        score: score
+      });
     } else {
+      var wins = this.state.numerator;
+      var denom = 25 - this.state.roundsLeft;
+      var score = Math.floor((wins/denom) * 100);
+      this.setState({
+        score: score
+      });
       this.showAgreement(2);
     }
     //shift off the oldest square
@@ -111,7 +120,8 @@ export default class NBackGame extends React.Component {
       roundsLeft: 24,
       litSquare: null,
       matchAsserted: false,
-      calledSquares: newHistory
+      calledSquares: newHistory,
+      numerator: 0
     })
     //give the user about a second before starting the game
     this.preGame = setTimeout(()=>{this.beginRound()}, 750);
@@ -163,6 +173,7 @@ export default class NBackGame extends React.Component {
   saveScore() {
     //post the score to the backend if user is logged in
     console.log(this.state.score);
+    alert("The game is over. Open the settings to start a new game!")
     if (this.profile) {
       var obj = {
         email: this.profile.email,
@@ -202,7 +213,7 @@ export default class NBackGame extends React.Component {
   //provide css class based on input
   answerFlash(color) {
     if (color === 1) {
-      return "youScore score"
+      return "score"
     }
     if (color === 2) {
       return "youFail score"
@@ -226,7 +237,7 @@ export default class NBackGame extends React.Component {
         />
         <div onClick={()=>this.assertMatch()} className="squareBox" style={{width: "300px", margin: "5px auto"}}>
           {_.range(9).map((i) => <NBackSquare key={i} squareId={i} litSquare={this.state.litSquare}/>)}
-          <div className={this.answerFlash(this.state.borderColor)}>Score: {this.state.score}</div>
+          <div className={this.answerFlash(this.state.borderColor)}>Score: {this.state.score}%</div>
         </div>
       </div>
     );
