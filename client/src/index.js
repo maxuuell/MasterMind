@@ -31,10 +31,10 @@ render(
       <Route path="memorygame" component={ GameMemory } />
       <Route path="leaderboard" component={ Leaderboard } />
       <Route path="profile" component={ ProfileContainer } onEnter={ requireAuth } />
-      <Route path="profile/nback" onEnter={ requireAuth } />
-      <Route path="profile/scramble" component={GameProfileContainer} onEnter={ requireAuth } gameName='scramble' />
-      <Route path="profile/simon" onEnter={ requireAuth } />
-      <Route path="profile/memory" onEnter={ requireAuth } />
+      <Route path="profile/nback" onEnter={ requireAuth } component={ NbackProfile } />
+      <Route path="profile/scramble" component={ GameProfileContainer } onEnter={ requireAuth } gameName='scramble' />
+      <Route path="profile/simon" component={GameProfileContainer} onEnter={ requireAuth } />
+      <Route path="profile/memory" component={ GameProfileContainer }onEnter={ requireAuth } />
       <Route path="scramblegame" component={ GameScramble }/>
       <Route path="nback" component={ NBackGame }/>
       <Route path="simon" component={ Simon }/>

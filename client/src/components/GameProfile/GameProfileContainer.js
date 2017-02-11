@@ -14,6 +14,10 @@ export default class GameProfileContainer extends Component {
     this.handleSelect = this.handleSelect.bind(this)
   }
 
+  componentWillMount() {
+    console.log('Mounted GameProfile')
+  }
+
   getHeader() {
     return `${this.props.profile.given_name}'s ${this.state.gameName} Stats`;
   }
@@ -27,7 +31,7 @@ export default class GameProfileContainer extends Component {
   render() {
     return (
       <div className='text-center'>
-        <h1 className='text-center'>{this.getHeader()}</h1>
+        <h1>{this.getHeader()}</h1>
         <Pagination
           bsSize='medium'
           items={10}
