@@ -4,7 +4,6 @@ import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 import AuthService from './helpers/AuthService';
 import GameScramble from './components/GameScramble';
 import App from './components/App';
-import SignUp from './components/SignUp';
 import Homepage from './components/Homepage';
 import GameMemory from './components/Memory/GameMemory';
 import Leaderboard from './components/Leaderboard';
@@ -36,7 +35,6 @@ render(
       <Route path="profile/simon" />
       <Route path="profile/memory" />
       <Route path="scramblegame" component={ GameScramble }/>
-      <Route path="signup" component={ SignUp }/>
       <Route path="nback" component={ NBackGame }/>
       <Route path="simon" component={ Simon }/>
     </Route>

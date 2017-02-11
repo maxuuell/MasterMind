@@ -10,7 +10,8 @@ const NUM_WORDS = 5;
 export default class NBackGame extends React.Component {
   constructor(props) {
     super(props);
-    this.gametype = 'scramble';
+    this.gametype = 'nBack';
+    this.profile = props.auth.getProfile();
     this.state = {
       n: 2,
       calledSquares: [null, null],
@@ -34,6 +35,7 @@ export default class NBackGame extends React.Component {
     this.startNewGame = this.startNewGame.bind(this);
     this.showAgreement = this.showAgreement.bind(this);
     this.agreementHelper = this.agreementHelper.bind(this);
+    console.log(this.profile);
   }
 
   beginRound() {
@@ -162,16 +164,15 @@ export default class NBackGame extends React.Component {
   saveScore() {
     //post the score to the backend if user is logged in
     console.log(this.state.score);
-    if (localStorage.username) {
-      console.log('scramble game username', localStorage.username);
+    if (this.profile) {
       var obj = {
-        username: localStorage.username,
-        gametype: this.gametype,
+        email: this.profile.email,
+        gameNampe: this.gametype,
         score: this.state.score
       };
       $.ajax({
         type: 'POST',
-        url: '/scores',
+        url: '/api/game',
         data: JSON.stringify(obj),
         contentType: 'application/json',
         success: function(data) {
@@ -180,7 +181,7 @@ export default class NBackGame extends React.Component {
       });
     } else {
       //nothing happens if username is not defined
-      console.log('nothing happens', localStorage.username);
+      console.log('nothing happens');
     }
   }
 
@@ -207,7 +208,7 @@ export default class NBackGame extends React.Component {
       return "youFail score"
     }
     else {
-      return "score"
+      return "score "
     }
   }
 
@@ -225,8 +226,8 @@ export default class NBackGame extends React.Component {
         />
         <div onClick={()=>this.assertMatch()} className="squareBox" style={{width: "300px", margin: "5px auto"}}>
           {_.range(9).map((i) => <NBackSquare key={i} squareId={i} litSquare={this.state.litSquare}/>)}
+          <div className={this.answerFlash(this.state.borderColor)}>Score: {this.state.score}</div>
         </div>
-        <div className={this.answerFlash(this.state.borderColor)}>Score: {this.state.score}</div>
       </div>
     );
   }
