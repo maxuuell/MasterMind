@@ -24,8 +24,8 @@ export const ScrambleModal = ({
             <Modal.Title>Scramble</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <h4>The Scramble Game</h4>
-            <p>--Write Description--</p>
+            <h4>JavaScript Scramble Game</h4>
+            <p>The idea is simple. We scramble a word. You unscramble that word and type it in. Get it right, and you get another word. If you get stuck, you can always skip to the next word, but watch your score if you do!</p>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={()=>closeModal()}>Cancel</Button>
