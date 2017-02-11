@@ -19,7 +19,7 @@ export const GameTable = ({gameName, filteredGames}) => {
           {isNback(filteredGames) ? <th>Level</th> : null}
         </tr>
       </thead>
-      {filteredGames.map((game, i) => <GameRow key={i} date={game.date} score={game.score} game={game}/>)}
+      {filteredGames.map((game, i) => <GameRow key={i} date={game.date} score={game.score} game={game} />)}
     </Table>
   )
 }

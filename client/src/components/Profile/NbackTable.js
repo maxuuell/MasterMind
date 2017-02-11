@@ -14,7 +14,7 @@ export const NbackTable = ({filteredGames}) => {
             <th>Level</th>
           </tr>
         </thead>
-        {filteredGames.map((game, i) => <GameRow key={i} date={game.date} score={game.score} level={game.level}/>)}
+        {filteredGames.map((game, i) => <GameRow key={i} date={game.date} score={game.score} level={game.level} game={game}/>)}
       </Table>
     </div>
   )
