@@ -8,11 +8,16 @@ export default class GameProfileContainer extends Component {
       filteredGames: [],
       gameName: this.props.location.pathname.split('/')[2]
     }
+    this.getHeader = this.getHeader.bind(this)
+  }
+
+  getHeader() {
+    return `${this.props.profile.given_name}'s ${this.state.gameName} Stats`;
   }
 
   render() {
     return (
-      <h1>GameProfileContainer</h1>
+      <h1 className='text-center'>{this.getHeader()}</h1>
     )
   }
 }
