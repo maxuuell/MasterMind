@@ -44,7 +44,7 @@ export default class ProfileContainer extends Component {
     });
 
     var sorted = filteredGames.sort((a,b) => {
-      return new Date(a.date) - new Date(b.date)
+      return new Date(b.date) - new Date(a.date)
     });
     return sorted.slice(0,5);
   }
