@@ -182,18 +182,16 @@ export default class NBackGame extends React.Component {
         score: this.state.score,
         n: this.state.n
       };
-      $.ajax({
-        type: 'POST',
-        url: '/api/game',
-        data: JSON.stringify(obj),
-        contentType: 'application/json',
-        success: function(data) {
-          console.log('data', data);
-        }
+      fetch(`/api/game`, {
+        method: 'POST',
+        headers: new Headers({'Content-Type': 'application/json'}),
+        body: JSON.stringify(obj)
+      })
+      .then((response) => {
+        console.log("Game Posted");
+      }).catch((err) => {
+        console.log(err);
       });
-    } else {
-      //nothing happens if username is not defined
-      console.log('nothing happens');
     }
   }
 
