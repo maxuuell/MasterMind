@@ -40,16 +40,23 @@ module.exports = {
     var userName = req.body.name;
     var email = req.body.email;
 
+    // format date
+    var dateObj = new Date();
+    var day = dateObj.getDate();
+    var month = dateObj.getMonght() + 1;
+    var year = dateObj.getFullYear();
+    var formatedDate = `${month}/${day}/${year}`;
+
+
     var gameObj = {
       email: email,
       userName: userName,
       gameName: req.body.gameName,
       score:  req.body.score,
-      date: new Date()
+      date: formatedDate
     };
 
     var newGame = new models.Game(gameObj);
-    console.log("New Game Instance: ", newGame);
 
     // add game instance to overall scoreboard
     /* 
@@ -61,8 +68,9 @@ module.exports = {
       if (err) {
         res.end("Error: ", err);
       }
+
       if (!scores) {
-        console.log("No Score");
+
         var newScore = new models.Score ({
           scoreboard: 0,
           nback: [],
@@ -122,7 +130,6 @@ module.exports = {
       }
 
       user.games.push(newGame);
-      console.log("just pushed to users game list");
 
       user.save(function (err, game) {
         if (err) {
@@ -143,7 +150,6 @@ module.exports = {
       }
       
       if (user) {
-        console.log('games', user.games);
         res.send(user.games);
       }    
     })
