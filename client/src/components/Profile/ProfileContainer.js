@@ -4,6 +4,7 @@ import { Games } from './Games';
 import { NbackTable } from './NbackTable';
 import { Table } from 'react-bootstrap';
 import { GAMES } from '../../constants/games';
+import { fetchScores } from '../../helpers/fetchScores';
 
 export default class ProfileContainer extends Component {
   constructor(props) {
@@ -18,20 +19,18 @@ export default class ProfileContainer extends Component {
 
   componentWillMount() {
     this.setState({loadingData: true});
-    fetch(`api/user/${this.state.profile.email}/scores`, {
-      method: "GET",
-      headers: new Headers({'Content-Type': 'application/json'})
-    })
+    fetchScores(this.state.profile.email)
       .then(data => {
         data.json()
           .then(games => {
-            this.setState({loadingData: false, games})
+            this.setState({games, loadingData: false})
           })
       })
       .catch(e => {
         console.log('Error', e)
         this.setState({loadingData: false})
       })
+
   }
 
   getProfileName(profile) {
@@ -41,9 +40,11 @@ export default class ProfileContainer extends Component {
   filterGamesByName(name) {
     var filteredGames = this.state.games.filter(game => {
       return game.gameName === name
-    })
+    });
 
-    var sorted = filteredGames.sort(g => new Date(g.date))
+    var sorted = filteredGames.sort((a,b) => {
+      return new Date(b.date) - new Date(a.date)
+    });
     return sorted.slice(0,5);
   }
 
@@ -53,10 +54,10 @@ export default class ProfileContainer extends Component {
       <div>
         <h1 className="text-center">{this.getProfileName(this.state.profile)}Profile</h1>
         <ProfileHeader totalGames={this.state.games.length}/>
-          {GAMES.map((name, i) => {
-            var filtered = this.filterGamesByName(name);
-            return <Games key={i} gameName={name} filteredGames={filtered}/>;
-          })}
+        {GAMES.map((name, i) => {
+          var filtered = this.filterGamesByName(name);
+          return <Games key={i} gameName={name} filteredGames={filtered}/>;
+        })}
         <NbackTable filteredGames={nBackGames} />
       </div>
     );

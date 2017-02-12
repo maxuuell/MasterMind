@@ -10,6 +10,8 @@ import Leaderboard from './components/Leaderboard';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import NBackGame from './components/nBack/nBackGame';
 import Simon from './components/Simon/Simon.js';
+import GameProfileContainer from './components/GameProfile/GameProfileContainer';
+import NbackProfile from './components/GameProfile/NbackProfile';
 
 const app = document.getElementById('app');
 const auth = new AuthService('xkMUjA7Bggf2NQ4W0uZlU4wv1pqd6aDD', 'buzzme.auth0.com');
@@ -27,13 +29,13 @@ render(
   <Router history={ browserHistory }>
     <Route path="/" component = { App } auth={ auth }>
       <IndexRoute component={ Homepage }></IndexRoute>
-      <Route path="memorygame" component={ GameMemory }/>
-      <Route path="leaderboard" component={ Leaderboard }/>
+      <Route path="memorygame" component={ GameMemory } />
+      <Route path="leaderboard" component={ Leaderboard } />
       <Route path="profile" component={ ProfileContainer } onEnter={ requireAuth } />
-      <Route path="profile/nback" />
-      <Route path="profile/scramble" />
-      <Route path="profile/simon" />
-      <Route path="profile/memory" />
+      <Route path="profile/nback" onEnter={ requireAuth } component={ GameProfileContainer } />
+      <Route path="profile/scramble" component={ GameProfileContainer } onEnter={ requireAuth } gameName='scramble' />
+      <Route path="profile/simon" component={GameProfileContainer} onEnter={ requireAuth } />
+      <Route path="profile/memory" component={ GameProfileContainer } onEnter={ requireAuth } />
       <Route path="scramblegame" component={ GameScramble }/>
       <Route path="nback" component={ NBackGame }/>
       <Route path="simon" component={ Simon }/>
