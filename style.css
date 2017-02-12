@@ -124,3 +124,9 @@ input {
 .navbar .dropdown-menu {
 
 }
+
+/*Jumbotron Configuration*/
+
+.jumbotron {
+  background-color: transparent;
+}
