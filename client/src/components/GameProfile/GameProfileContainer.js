@@ -58,27 +58,31 @@ export default class GameProfileContainer extends Component {
   }
 
   render() {
-    return (
-      <div className='center-block'>
-        <h1>{this.getHeader()}</h1>
-        <p>Total {this.state.gameName} games played: {this.state.filteredGames.length}</p>
-        <GameTable
-          gameName={this.state.gameName}
-          filteredGames={this.paginateScores()}
-        />
-        <Pagination
-          first
-          last
-          ellipsis
-          boundaryLinks
-          bsSize='medium'
-          items={this.getItemsAmount()}
-          maxButtons={10}
-          activePage={this.state.activePage}
-          onSelect={this.handleSelect}
-        />
-        <Graph filteredGames={this.state.filteredGames} />
-      </div>
-    )
+    if (this.state.loadingData) {
+      return <img className='center-block' src='/assets/img/loading.gif' />
+    } else {
+      return (
+        <div className='center-block'>
+          <h1>{this.getHeader()}</h1>
+          <p>Total {this.state.gameName} games played: {this.state.filteredGames.length}</p>
+          <GameTable
+            gameName={this.state.gameName}
+            filteredGames={this.paginateScores()}
+          />
+          <Pagination
+            first
+            last
+            ellipsis
+            boundaryLinks
+            bsSize='medium'
+            items={this.getItemsAmount()}
+            maxButtons={10}
+            activePage={this.state.activePage}
+            onSelect={this.handleSelect}
+          />
+          <Graph filteredGames={this.state.filteredGames} />
+        </div>
+      )
+    }
   }
 }
