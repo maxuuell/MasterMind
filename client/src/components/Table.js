@@ -4,7 +4,7 @@ import { Table } from 'react-bootstrap';
 
 export var TableContainer = ({gameTitle, games}) => {
   return (
-    <div>
+    <div className="ourTable center-block">
       <h1>{gameTitle}</h1>
       <Table striped bordered condensed>
         <thead>
@@ -20,12 +20,12 @@ export var TableContainer = ({gameTitle, games}) => {
             <TableItem
               game={game}
               key={index}
-              index={index + 1} 
+              index={index + 1}
             />
           )}
         </tbody>
       </Table>
     </div>
   )
-  
+
 }

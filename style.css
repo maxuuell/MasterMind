@@ -26,6 +26,15 @@ label {
   text-shadow: none;
 }
 
+.ourTable {
+  width: 75%;
+}
+
+.btn-us {
+  margin: 5px;
+  padding: 5px;
+}
+
 .panel-title {
   text-shadow: none;
 }
