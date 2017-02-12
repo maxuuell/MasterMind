@@ -7,16 +7,18 @@ export default class GameMemory extends React.Component {
     super(props);
     this.gametype = 'memory';
     this.profile = props.auth.getProfile();
+    this.needsRestart = false;
     this.state = {
       score: 0,
-      showModal: true
+      showModal: true,
+      game: false,
     };
     this.saveScore = this.saveScore.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
     this.beginGame = this.beginGame.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
     this.startNewGame = this.startNewGame.bind(this);
+    this.createGame = this.createGame.bind(this);
   }
   render() {
     return (
@@ -28,42 +30,45 @@ export default class GameMemory extends React.Component {
         openModal={this.openModal}
         showModal={this.state.showModal}
         />
-        <div id="phaser-game"></div>
+        <div id='phaser-game'></div>
       </div>
     );
   }
 
-  componentDidMount() {
-    this.createGame();
-  }
-
   saveScore() {
     //********************Call this at the end of the game!*******************
-    alert("The game is over. Open the settings to start a new game!");
-    console.log(this.state.score);
-    if (this.profile) {
-      var obj = {
-        email: this.profile.email,
-        name: this.profile.name,
-        gameName: this.gametype,
-        score: this.state.score,
-        n: null
-      };
-      fetch(`/api/game`, {
-        method: 'POST',
-        headers: new Headers({'Content-Type': 'application/json'}),
-        body: JSON.stringify(obj)
-      })
-      .then((response) => {
-        console.log("Game Posted");
-      }).catch((err) => {
-        console.log(err);
-      });
-    }
+    console.log('Saving the score!');
+    // alert("The game is over. Open the settings to start a new game!");
+    // console.log(this.state.score);
+    // if (this.profile) {
+    //   var obj = {
+    //     email: this.profile.email,
+    //     name: this.profile.name,
+    //     gameName: this.gametype,
+    //     score: this.state.score,
+    //     n: null
+    //   };
+    //   fetch(`/api/game`, {
+    //     method: 'POST',
+    //     headers: new Headers({'Content-Type': 'application/json'}),
+    //     body: JSON.stringify(obj)
+    //   })
+    //   .then((response) => {
+    //     console.log("Game Posted");
+    //   }).catch((err) => {
+    //     console.log(err);
+    //   });
+    // }
   }
 
   beginGame() {
     //************Set state to opening conditions and start a new game****************
+    console.log(this.state.game);
+    if (this.state.game === false) {
+      this.createGame();
+    } else {
+      this.needsRestart = true;
+    }
   }
 
   //close the modal and start a new game
@@ -81,10 +86,12 @@ export default class GameMemory extends React.Component {
   }
 
   createGame() {
+    var that = this;
     var game = new Phaser.Game(740, 480, Phaser.AUTO, 'phaser-game', {preload: preload, create: create, update: update});
+    this.setState({game: game});
 
     var blocks, colWidth = 6, colHeight = 6, displacementX = 110, displacementY = 70, startingPositionX = 80, startingPositionY = 50;
-    var answers, text, score = 0, previouslyClickedBlock, flipDelay = 0.3, initialDelay = 2;
+    var text, score = 0, previouslyClickedBlock, flipDelay = 0.3, initialDelay = 2;
     var blockTypes = [
       {amountUsed: 0, spriteIndex: 0},
       {amountUsed: 0, spriteIndex: 2},
@@ -106,31 +113,51 @@ export default class GameMemory extends React.Component {
       {amountUsed: 0, spriteIndex: 35},
     ];
 
-    function preload() {
-      game.load.image('background', 'client/src/components/Memory/graphics/breakout_bg.png');
-      game.load.spritesheet('board_sprites', 'client/src/components/Memory/graphics/breakout_sprites.png', 40, 40);
-    }
-
-    function create() {
+    function restart() {
+      if (blocks) {
+        for (var i = 0; i < blocks.children.length; i++) {
+          blocks.children[i].destroy();
+        }
+      }
+      previouslyClickedBlock = null;
+      for (var i = 0; i < blockTypes.length; i++) {
+        blockTypes[i].amountUsed = 0;
+      }
       var background = game.add.sprite(0, 0,'background');
       background.scale.setTo(1.2);
-
+      score = 0;
       blocks = game.add.group();
       blocks.enableBody = true;
       blocks.inputEnableChildren = true;
-      drawGrid(blocks, 'board_sprites', 1);
+      drawGrid(blocks, 'board_sprites');
       toggleBlocks(blocks.children, initialDelay);
 
       text = game.add.text(250, 16, 'Score ' + score, {fill: '#eeeeee'});
       blocks.onChildInputDown.add(onBlockClicked, this);
     }
 
-    function update() {
+    function preload() {
+      game.load.image('background', 'client/src/components/Memory/graphics/breakout_bg.png');
+      game.load.spritesheet('board_sprites', 'client/src/components/Memory/graphics/breakout_sprites.png', 40, 40);
+    }
 
+    function create() {
+      restart();
+    }
+
+    function update() {
+      if (that.needsRestart) {
+        console.log('Restart needed');
+        restart();
+        that.needsRestart = false;
+      }
     }
 
     function onBlockClicked(block, pointer) {
+      console.log('You clicked on ', block);
+      console.log('isClickable: ', block.isClickable);
       if (block.isClickable === true) {
+        console.log('Block was clickable');
         block.isClickable = false;
         block.loadTexture('board_sprites', block.blockID);
         if (previouslyClickedBlock)
@@ -153,10 +180,12 @@ export default class GameMemory extends React.Component {
     }
 
     function findAvailableSprite() {
+      console.log('Inside findAvailableSprite');
       var randomizedID = Math.floor(game.rnd.realInRange(0, blockTypes.length));
       if (randomizedID > 35) {
         randomizedID = 35;
       }
+
       var selectedBlock = blockTypes[randomizedID];
 
       if (selectedBlock.amountUsed < 2) {
@@ -173,7 +202,8 @@ export default class GameMemory extends React.Component {
       }
     }
 
-    function drawGrid(group, spriteSheet, indexInSheet) {
+    function drawGrid(group, spriteSheet) {
+      console.log('Inside drawGrid');
       for (var i = 0; i < colWidth; i++) {
         for (var j = 0; j < colHeight; j++) {
           var spriteID = findAvailableSprite();
@@ -185,12 +215,12 @@ export default class GameMemory extends React.Component {
       }
     }
 
-    function toggleBlocks(blocksToToggle, timeToWait) {
+    function toggleBlocks(blocksToToggle, timeToWait, texture) {
       timeToWait = timeToWait || 2;
-
+      texture = texture || 1;
       game.time.events.add(Phaser.Timer.SECOND * timeToWait, function() {
         for (var i = 0; i < blocksToToggle.length; i++) {
-          blocksToToggle[i].loadTexture('board_sprites', 1);
+          blocksToToggle[i].loadTexture('board_sprites', texture);
         }
       }, this);
     }
