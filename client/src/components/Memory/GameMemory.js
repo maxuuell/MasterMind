@@ -37,28 +37,27 @@ export default class GameMemory extends React.Component {
 
   saveScore() {
     //********************Call this at the end of the game!*******************
-    console.log('Saving the score!');
-    // alert("The game is over. Open the settings to start a new game!");
-    // console.log(this.state.score);
-    // if (this.profile) {
-    //   var obj = {
-    //     email: this.profile.email,
-    //     name: this.profile.name,
-    //     gameName: this.gametype,
-    //     score: this.state.score,
-    //     n: null
-    //   };
-    //   fetch(`/api/game`, {
-    //     method: 'POST',
-    //     headers: new Headers({'Content-Type': 'application/json'}),
-    //     body: JSON.stringify(obj)
-    //   })
-    //   .then((response) => {
-    //     console.log("Game Posted");
-    //   }).catch((err) => {
-    //     console.log(err);
-    //   });
-    // }
+    alert("The game is over. Open the settings to start a new game!");
+    console.log(this.state.score);
+    if (this.profile) {
+      var obj = {
+        email: this.profile.email,
+        name: this.profile.name,
+        gameName: this.gametype,
+        score: this.state.score,
+        n: null
+      };
+      fetch(`/api/game`, {
+        method: 'POST',
+        headers: new Headers({'Content-Type': 'application/json'}),
+        body: JSON.stringify(obj)
+      })
+      .then((response) => {
+        console.log("Game Posted");
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
   }
 
   beginGame() {
@@ -68,6 +67,7 @@ export default class GameMemory extends React.Component {
       this.createGame();
     } else {
       this.needsRestart = true;
+      this.state.game.paused = false;
     }
   }
 
@@ -86,12 +86,12 @@ export default class GameMemory extends React.Component {
   }
 
   createGame() {
-    var that = this;
+    var component = this;
     var game = new Phaser.Game(740, 480, Phaser.AUTO, 'phaser-game', {preload: preload, create: create, update: update});
     this.setState({game: game});
 
     var blocks, colWidth = 6, colHeight = 6, displacementX = 110, displacementY = 70, startingPositionX = 80, startingPositionY = 50;
-    var text, score = 0, previouslyClickedBlock, flipDelay = 0.3, initialDelay = 2;
+    var text, score = 0, previouslyClickedBlock, flipDelay = 0.3, initialDelay = 2, gameTime = 30;
     var blockTypes = [
       {amountUsed: 0, spriteIndex: 0},
       {amountUsed: 0, spriteIndex: 2},
@@ -114,6 +114,7 @@ export default class GameMemory extends React.Component {
     ];
 
     function restart() {
+      game.paused = false;
       if (blocks) {
         for (var i = 0; i < blocks.children.length; i++) {
           blocks.children[i].destroy();
@@ -134,6 +135,12 @@ export default class GameMemory extends React.Component {
 
       text = game.add.text(250, 16, 'Score ' + score, {fill: '#eeeeee'});
       blocks.onChildInputDown.add(onBlockClicked, this);
+
+      game.time.events.add(Phaser.Timer.SECOND * gameTime, function() {
+        game.paused = true;
+        component.setState({score: score});
+        component.saveScore();
+      });
     }
 
     function preload() {
@@ -146,18 +153,15 @@ export default class GameMemory extends React.Component {
     }
 
     function update() {
-      if (that.needsRestart) {
+      if (component.needsRestart) {
         console.log('Restart needed');
         restart();
-        that.needsRestart = false;
+        component.needsRestart = false;
       }
     }
 
     function onBlockClicked(block, pointer) {
-      console.log('You clicked on ', block);
-      console.log('isClickable: ', block.isClickable);
       if (block.isClickable === true) {
-        console.log('Block was clickable');
         block.isClickable = false;
         block.loadTexture('board_sprites', block.blockID);
         if (previouslyClickedBlock)
@@ -180,7 +184,6 @@ export default class GameMemory extends React.Component {
     }
 
     function findAvailableSprite() {
-      console.log('Inside findAvailableSprite');
       var randomizedID = Math.floor(game.rnd.realInRange(0, blockTypes.length));
       if (randomizedID > 35) {
         randomizedID = 35;
@@ -203,7 +206,6 @@ export default class GameMemory extends React.Component {
     }
 
     function drawGrid(group, spriteSheet) {
-      console.log('Inside drawGrid');
       for (var i = 0; i < colWidth; i++) {
         for (var j = 0; j < colHeight; j++) {
           var spriteID = findAvailableSprite();
