@@ -1,7 +1,7 @@
 import { Modal, Button } from 'react-bootstrap'
 import React from 'react';
 
-export const MemoryModal = ({
+export const SimonModal = ({
     beginGame,
     startNewGame,
     closeModal,
