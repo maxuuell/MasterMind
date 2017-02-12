@@ -37,27 +37,28 @@ export default class GameMemory extends React.Component {
 
   saveScore() {
     //********************Call this at the end of the game!*******************
-    alert("The game is over. Open the settings to start a new game!");
-    console.log(this.state.score);
-    if (this.profile) {
-      var obj = {
-        email: this.profile.email,
-        name: this.profile.name,
-        gameName: this.gametype,
-        score: this.state.score,
-        n: null
-      };
-      fetch(`/api/game`, {
-        method: 'POST',
-        headers: new Headers({'Content-Type': 'application/json'}),
-        body: JSON.stringify(obj)
-      })
-      .then((response) => {
-        console.log("Game Posted");
-      }).catch((err) => {
-        console.log(err);
-      });
-    }
+    console.log('Saving the score!');
+    // alert("The game is over. Open the settings to start a new game!");
+    // console.log(this.state.score);
+    // if (this.profile) {
+    //   var obj = {
+    //     email: this.profile.email,
+    //     name: this.profile.name,
+    //     gameName: this.gametype,
+    //     score: this.state.score,
+    //     n: null
+    //   };
+    //   fetch(`/api/game`, {
+    //     method: 'POST',
+    //     headers: new Headers({'Content-Type': 'application/json'}),
+    //     body: JSON.stringify(obj)
+    //   })
+    //   .then((response) => {
+    //     console.log("Game Posted");
+    //   }).catch((err) => {
+    //     console.log(err);
+    //   });
+    // }
   }
 
   beginGame() {
@@ -113,7 +114,11 @@ export default class GameMemory extends React.Component {
     ];
 
     function restart() {
-      game.world.removeAll();
+      if (blocks) {
+        for (var i = 0; i < blocks.children.length; i++) {
+          blocks.children[i].destroy();
+        }
+      }
       previouslyClickedBlock = null;
       for (var i = 0; i < blockTypes.length; i++) {
         blockTypes[i].amountUsed = 0;
@@ -154,7 +159,7 @@ export default class GameMemory extends React.Component {
       if (block.isClickable === true) {
         console.log('Block was clickable');
         block.isClickable = false;
-        toggleBlocks([block], 0.1, block.blockID);
+        block.loadTexture('board_sprites', block.blockID);
         if (previouslyClickedBlock)
         {
           if (previouslyClickedBlock.blockID === block.blockID) {
