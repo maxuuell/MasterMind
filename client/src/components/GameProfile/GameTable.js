@@ -3,7 +3,6 @@ import { Table } from 'react-bootstrap';
 import { GameRow } from '../shared/GameRow';
 
 const isNback = (games) => {
-  console.log('games[0]', games[0])
   if(!games[0]) { return false; }
   return games[0].level ? true : false;
 }

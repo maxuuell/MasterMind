@@ -59,7 +59,7 @@ export default class GameProfileContainer extends Component {
 
   render() {
     return (
-      <div className='text-center'>
+      <div className='center-block'>
         <h1>{this.getHeader()}</h1>
         <p>Total {this.state.gameName} games played: {this.state.filteredGames.length}</p>
         <GameTable
