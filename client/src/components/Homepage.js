@@ -9,9 +9,9 @@ export default class Homepage extends React.Component {
 
     <div className="row">
 
-        <h1>Welcome to MasterMind!</h1>
+        <h1>Welcome to MegaMind!</h1>
         <br/>
-        <p>MasterMind is a collection of games designed to test and strengthen your mental fortitude. While everyone is allowed to play these games, creating an account gives
+        <p>MegaMind is a collection of games designed to test and strengthen your mental fortitude. While everyone is allowed to play these games, creating an account gives
             you the ability to keep track of your personal progress</p>
             <br/>
       </div>
@@ -36,7 +36,7 @@ export default class Homepage extends React.Component {
    <div className = "col-sm-6 col-md-3">
    <figure>
   <img src={'http://icons.iconarchive.com/icons/martz90/circle/128/books-icon.png'} alt="book" className="img-rounded"/>
-  <figcaption>Scrabble</figcaption>
+  <figcaption>Word Scramble</figcaption>
   </figure>
    </div>
 
