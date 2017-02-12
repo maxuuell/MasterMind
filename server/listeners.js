@@ -40,14 +40,6 @@ module.exports = {
     var userName = req.body.name;
     var email = req.body.email;
 
-    // // format date
-    // var dateObj = new Date();
-    // var day = dateObj.getDate();
-    // var month = dateObj.getMonth() + 1;
-    // var year = dateObj.getFullYear();
-    // var formatedDate = `${month}/${day}/${year}`;
-    // console.log(formatedDate);
-
     var gameObj = {
       email: email,
       userName: userName,
