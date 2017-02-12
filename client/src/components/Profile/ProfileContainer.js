@@ -50,16 +50,20 @@ export default class ProfileContainer extends Component {
 
   render() {
     const nBackGames = this.filterGamesByName('nback');
-    return (
-      <div>
-        <h1 className="text-center">{this.getProfileName(this.state.profile)}Profile</h1>
-        <ProfileHeader totalGames={this.state.games.length}/>
-        {GAMES.map((name, i) => {
-          var filtered = this.filterGamesByName(name);
-          return <Games key={i} gameName={name} filteredGames={filtered}/>;
-        })}
-        <NbackTable filteredGames={nBackGames} />
-      </div>
-    );
+    if (this.state.loadingData) {
+      return <img className='center-block' src='/assets/img/loading.gif' />
+    } else {
+      return (
+        <div>
+          <h1 className="text-center">{this.getProfileName(this.state.profile)}Profile</h1>
+          <ProfileHeader totalGames={this.state.games.length}/>
+          {GAMES.map((name, i) => {
+            var filtered = this.filterGamesByName(name);
+            return <Games key={i} gameName={name} filteredGames={filtered}/>;
+          })}
+          <NbackTable filteredGames={nBackGames} />
+        </div>
+      );
+    }
   }
 }
