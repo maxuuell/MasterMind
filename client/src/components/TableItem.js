@@ -6,7 +6,7 @@ export var TableItem = ({game, index}) => {
       <td>{index}</td>
       <td>{game.userName}</td>
       <td>{game.score}</td>
-      <td>{game.date}</td>
+      <td>{new Date(game.date).toLocaleDateString()}</td>
     </tr>
   )
 
