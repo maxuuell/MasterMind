@@ -25,7 +25,10 @@ export const MemoryModal = ({
           </Modal.Header>
           <Modal.Body>
             <h4>Matching Memory Game</h4>
-            <p>--Write Description--</p>
+            <p>
+              MEMORY is a matching game where you have 30 seconds to find as many matching pairs on the grid as possible. Every time you find a matching pair, 
+              your score goes up by 1.
+            </p>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={()=>closeModal()}>Cancel</Button>
