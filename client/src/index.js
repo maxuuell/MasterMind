@@ -28,16 +28,16 @@ render(
   <Router history={ browserHistory }>
     <Route path="/" component = { App } auth={ auth }>
       <IndexRoute component={ Homepage }></IndexRoute>
-      <Route path="memorygame" component={ GameMemory } />
-      <Route path="leaderboard" component={ Leaderboard } />
-      <Route path="profile" component={ ProfileContainer } onEnter={ requireAuth } />
-      <Route path="profile/nback" onEnter={ requireAuth } component={ GameProfileContainer } />
-      <Route path="profile/scramble" component={ GameProfileContainer } onEnter={ requireAuth } gameName='scramble' />
-      <Route path="profile/simon" component={GameProfileContainer} onEnter={ requireAuth } />
-      <Route path="profile/memory" component={ GameProfileContainer } onEnter={ requireAuth } />
-      <Route path="scramblegame" component={ GameScramble }/>
-      <Route path="nback" component={ NBackGame }/>
-      <Route path="simon" component={ Simon }/>
+      <Route path="/memorygame" component={ GameMemory } />
+      <Route path="/leaderboard" component={ Leaderboard } />
+      <Route path="/profile" component={ ProfileContainer } onEnter={ requireAuth } />
+      <Route path="/profile/nback" onEnter={ requireAuth } component={ GameProfileContainer } />
+      <Route path="/profile/scramble" component={ GameProfileContainer } onEnter={ requireAuth } gameName='scramble' />
+      <Route path="/profile/simon" component={GameProfileContainer} onEnter={ requireAuth } />
+      <Route path="/profile/memory" component={ GameProfileContainer } onEnter={ requireAuth } />
+      <Route path="/scramblegame" component={ GameScramble }/>
+      <Route path="/nback" component={ NBackGame }/>
+      <Route path="/simon" component={ Simon }/>
     </Route>
   </Router>
   , app
