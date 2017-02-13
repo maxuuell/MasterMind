@@ -32,7 +32,6 @@ export default class GameScramble extends React.Component {
     this.skipWord = this.skipWord.bind(this);
     this.decrementTimer = this.decrementTimer.bind(this);
     this.saveScore = this.saveScore.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this)
     this.beginGame = this.beginGame.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -110,11 +109,6 @@ export default class GameScramble extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.interval = setInterval(this.decrementTimer.bind(this), 1000);
-    this.setState({shuffled: this.shuffle(this.state.word)});
-  }
-
   componentWillUnmount() {
     clearInterval(this.interval);
   }
@@ -154,6 +148,7 @@ export default class GameScramble extends React.Component {
       score: 0,
       timeLeft: 45
     });
+    this.interval = setInterval(this.decrementTimer.bind(this), 1000);
     this.changeWord(context);
   }
 
