@@ -6,8 +6,8 @@ export const Games = ({gameName, filteredGames}) => {
   //TODO fix props in GameRow
   return (
     <div className="center-block ourTable">
+      <h1>{gameName}</h1>
       <Table id={`#{gameName}-table`} condensed striped>
-        <h1>{gameName}</h1>
         <thead>
           <tr>
             <th>Date</th>
