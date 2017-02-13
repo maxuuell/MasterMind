@@ -8,7 +8,8 @@ export default class Leaderboard extends React.Component {
     super(props);
     this.state = {
       gameToRender: undefined,
-      gameInstances: []
+      gameInstances: [],
+      nbackLevel: 0
     }
 
     this.nback = this.nback.bind(this);
@@ -35,6 +36,7 @@ export default class Leaderboard extends React.Component {
 
   nback() {
     this.setState({
+      nbackLevel: 1,
       gameToRender: "NBack"
     })
     this.leaderboardFetch('nback');
