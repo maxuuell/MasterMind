@@ -5,8 +5,8 @@ import { GameRow } from '../shared/GameRow';
 export const NbackTable = ({filteredGames}) => {
   return (
     <div className="ourTable center-block">
+      <h1>nBack</h1>
       <Table id="nback-table">
-        <h1>nBack</h1>
         <thead>
           <tr>
             <th>Date</th>

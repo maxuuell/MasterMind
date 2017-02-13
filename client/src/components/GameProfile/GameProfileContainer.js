@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Pagination } from 'react-bootstrap';
 import { GameTable } from './GameTable';
 import { Graph } from './Graph';
+import { Links } from './Links';
 import { fetchScores } from '../../helpers/fetchScores';
 
 export default class GameProfileContainer extends Component {
@@ -18,6 +19,7 @@ export default class GameProfileContainer extends Component {
     this.handleSelect = this.handleSelect.bind(this)
     this.paginateScores = this.paginateScores.bind(this)
     this.getItemsAmount = this.getItemsAmount.bind(this)
+    this.changeGameView = this.changeGameView.bind(this)
   }
 
   componentWillMount() {
@@ -26,14 +28,18 @@ export default class GameProfileContainer extends Component {
       .then(data => {
         data.json()
           .then(scores => {
-            var filteredGames = scores.filter(game => game.gameName === this.state.gameName)
-            var sorted = filteredGames.sort((a,b) => {
-              return new Date(b.date) - new Date(a.date)
-            });
+            var sorted = this.getSortedScores(scores);
             this.setState({filteredGames: sorted, loadingData: false});
           })
       })
       .catch(error => this.setState({loadingData: false}))
+  }
+
+  getSortedScores(scores) {
+    var filteredGames = scores.filter(game => game.gameName === this.state.gameName)
+    return filteredGames.sort((a,b) => {
+      return new Date(b.date) - new Date(a.date)
+    });
   }
 
   getHeader() {
@@ -57,12 +63,26 @@ export default class GameProfileContainer extends Component {
     return Math.ceil(this.state.filteredGames.length/5);
   }
 
+  changeGameView(game) {
+    this.setState({loadingData: true, gameName: game})
+    fetchScores(this.state.profile.email)
+      .then(data => {
+        data.json()
+          .then(scores => {
+            var sorted = this.getSortedScores(scores);
+            this.setState({filteredGames: sorted, loadingData: false});
+          })
+      })
+      .catch(error => this.setState({loadingData: false}))
+  }
+
   render() {
     if (this.state.loadingData) {
       return <img className='center-block' src='/assets/img/loading.gif' />
     } else {
       return (
         <div className='center-block'>
+          <Links onGameChange={this.changeGameView}/>
           <h1>{this.getHeader()}</h1>
           <p>Total {this.state.gameName} games played: {this.state.filteredGames.length}</p>
           <GameTable
@@ -80,7 +100,7 @@ export default class GameProfileContainer extends Component {
             activePage={this.state.activePage}
             onSelect={this.handleSelect}
           />
-          <Graph filteredGames={this.state.filteredGames} />
+          <Graph filteredGames={this.paginateScores()} />
         </div>
       )
     }
