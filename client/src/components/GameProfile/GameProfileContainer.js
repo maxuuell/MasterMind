@@ -80,7 +80,7 @@ export default class GameProfileContainer extends Component {
             activePage={this.state.activePage}
             onSelect={this.handleSelect}
           />
-          <Graph filteredGames={this.state.filteredGames} />
+          <Graph filteredGames={this.paginateScores()} />
         </div>
       )
     }

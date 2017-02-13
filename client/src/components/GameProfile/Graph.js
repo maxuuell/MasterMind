@@ -2,8 +2,7 @@ import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 
 const transformData = (data) => {
-  var firstTen = data.slice(0,10);
-  return firstTen.map(el => {
+  return data.map(el => {
     return {
       date: new Date(el.date).toLocaleDateString(),
       score: el.score
