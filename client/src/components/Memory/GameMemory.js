@@ -20,6 +20,11 @@ export default class GameMemory extends React.Component {
     this.startNewGame = this.startNewGame.bind(this);
     this.createGame = this.createGame.bind(this);
   }
+
+  componentWillUnmount() {
+    this.game.time.events.removeAll();
+  }
+
   render() {
     return (
       <div>
