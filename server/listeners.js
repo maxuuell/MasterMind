@@ -45,6 +45,7 @@ module.exports = {
       userName: userName,
       gameName: req.body.gameName,
       score:  req.body.score,
+      level: req.body.n,
       date: new Date()
     };
 
