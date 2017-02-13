@@ -12,6 +12,7 @@ export var TableContainer = ({gameTitle, games}) => {
             <th>Rank</th>
             <th>Name</th>
             <th>Score</th>
+            {gameTitle === 'NBack' ? <td>Level</td> : null}
             <th>Date</th>
           </tr>
         </thead>
