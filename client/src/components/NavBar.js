@@ -26,7 +26,7 @@ export default class Navigation extends Component {
         <Navbar.Header>
           <Navbar.Brand>
             <LinkContainer to='/'>
-              <a>MasterMind</a>
+              <a>MegaMind</a>
             </LinkContainer>
           </Navbar.Brand>
           <Navbar.Toggle />

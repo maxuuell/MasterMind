@@ -29,7 +29,6 @@ app.post("/api/game", listeners.addGame);
 app.post("/api/user", listeners.userCheck);
 
 app.get('*', function (request, response){
-  console.log('here')
   response.sendFile(path.resolve(rootPath + '/index.html'))
 })
 
