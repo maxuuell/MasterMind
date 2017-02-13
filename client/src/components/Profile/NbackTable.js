@@ -1,11 +1,14 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import { GameRow } from '../shared/GameRow';
+import { Link } from 'react-router';
 
 export const NbackTable = ({filteredGames}) => {
   return (
     <div className="ourTable center-block">
-      <h1>nBack</h1>
+      <Link to="/profile/nback">
+        <h1>nBack</h1>
+      </Link>
       <Table id="nback-table">
         <thead>
           <tr>

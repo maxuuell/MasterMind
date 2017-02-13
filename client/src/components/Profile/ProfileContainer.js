@@ -56,7 +56,7 @@ export default class ProfileContainer extends Component {
       return (
         <div>
           <h1 className="text-center">{this.getProfileName(this.state.profile)}Profile</h1>
-          <ProfileHeader totalGames={this.state.games.length}/>
+          <ProfileHeader totalGames={this.state.games.length} />
           {GAMES.map((name, i) => {
             var filtered = this.filterGamesByName(name);
             return <Games key={i} gameName={name} filteredGames={filtered}/>;
