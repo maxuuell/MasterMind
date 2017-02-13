@@ -22,7 +22,7 @@ export default class GameMemory extends React.Component {
   }
 
   componentWillUnmount() {
-    this.game.time.events.removeAll();
+    this.state.game.time.events.removeAll();
   }
 
   render() {
